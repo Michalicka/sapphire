@@ -2,5 +2,5 @@
 export default {
   required: 'Field is required',
   email: 'Field has to be an email',
-  min: `Field must be at least 6 characters long`
+  min: (min) => `Field has to be at least ${min} chracters long`
 }
