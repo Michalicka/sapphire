@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core'
 import PropTypes from 'prop-types'
+import Counter from '../containers/Counter'
 
 const styles = theme => {
   return {
@@ -23,6 +24,7 @@ export const About = ({ classes }) => {
         className={classes.link}
         to="/home"
       >Home</Link>
+      <Counter />
     </div>
   )
 }
