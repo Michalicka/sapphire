@@ -9,8 +9,15 @@ export const PostUsers = Yup.object().shape({
     .email(messages.email)
     .required(messages.required),
   password: Yup.string()
-    .min(6, messages.min(6))
+    .min(6, messages.min)
     .required(messages.required)
 })
 
-console.log(PostUsers)
+PostUsers.validate({
+  displayName: '',
+  email: '',
+  password: ''
+}, { abortEarly: false })
+  .catch(error => {
+    console.log(error)
+  })

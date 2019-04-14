@@ -29,36 +29,42 @@ export const RegistrationForm = ({ classes }) => {
         console.log(values)
       }}
       render={({ handleChange, handleBlur, values, handleSubmit, errors, touched }) => (
-        <form onSubmit={handleSubmit}>
+        <form
+          id="form"
+          onSubmit={handleSubmit}
+        >
           <TextField
             name="displayName"
+            id="displayName"
             label="Display name"
             fullWidth
             onChange={handleChange}
             onBlur={handleBlur}
-            values={values.displayName}
+            value={values.displayName}
             error={!!errors.displayName && !!touched.displayName}
             helperText={touched.displayName ? errors.displayName : ''}
             className={classes.field}
           />
           <TextField
             name="email"
+            id="email"
             label="E-mail"
             fullWidth
             onChange={handleChange}
             onBlur={handleBlur}
-            values={values.email}
+            value={values.email}
             error={!!errors.email && !!touched.email}
             helperText={touched.email ? errors.email : ''}
             className={classes.field}
           />
           <TextField
             name="password"
+            id="password"
             label="Password"
             fullWidth
             onChange={handleChange}
             onBlur={handleBlur}
-            values={values.password}
+            value={values.password}
             error={!!errors.password && !!touched.password}
             helperText={touched.password ? errors.password : ''}
             className={classes.field}
