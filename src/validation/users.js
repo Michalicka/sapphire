@@ -12,12 +12,3 @@ export const PostUsers = Yup.object().shape({
     .min(6, messages.min)
     .required(messages.required)
 })
-
-PostUsers.validate({
-  displayName: '',
-  email: '',
-  password: ''
-}, { abortEarly: false })
-  .catch(error => {
-    console.log(error)
-  })
