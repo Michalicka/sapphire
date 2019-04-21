@@ -11,8 +11,8 @@ const styles = theme => ({
   field: {
     marginBottom: theme.spacing.unit * 2
   },
-  buttonWrap: {
-    marginTop: theme.spacing.unit * 2
+  button: {
+    marginTop: theme.spacing.unit * 4
   }
 })
 
@@ -69,14 +69,13 @@ export const RegistrationForm = ({ classes }) => {
             helperText={touched.password ? errors.password : ''}
             className={classes.field}
           />
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.buttonWrap}
-              onClick={handleSubmit}
-            >Register</Button>
-          </div>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            type="submit"
+            fullWidth
+          >Register</Button>
         </form>
       )}
     />
