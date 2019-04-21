@@ -6,12 +6,15 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import RegistrationForm from '../components/RegistrationForm'
+import Logo from '../components/Logo'
 
 const styles = theme => ({
   logo: {
     color: theme.palette.primary.main,
     fontSize: 48,
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
+    maxWidth: 160,
+    display: 'inline-block'
   },
   wrap: {
     paddingTop: theme.spacing.unit * 3,
@@ -51,7 +54,7 @@ export const Registration = ({ classes }) => {
           lg={5}
         >
           <Paper className={classes.content}>
-            <div className={classes.logo}>Logo</div>
+            <Logo className={classes.logo}/>
             <Typography
               variant="h4"
               gutterBottom
