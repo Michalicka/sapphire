@@ -6,7 +6,8 @@ import withRoot from './withRoot'
 // import rootReducer from './reducers'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import Registration from './views/Registration'
-import { registration } from './routes'
+import Login from './views/Login'
+import { registration, login } from './routes'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
@@ -28,6 +29,7 @@ export class App extends React.Component {
             render={() => <Redirect to={registration} />}
           />
           <Route path={registration} component={Registration} />
+          <Route path={login} component={Login} />
         </Router>
       </Provider>
     )
