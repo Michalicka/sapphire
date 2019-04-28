@@ -24,5 +24,6 @@ module.exports = {
   ],
   "rules": {
     "space-before-function-paren": ["error", "never"],
+    "generator-star-spacing": ["error", { "before": false, "after": true }]
   }
 };

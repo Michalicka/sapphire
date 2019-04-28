@@ -1,0 +1,2 @@
+
+export const registration = '/registration'

@@ -10,5 +10,8 @@ export default createMuiTheme({
   },
   typography: {
     useNextVariants: true
+  },
+  shape: {
+    borderRadius: 6
   }
 })
