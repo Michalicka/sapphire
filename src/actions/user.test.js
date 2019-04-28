@@ -1,6 +1,6 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM } from '../actionTypes/user'
-import { userRegistration, changeUserData, changeUserParam } from './user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG } from '../actionTypes/user'
+import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading } from './user'
 
 describe('user actions', () => {
   it('user registration', () => {
@@ -36,5 +36,30 @@ describe('user actions', () => {
     }
 
     expect(changeUserParam(key, value)).toEqual(expectedOutput)
+  })
+
+  it('change user errors', () => {
+    const errors = {
+      name: 'error',
+      email: 'error',
+      password: 'error',
+      password_confirmation: 'error'
+    }
+
+    const expectedOutput = {
+      type: CHANGE_USER_ERRORS,
+      errors
+    }
+
+    expect(changeUserErrors(errors)).toEqual(expectedOutput)
+  })
+
+  it('toggle user loading', () => {
+    const expectedOutput = {
+      type: TOGGLE_USER_LOADNIG,
+      value: true
+    }
+
+    expect(toggleUserLoading(true)).toEqual(expectedOutput)
   })
 })

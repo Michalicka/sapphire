@@ -1,9 +1,10 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM } from '../actionTypes/user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG } from '../actionTypes/user'
 
-export function userRegistration() {
+export function userRegistration(payload) {
   return {
-    type: USER_REGISTRATION
+    type: USER_REGISTRATION,
+    payload
   }
 }
 
@@ -18,6 +19,20 @@ export function changeUserParam(key, value) {
   return {
     type: CHANGE_USER_PARAM,
     key,
+    value
+  }
+}
+
+export function changeUserErrors(errors) {
+  return {
+    type: CHANGE_USER_ERRORS,
+    errors
+  }
+}
+
+export function toggleUserLoading(value) {
+  return {
+    type: TOGGLE_USER_LOADNIG,
     value
   }
 }

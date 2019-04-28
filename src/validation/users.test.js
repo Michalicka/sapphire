@@ -4,9 +4,10 @@ import { PostUsers } from './users'
 describe('users validation', () => {
   it('should be valid PostUsers validation', done => {
     const validValues = {
-      displayName: 'john',
+      name: 'john',
       email: 'john@doe.com',
-      password: 'password'
+      password: 'password',
+      password_confirmation: 'password'
     }
     PostUsers.isValid(validValues)
       .then(isValid => {
@@ -17,9 +18,10 @@ describe('users validation', () => {
 
   it('should not be valid PostUsers validation', done => {
     const unvalidValues = {
-      displayName: '',
+      name: '',
       email: '',
-      password: ''
+      password: '',
+      password_confirmation: ''
     }
     PostUsers.isValid(unvalidValues)
       .then(isValid => {
