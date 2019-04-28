@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import RegistrationForm from '../components/RegistrationForm'
+import RegistrationForm from '../containers/RegistrationForm'
 import Logo from '../components/Logo'
 
 const styles = theme => ({
@@ -22,7 +22,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     [theme.breakpoints.up('sm')]: {
-      paddingTop: theme.spacing.unit * 16
+      paddingTop: theme.spacing.unit * 12
     }
   },
   content: {
@@ -55,7 +55,7 @@ export const Registration = ({ classes }) => {
           lg={4}
         >
           <Paper className={classes.content}>
-            <Logo className={classes.logo}/>
+            <Logo className={classes.logo} />
             <Typography
               variant="h5"
               gutterBottom
