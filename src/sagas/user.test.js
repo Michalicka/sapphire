@@ -1,6 +1,7 @@
 
 import { put, call, take } from 'redux-saga/effects'
-import { changeUserData, changeUserErrors, toggleUserLoading } from '../actions/user'
+import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam } from '../actions/user'
+import { changeMessagebarParam } from '../actions/messagebar'
 import { users as usersLink } from '../apiLinks'
 import { USER_REGISTRATION } from '../actionTypes/user'
 import axios from 'axios'
@@ -40,6 +41,10 @@ describe('sagas user', () => {
       const apiCall = call(axios.post, usersLink, registrationAction.payload)
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeUserData(response)))
+      expect(gen.next(response).value).toEqual(put(changeUserParam('registrationSuccess', true)))
+      expect(gen.next(response).value).toEqual(put(changeMessagebarParam('variant', 'success')))
+      expect(gen.next(response).value).toEqual(put(changeMessagebarParam('message', 'Registration was successful')))
+      expect(gen.next(response).value).toEqual(put(changeMessagebarParam('open', true)))
       expect(gen.next().value).toEqual(put(toggleUserLoading(false)))
       expect(gen.next().value).toEqual(take(USER_REGISTRATION))
     })
