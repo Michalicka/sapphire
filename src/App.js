@@ -11,6 +11,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import Messagebar from './components/MessageBar'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))
@@ -29,6 +30,12 @@ export class App extends React.Component {
           <Route path={registration} component={Registration} />
           <Route path={login} component={Login} />
         </Router>
+        <Messagebar
+          open={false}
+          message="test"
+          variant="info"
+          handleClose={() => console.log('close')}
+        />
         <CssBaseline />
       </Provider>
     )
