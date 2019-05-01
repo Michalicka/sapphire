@@ -1,6 +1,6 @@
 
 import messagebar from './messagebar'
-import { changeMessagebarData } from '../actions/messagebar'
+import { changeMessagebarParam } from '../actions/messagebar'
 
 describe('messagebar reducer', () => {
   it('initial state', () => {
@@ -12,12 +12,12 @@ describe('messagebar reducer', () => {
     expect(messagebar(undefined, {})).toEqual(expectedValue)
   })
 
-  it('changeMessagebarData', () => {
+  it('changeMessagebarParam', () => {
     const expectedValue = {
       open: true,
-      message: 'message',
-      variant: 'success'
+      message: '',
+      variant: 'info'
     }
-    expect(messagebar(undefined, changeMessagebarData(expectedValue))).toEqual(expectedValue)
+    expect(messagebar(undefined, changeMessagebarParam('open', true))).toEqual(expectedValue)
   })
 })
