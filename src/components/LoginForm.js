@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import { fieldProps } from '../utils'
 import { registration } from '../routes'
 import RouterLink from './RouterLink'
+import { Login } from '../validation/users'
 
 const styles = theme => ({
   field: {
@@ -34,6 +35,7 @@ export const LoginForm = ({ classes, userErrors, login, loading }) => {
       onSubmit={values => {
         login(values)
       }}
+      validationSchema={Login}
       render={formData => {
         const userFieldProps = fieldProps(formData, userErrors)
         return (

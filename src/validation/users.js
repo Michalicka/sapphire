@@ -10,7 +10,7 @@ function equalTo(ref, msg) {
     params: {
       reference: ref.path
     },
-    test: function(value) {
+    test(value) {
       return value === this.resolve(ref)
     }
   })
@@ -29,4 +29,13 @@ export const PostUsers = Yup.object().shape({
     .required(messages.required),
   password_confirmation: Yup.string()
     .equalTo(Yup.ref('password'), messages.equalTo)
+})
+
+export const Login = Yup.object().shape({
+  email: Yup.string()
+    .email(messages.email)
+    .required(messages.required),
+  password: Yup.string()
+    .min(6, messages.min)
+    .required(messages.required)
 })
