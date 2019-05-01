@@ -1,18 +1,16 @@
 
-import { changeMessagebarData } from './messagebar'
-import { CHANGE_MESSAGEBAR_DATA } from '../actionTypes/messagebar'
+import { changeMessagebarParam } from './messagebar'
+import { CHANGE_MESSAGEBAR_PARAM } from '../actionTypes/messagebar'
 
 describe('messagebar actions', () => {
-  it('changeMessagebarData', () => {
-    const payload = {
-      open: true,
-      message: 'message',
-      variant: 'success'
-    }
+  it('changeMessagebarParam', () => {
+    const key = 'key'
+    const value = 'value'
     const expectedValue = {
-      type: CHANGE_MESSAGEBAR_DATA,
-      payload
+      type: CHANGE_MESSAGEBAR_PARAM,
+      key,
+      value
     }
-    expect(changeMessagebarData(payload)).toEqual(expectedValue)
+    expect(changeMessagebarParam(key, value)).toEqual(expectedValue)
   })
 })

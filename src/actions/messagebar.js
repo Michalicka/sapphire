@@ -1,9 +1,10 @@
 
-import { CHANGE_MESSAGEBAR_DATA } from '../actionTypes/messagebar'
+import { CHANGE_MESSAGEBAR_PARAM } from '../actionTypes/messagebar'
 
-export function changeMessagebarData(payload) {
+export function changeMessagebarParam(key, value) {
   return {
-    type: CHANGE_MESSAGEBAR_DATA,
-    payload
+    type: CHANGE_MESSAGEBAR_PARAM,
+    key,
+    value
   }
 }

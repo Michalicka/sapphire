@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import MessageBar from '../components/MessageBar'
-import { changeMessagebarData } from '../actions/messagebar'
+import { changeMessagebarParam } from '../actions/messagebar'
 
 const mapStateToProps = state => ({
   open: state.messagebar.open,
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleClose: () => dispatch(changeMessagebarData({ open: false, message: '', variant: 'info' }))
+  handleClose: () => dispatch(changeMessagebarParam('open', false))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageBar)

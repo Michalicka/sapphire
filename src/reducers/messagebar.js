@@ -1,5 +1,5 @@
 
-import { CHANGE_MESSAGEBAR_DATA } from '../actionTypes/messagebar'
+import { CHANGE_MESSAGEBAR_PARAM } from '../actionTypes/messagebar'
 
 const initialState = {
   open: false,
@@ -9,8 +9,9 @@ const initialState = {
 
 export default function messagebar(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_MESSAGEBAR_DATA:
-      return { ...action.payload }
+    case CHANGE_MESSAGEBAR_PARAM:
+      const newState = { ...state, [action.key]: action.value }
+      return newState
     default:
       return state
   }
