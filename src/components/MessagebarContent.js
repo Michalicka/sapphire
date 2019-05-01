@@ -4,14 +4,11 @@ import SnackbarContent from '@material-ui/core/SnackbarContent'
 import classNames from 'classnames'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import WarningIcon from '@material-ui/icons/Warning'
-import ErrorIcon from '@material-ui/icons/Error'
-import InfoIcon from '@material-ui/icons/Info'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import green from '@material-ui/core/colors/green'
 import amber from '@material-ui/core/colors/amber'
+import StatusIcon from './StatusIcon'
 
 const styles = theme => ({
   success: {
@@ -39,21 +36,16 @@ const styles = theme => ({
   }
 })
 
-const variantIcon = {
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
-  info: InfoIcon
-}
-
 export const MessagebarContent = ({ classes, className, message, onClose, variant, ...other }) => {
-  const Icon = variantIcon[variant]
   return (
     <SnackbarContent
       className={classNames(classes[variant], className)}
       message={
         <span className={classes.message}>
-          <Icon className={classNames(classes.icon, classes.iconVariant)} />
+          <StatusIcon
+            variant={variant}
+            className={classNames(classes.icon, classes.iconVariant)}
+          />
           {message}
         </span>
       }
