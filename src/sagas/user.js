@@ -10,7 +10,9 @@ export const postUsers = fetchEntity.bind(
   usersLink,
   {
     request: USER_REGISTRATION,
-    success: response => changeUserData({ id: null, name: '', email: response.email, password: '', passwordConfirmation: '' }),
+    success: [
+      response => changeUserData({ id: null, name: '', email: response.email, password: '', passwordConfirmation: '' })
+    ],
     error: errors => changeUserErrors(errors),
     loading: value => toggleUserLoading(value)
   }
