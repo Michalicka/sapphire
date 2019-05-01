@@ -5,9 +5,13 @@ import { PostUsers } from '../validation/users'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
+import Link from '@material-ui/core/Link'
 import { withStyles } from '@material-ui/core/styles'
+import RouterLink from './RouterLink'
 import PropTypes from 'prop-types'
 import { fieldProps } from '../utils'
+import { login } from '../routes'
+import { Typography } from '@material-ui/core'
 
 const styles = theme => ({
   field: {
@@ -32,7 +36,6 @@ export const RegistrationForm = ({ classes, userErrors, registration, loading })
       }}
       validationSchema={PostUsers}
       onSubmit={values => {
-        console.log(values)
         registration(values)
       }}
       render={formData => {
@@ -50,25 +53,35 @@ export const RegistrationForm = ({ classes, userErrors, registration, loading })
               />
             }
             <TextField
-              { ...userFieldProps('name') }
+              {...userFieldProps('name')}
               fullWidth
               className={classes.field}
             />
             <TextField
-              { ...userFieldProps('email') }
+              {...userFieldProps('email')}
               fullWidth
               className={classes.field}
             />
             <TextField
-              { ...userFieldProps('password', 'password') }
+              {...userFieldProps('password', 'password')}
               fullWidth
               className={classes.field}
             />
             <TextField
-              { ...userFieldProps('password_confirmation', 'password') }
+              {...userFieldProps('password_confirmation', 'password')}
               fullWidth
               className={classes.field}
             />
+            <Typography
+              variant="body2"
+              align="left"
+              gutterBottom
+            >
+              Do you already have an account? <Link
+                component={RouterLink({ to: login })}
+                color="secondary"
+              >Log in</Link>
+            </Typography>
             <Button
               variant="contained"
               color="primary"
