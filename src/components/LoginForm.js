@@ -4,9 +4,13 @@ import { Formik } from 'formik'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
+import Link from '@material-ui/core/Link'
+import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { fieldProps } from '../utils'
+import { registration } from '../routes'
+import RouterLink from './RouterLink'
 
 const styles = theme => ({
   field: {
@@ -45,15 +49,25 @@ export const LoginForm = ({ classes, userErrors, login, loading }) => {
               />
             }
             <TextField
-              { ...userFieldProps('email') }
+              {...userFieldProps('email')}
               fullWidth
               className={classes.field}
             />
             <TextField
-              { ...userFieldProps('password', 'password') }
+              {...userFieldProps('password', 'password')}
               fullWidth
               className={classes.field}
             />
+            <Typography
+              variant="body2"
+              align="left"
+              gutterBottom
+            >
+              Do not you have an account yet? <Link
+                component={RouterLink({ to: registration })}
+                color="secondary"
+              >Sign up</Link>
+            </Typography>
             <Button
               variant="contained"
               color="primary"
