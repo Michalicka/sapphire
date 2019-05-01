@@ -12,6 +12,7 @@ import PropTypes from 'prop-types'
 import { fieldProps } from '../utils'
 import { login } from '../routes'
 import { Typography } from '@material-ui/core'
+import { Redirect } from 'react-router-dom'
 
 const styles = theme => ({
   field: {
@@ -25,7 +26,7 @@ const styles = theme => ({
   }
 })
 
-export const RegistrationForm = ({ classes, userErrors, registration, loading }) => {
+export const RegistrationForm = ({ classes, userErrors, registration, loading, registrationSuccess }) => {
   return (
     <Formik
       initialValues={{
@@ -90,6 +91,15 @@ export const RegistrationForm = ({ classes, userErrors, registration, loading })
               fullWidth
               disabled={loading}
             >Register</Button>
+            {registrationSuccess &&
+              <Redirect
+                to={{
+                  pathname: login,
+                  search: '?registration-success'
+                }}
+                push
+              />
+            }
           </form>
         )
       }}
@@ -101,7 +111,8 @@ RegistrationForm.propTypes = {
   classes: PropTypes.object.isRequired,
   registration: PropTypes.func.isRequired,
   userErrors: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  registrationSuccess: PropTypes.bool
 }
 
 export default withStyles(styles)(RegistrationForm)
