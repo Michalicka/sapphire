@@ -1,20 +1,7 @@
 
 import * as Yup from 'yup'
 import messages from '../validationMessages'
-
-function equalTo(ref, msg) {
-  return this.test({
-    name: 'equalTo',
-    exclusive: false,
-    message: msg,
-    params: {
-      reference: ref.path
-    },
-    test(value) {
-      return value === this.resolve(ref)
-    }
-  })
-}
+import { equalTo } from './yupMethods'
 
 Yup.addMethod(Yup.string, 'equalTo', equalTo)
 
