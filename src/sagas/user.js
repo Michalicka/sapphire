@@ -13,8 +13,9 @@ export const postUsers = fetchEntity.bind(
   {
     request: USER_REGISTRATION,
     success: [
-      response => put(changeUserData({ id: null, name: '', email: response.email, password: '', passwordConfirmation: '' })),
+      response => put(changeUserData({ id: null, name: '', email: '', password: '', passwordConfirmation: '' })),
       () => put(changeUserParam('registrationSuccess', true)),
+      () => put(changeUserErrors({})),
       () => put(changeMessagebarParam('variant', 'success')),
       () => put(changeMessagebarParam('message', 'Registration was successful')),
       () => put(changeMessagebarParam('open', true))

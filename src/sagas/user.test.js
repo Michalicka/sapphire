@@ -32,7 +32,7 @@ describe('sagas user', () => {
       const response = {
         id: null,
         name: '',
-        email: 'john@doe.com',
+        email: '',
         password: '',
         passwordConfirmation: ''
       }
@@ -42,6 +42,7 @@ describe('sagas user', () => {
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeUserData(response)))
       expect(gen.next(response).value).toEqual(put(changeUserParam('registrationSuccess', true)))
+      expect(gen.next(response).value).toEqual(put(changeUserErrors({})))
       expect(gen.next(response).value).toEqual(put(changeMessagebarParam('variant', 'success')))
       expect(gen.next(response).value).toEqual(put(changeMessagebarParam('message', 'Registration was successful')))
       expect(gen.next(response).value).toEqual(put(changeMessagebarParam('open', true)))
