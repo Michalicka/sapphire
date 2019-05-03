@@ -1,8 +1,9 @@
 
-import { POST_TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS } from '../actionTypes/tokens'
+import { POST_TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
 
 const initialState = {
-  errors: {}
+  errors: {},
+  loading: false
 }
 
 function tokens(state = initialState, action) {
@@ -11,6 +12,8 @@ function tokens(state = initialState, action) {
       return { ...state, postTokensSuccess: true }
     case CHANGE_TOKENS_ERRORS:
       return { ...state, errors: action.errors }
+    case TOGGLE_TOKENS_LOADING:
+      return { ...state, loading: action.value }
     default:
       return state
   }
