@@ -25,7 +25,7 @@ const styles = theme => ({
   }
 })
 
-export const LoginForm = ({ classes, userErrors, login, loading }) => {
+export const LoginForm = ({ classes, tokensErrors, login, loading }) => {
   return (
     <Formik
       initialValues={{
@@ -37,7 +37,7 @@ export const LoginForm = ({ classes, userErrors, login, loading }) => {
       }}
       validationSchema={Login}
       render={formData => {
-        const userFieldProps = fieldProps(formData, userErrors)
+        const userFieldProps = fieldProps(formData, tokensErrors)
         return (
           <form
             data-test-id="registration-form"
@@ -88,7 +88,7 @@ export const LoginForm = ({ classes, userErrors, login, loading }) => {
 LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
-  userErrors: PropTypes.object.isRequired,
+  tokensErrors: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired
 }
 

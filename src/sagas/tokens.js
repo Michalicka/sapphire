@@ -6,8 +6,8 @@ import { fetchEntity } from './utils'
 import { put, call } from 'redux-saga/effects'
 
 export function setToken(token, type) {
-  localStorage.setItem('token', token)
-  localStorage.setItem('type', type)
+  localStorage.setItem('accessToken', token)
+  localStorage.setItem('tokenType', type)
 }
 
 export const postTokens = fetchEntity.bind(
@@ -17,7 +17,7 @@ export const postTokens = fetchEntity.bind(
   {
     request: POST_TOKENS_REQUEST,
     success: [
-      response => call(setToken, response.access_token, response.token_type),
+      response => call(setToken, response.data.data.access_token, response.data.data.token_type),
       () => put(changeTokensErrors({})),
       () => put(postTokensSuccess())
     ],

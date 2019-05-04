@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../containers/LoginForm'
 import { withStyles } from '@material-ui/core/styles'
 import Logo from '../components/Logo'
 
@@ -61,11 +61,7 @@ export const Login = ({ classes }) => {
               gutterBottom
               className={classes.title}
             >Login</Typography>
-            <LoginForm
-              login={values => console.log(values)}
-              userErrors={({})}
-              loading={false}
-            />
+            <LoginForm/>
           </Paper>
         </Grid>
       </Grid>

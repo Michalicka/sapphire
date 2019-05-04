@@ -30,12 +30,7 @@ export class App extends React.Component {
           <Route path={registration} component={Registration} />
           <Route path={login} component={Login} />
         </Router>
-        <Messagebar
-          open={false}
-          message="test"
-          variant="info"
-          handleClose={() => console.log('close')}
-        />
+        <Messagebar />
         <CssBaseline />
       </Provider>
     )
