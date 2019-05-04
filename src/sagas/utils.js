@@ -16,7 +16,9 @@ export function* fetchEntity(method, link, entity) {
     yield put(entity.loading(true))
     try {
       const response = yield call(axios[method], link, action.payload)
-      yield put(entity.success(response))
+      for (let index = 0; index < entity.success.length; index++) {
+        yield entity.success[index](response)
+      }
       yield put(entity.loading(false))
     } catch (error) {
       if (error.response.status === 422) {

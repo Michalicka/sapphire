@@ -22,10 +22,12 @@ describe('sagas utils', () => {
     const link = 'https://www.google.com/'
     const entity = {
       request: 'REQUEST',
-      success: response => ({
-        type: 'SUCCESS',
-        response
-      }),
+      success: [
+        response => put({
+          type: 'SUCCESS',
+          response
+        })
+      ],
       error: error => ({
         type: 'ERROR',
         error
@@ -51,7 +53,9 @@ describe('sagas utils', () => {
       expect(gen.next(fakeAction).value).toEqual(put(entity.loading(true)))
       const apiCall = call(axios[method], link, fakeAction.payload)
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(apiCall).value).toEqual(put(entity.success(apiCall)))
+      for (let index = 0; index < entity.success.length; index++) {
+        expect(gen.next(apiCall).value).toEqual(entity.success[index](apiCall))
+      }
       expect(gen.next(fakeAction).value).toEqual(put(entity.loading(false)))
       expect(gen.next().value).toEqual(take(entity.request))
     })

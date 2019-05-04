@@ -1,18 +1,17 @@
 
 import React from 'react'
 import { Formik } from 'formik'
-import { PostUsers } from '../validation/users'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
+import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import RouterLink from './RouterLink'
 import PropTypes from 'prop-types'
 import { fieldProps } from '../utils'
-import { login } from '../routes'
-import { Typography } from '@material-ui/core'
-import { Redirect } from 'react-router-dom'
+import { registration } from '../routes'
+import RouterLink from './RouterLink'
+import { Login } from '../validation/users'
 
 const styles = theme => ({
   field: {
@@ -26,21 +25,19 @@ const styles = theme => ({
   }
 })
 
-export const RegistrationForm = ({ classes, userErrors, registration, loading, registrationSuccess }) => {
+export const LoginForm = ({ classes, tokensErrors, login, loading }) => {
   return (
     <Formik
       initialValues={{
-        name: '',
         email: '',
-        password: '',
-        password_confirmation: ''
+        password: ''
       }}
-      validationSchema={PostUsers}
       onSubmit={values => {
-        registration(values)
+        login(values)
       }}
+      validationSchema={Login}
       render={formData => {
-        const userFieldProps = fieldProps(formData, userErrors)
+        const userFieldProps = fieldProps(formData, tokensErrors)
         return (
           <form
             data-test-id="registration-form"
@@ -54,11 +51,6 @@ export const RegistrationForm = ({ classes, userErrors, registration, loading, r
               />
             }
             <TextField
-              {...userFieldProps('name')}
-              fullWidth
-              className={classes.field}
-            />
-            <TextField
               {...userFieldProps('email')}
               fullWidth
               className={classes.field}
@@ -68,20 +60,15 @@ export const RegistrationForm = ({ classes, userErrors, registration, loading, r
               fullWidth
               className={classes.field}
             />
-            <TextField
-              {...userFieldProps('password_confirmation', 'password')}
-              fullWidth
-              className={classes.field}
-            />
             <Typography
               variant="body2"
               align="left"
               gutterBottom
             >
-              Do you already have an account? <Link
-                component={RouterLink({ to: login })}
+              Do not you have an account yet? <Link
+                component={RouterLink({ to: registration })}
                 color="secondary"
-              >Log in</Link>
+              >Sign up</Link>
             </Typography>
             <Button
               variant="contained"
@@ -90,16 +77,7 @@ export const RegistrationForm = ({ classes, userErrors, registration, loading, r
               type="submit"
               fullWidth
               disabled={loading}
-            >Register</Button>
-            {registrationSuccess &&
-              <Redirect
-                to={{
-                  pathname: login,
-                  search: '?registration-success'
-                }}
-                push
-              />
-            }
+            >Login</Button>
           </form>
         )
       }}
@@ -107,12 +85,11 @@ export const RegistrationForm = ({ classes, userErrors, registration, loading, r
   )
 }
 
-RegistrationForm.propTypes = {
+LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  registration: PropTypes.func.isRequired,
-  userErrors: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
-  registrationSuccess: PropTypes.bool
+  login: PropTypes.func.isRequired,
+  tokensErrors: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 }
 
-export default withStyles(styles)(RegistrationForm)
+export default withStyles(styles)(LoginForm)

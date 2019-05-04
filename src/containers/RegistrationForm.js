@@ -5,7 +5,8 @@ import { userRegistration } from '../actions/user'
 
 const mapStateToProps = state => ({
   userErrors: state.user.errors,
-  loading: state.user.loading
+  loading: state.user.loading,
+  registrationSuccess: state.user.data.registrationSuccess
 })
 
 const mapDispatchToProps = dispatch => ({
