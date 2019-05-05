@@ -27,15 +27,19 @@ describe('sagas user', () => {
     })
     it('should return postUsers success flow', () => {
       const response = {
-        access_token: 'fijasdp',
-        token_type: 'bearer',
-        expires_in: 3600
+        data: {
+          data: {
+            access_token: 'fijasdp',
+            token_type: 'bearer',
+            expires_in: 3600
+          }
+        }
       }
       expect(gen.next().value).toEqual(take(POST_TOKENS_REQUEST))
       expect(gen.next(registrationAction).value).toEqual(put(toggleTokensLoading(true)))
       const apiCall = call(axios.post, tokensLink, registrationAction.payload)
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(call(setToken, response.access_token, response.token_type))
+      expect(gen.next(response).value).toEqual(call(setToken, response.data.data.access_token, response.data.data.token_type))
       expect(gen.next(response).value).toEqual(put(changeTokensErrors({})))
       expect(gen.next(response).value).toEqual(put(postTokensSuccess()))
       expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))

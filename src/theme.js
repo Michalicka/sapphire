@@ -1,12 +1,12 @@
 
 import indigo from '@material-ui/core/colors/indigo'
-import blue from '@material-ui/core/colors/blue'
+import deepPurple from '@material-ui/core/colors/deepPurple'
 import { createMuiTheme } from '@material-ui/core/styles'
 
 export default createMuiTheme({
   palette: {
     primary: indigo,
-    secondary: blue
+    secondary: deepPurple
   },
   typography: {
     useNextVariants: true

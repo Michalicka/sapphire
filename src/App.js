@@ -4,7 +4,7 @@ import withRoot from './withRoot'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import Registration from './views/Registration'
 import Login from './views/Login'
-import { registration, login } from './routes'
+import { registration, login, dashboard } from './routes'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
@@ -12,6 +12,7 @@ import rootReducer from './reducers'
 import rootSaga from './sagas'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Messagebar from './containers/MessageBar'
+import Dashboard from './views/Dashboard'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))
@@ -29,6 +30,7 @@ export class App extends React.Component {
           />
           <Route path={registration} component={Registration} />
           <Route path={login} component={Login} />
+          <Route path={dashboard} component={Dashboard} />
         </Router>
         <Messagebar />
         <CssBaseline />
