@@ -5,12 +5,13 @@ import { tokens as tokensLink } from '../apiLinks'
 import { POST_TOKENS_REQUEST } from '../actionTypes/tokens'
 import axios from 'axios'
 import { postTokens, setToken } from './tokens'
+import { LocalStorageMock } from '../testUtils'
 import { formatErrors } from './utils'
 
 // jest.mock('axios')
 
-describe('sagas user', () => {
-  describe('postUsers tests', () => {
+describe('sagas tokens', () => {
+  describe('postTokens tests', () => {
     let gen
     const registrationAction = {
       type: POST_TOKENS_REQUEST,
@@ -63,6 +64,16 @@ describe('sagas user', () => {
       expect(gen.throw(errorBody).value).toEqual(put(changeTokensErrors(formatErrors(errorBody.response.data.errors))))
       expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
       expect(gen.next().value).toEqual(take(POST_TOKENS_REQUEST))
+    })
+  })
+  describe('setToken tests', () => {
+    it('should return expected localStorage', () => {
+      window.localStorage = new LocalStorageMock()
+      const token = 'token'
+      const type = 'type'
+      setToken(token, type)
+      expect(localStorage.getItem('accessToken')).toBe(token)
+      expect(localStorage.getItem('tokenType')).toBe(type)
     })
   })
 })

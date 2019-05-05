@@ -2,13 +2,15 @@
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import ToolBar from '@material-ui/core/Toolbar'
-import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import MessageIcon from '@material-ui/icons/Message'
 import Avatar from '@material-ui/core/Avatar'
 import Logo from '../components/Logo'
+import Projects from './Projects'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
+import { Switch, Redirect, Route } from 'react-router-dom'
+import { projects as projectsLink } from '../routes'
 
 const styles = theme => ({
   appBar: {
@@ -29,13 +31,15 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary[400]
   },
   container: {
-    paddingTop: theme.spacing.unit * 10,
+    paddingTop: theme.spacing.unit * 12,
     paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2
+    paddingRight: theme.spacing.unit * 2,
+    maxWidth: 1100,
+    margin: '0 auto'
   }
 })
 
-export const Dashboard = ({ classes }) => {
+export const Dashboard = ({ classes, match }) => {
   return (
     <div>
       <AppBar
@@ -60,19 +64,26 @@ export const Dashboard = ({ classes }) => {
         </ToolBar>
       </AppBar>
       <div className={classes.container}>
-        <Grid
-          container
-          justify="center"
-          spacing={16}
-        >
-        </Grid>
+        <Switch>
+          <Route
+            path={`${match.url}${projectsLink}`}
+            exact
+            component={Projects}
+          />
+          <Route
+            path={match.url}
+            exact
+            render={() => <Redirect to={`${match.url}${projectsLink}`} />}
+          />
+        </Switch>
       </div>
     </div>
   )
 }
 
 Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Dashboard)
