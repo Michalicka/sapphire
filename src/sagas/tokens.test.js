@@ -1,6 +1,6 @@
 
 import { put, call, take } from 'redux-saga/effects'
-import { postTokensSuccess, changeTokensErrors, toggleTokensLoading } from '../actions/tokens'
+import { changeTokensErrors, toggleTokensLoading, tokensSuccess } from '../actions/tokens'
 import { tokens as tokensLink } from '../apiLinks'
 import { POST_TOKENS_REQUEST } from '../actionTypes/tokens'
 import axios from 'axios'
@@ -42,7 +42,7 @@ describe('sagas tokens', () => {
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(call(setToken, response.data.data.access_token, response.data.data.token_type))
       expect(gen.next(response).value).toEqual(put(changeTokensErrors({})))
-      expect(gen.next(response).value).toEqual(put(postTokensSuccess()))
+      expect(gen.next(response).value).toEqual(put(tokensSuccess(true)))
       expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
       expect(gen.next().value).toEqual(take(POST_TOKENS_REQUEST))
     })

@@ -1,12 +1,13 @@
 
 import tokens from './tokens'
-import { postTokensSuccess, changeTokensErrors, toggleTokensLoading } from '../actions/tokens'
+import { tokensSuccess, changeTokensErrors, toggleTokensLoading } from '../actions/tokens'
 
 describe('tokens reducer', () => {
   it('should return initial state', () => {
     const initialState = {
       errors: {},
-      loading: false
+      loading: false,
+      success: false
     }
     expect(tokens(undefined, {})).toEqual(initialState)
   })
@@ -15,9 +16,9 @@ describe('tokens reducer', () => {
     const expectedState = {
       errors: {},
       loading: false,
-      postTokensSuccess: true
+      success: true
     }
-    expect(tokens(undefined, postTokensSuccess())).toEqual(expectedState)
+    expect(tokens(undefined, tokensSuccess(true))).toEqual(expectedState)
   })
 
   it('should return expected state after changeTokensErrors action call', () => {
@@ -27,7 +28,8 @@ describe('tokens reducer', () => {
     }
     const expectedState = {
       errors,
-      loading: false
+      loading: false,
+      success: false
     }
     expect(tokens(undefined, changeTokensErrors(errors))).toEqual(expectedState)
   })
@@ -35,7 +37,8 @@ describe('tokens reducer', () => {
   it('should return expected state after toggleTokensLoading action call', () => {
     const expectedState = {
       errors: {},
-      loading: true
+      loading: true,
+      success: false
     }
     expect(tokens(undefined, toggleTokensLoading(true))).toEqual(expectedState)
   })

@@ -1,15 +1,16 @@
 
-import { POST_TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
+import { TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
 
 const initialState = {
   errors: {},
-  loading: false
+  loading: false,
+  success: false
 }
 
 function tokens(state = initialState, action) {
   switch (action.type) {
-    case POST_TOKENS_SUCCESS:
-      return { ...state, postTokensSuccess: true }
+    case TOKENS_SUCCESS:
+      return { ...state, success: action.value }
     case CHANGE_TOKENS_ERRORS:
       return { ...state, errors: action.errors }
     case TOGGLE_TOKENS_LOADING:

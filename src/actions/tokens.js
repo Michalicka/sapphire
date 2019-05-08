@@ -1,5 +1,5 @@
 
-import { POST_TOKENS_REQUEST, POST_TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
+import { POST_TOKENS_REQUEST, TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
 
 export function postTokensRequest(payload) {
   return {
@@ -8,9 +8,10 @@ export function postTokensRequest(payload) {
   }
 }
 
-export function postTokensSuccess() {
+export function tokensSuccess(value) {
   return {
-    type: POST_TOKENS_SUCCESS
+    type: TOKENS_SUCCESS,
+    value
   }
 }
 

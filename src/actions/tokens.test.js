@@ -1,6 +1,6 @@
 
-import { postTokensRequest, postTokensSuccess, changeTokensErrors, toggleTokensLoading } from './tokens'
-import { POST_TOKENS_REQUEST, POST_TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
+import { postTokensRequest, tokensSuccess, changeTokensErrors, toggleTokensLoading } from './tokens'
+import { POST_TOKENS_REQUEST, TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
 
 describe('action tokens', () => {
   it('postTokensRequest', () => {
@@ -15,11 +15,12 @@ describe('action tokens', () => {
     expect(postTokensRequest(payload)).toEqual(expectedValue)
   })
 
-  it('postTokensSuccess', () => {
+  it('tokensSuccess', () => {
     const expectedValue = {
-      type: POST_TOKENS_SUCCESS
+      type: TOKENS_SUCCESS,
+      value: true
     }
-    expect(postTokensSuccess()).toEqual(expectedValue)
+    expect(tokensSuccess(true)).toEqual(expectedValue)
   })
 
   it('changeTokensError', () => {
