@@ -44,7 +44,7 @@ const options = [
   }
 ]
 
-export const Projects = ({ classes, match }) => {
+export const Projects = ({ classes }) => {
   return (
     <Grid
       container
@@ -74,8 +74,7 @@ export const Projects = ({ classes, match }) => {
 }
 
 Projects.propTypes = {
-  classes: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Projects)

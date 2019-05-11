@@ -1,6 +1,6 @@
 
-import { postTokensRequest, tokensSuccess, changeTokensErrors, toggleTokensLoading } from './tokens'
-import { POST_TOKENS_REQUEST, TOKENS_SUCCESS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING } from '../actionTypes/tokens'
+import { postTokensRequest, changeTokensStatus, changeTokensErrors, toggleTokensLoading, refreshTokenWatch, putTokensRequest } from './tokens'
+import { POST_TOKENS_REQUEST, CHANGE_TOKENS_STATUS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST } from '../actionTypes/tokens'
 
 describe('action tokens', () => {
   it('postTokensRequest', () => {
@@ -15,12 +15,13 @@ describe('action tokens', () => {
     expect(postTokensRequest(payload)).toEqual(expectedValue)
   })
 
-  it('tokensSuccess', () => {
+  it('changeTokensStatus', () => {
+    const authorized = 'Authorized'
     const expectedValue = {
-      type: TOKENS_SUCCESS,
-      value: true
+      type: CHANGE_TOKENS_STATUS,
+      value: authorized
     }
-    expect(tokensSuccess(true)).toEqual(expectedValue)
+    expect(changeTokensStatus(authorized)).toEqual(expectedValue)
   })
 
   it('changeTokensError', () => {
@@ -38,5 +39,21 @@ describe('action tokens', () => {
       value: true
     }
     expect(toggleTokensLoading(true)).toEqual(expectedValue)
+  })
+
+  it('refreshTokenWatch', () => {
+    const expectedValue = {
+      type: REFRESH_TOKEN_WATCH
+    }
+    expect(refreshTokenWatch()).toEqual(expectedValue)
+  })
+
+  it('putTokensRequest', () => {
+    const nextAction = 'action'
+    const expectedValue = {
+      type: PUT_TOKENS_REQUEST,
+      nextAction
+    }
+    expect(putTokensRequest(nextAction)).toEqual(expectedValue)
   })
 })

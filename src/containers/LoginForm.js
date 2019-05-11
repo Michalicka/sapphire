@@ -6,7 +6,7 @@ import { postTokensRequest } from '../actions/tokens'
 export const mapStateToProps = state => ({
   tokensErrors: state.tokens.errors,
   loading: state.tokens.loading,
-  success: state.tokens.success
+  status: state.tokens.status
 })
 
 export const mapDispatchToProps = dispatch => ({

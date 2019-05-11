@@ -10,7 +10,8 @@ import Projects from './Projects'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { Switch, Redirect, Route } from 'react-router-dom'
-import { projects as projectsLink } from '../routes'
+import { projects as projectsLink, login } from '../routes'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   appBar: {
@@ -39,7 +40,7 @@ const styles = theme => ({
   }
 })
 
-export const Dashboard = ({ classes, match }) => {
+export const Dashboard = ({ classes, match, status }) => {
   return (
     <div>
       <AppBar
@@ -77,13 +78,21 @@ export const Dashboard = ({ classes, match }) => {
           />
         </Switch>
       </div>
+      {(status === 'Unauthorized' || localStorage.getItem('accessToken') === null) &&
+        <Redirect to={login} />
+      }
     </div>
   )
 }
 
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  status: PropTypes.oneOf(['Authorized', 'Unauthorized'])
 }
 
-export default withStyles(styles)(Dashboard)
+const mapStateToProps = state => ({
+  status: state.tokens.status
+})
+
+export default connect(mapStateToProps)(withStyles(styles)(Dashboard))

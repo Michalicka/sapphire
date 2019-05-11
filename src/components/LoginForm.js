@@ -9,9 +9,10 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { fieldProps } from '../utils'
-import { registration } from '../routes'
 import RouterLink from './RouterLink'
 import { Login } from '../validation/users'
+import { Redirect } from 'react-router-dom'
+import { dashboard, registration } from '../routes'
 
 const styles = theme => ({
   field: {
@@ -25,7 +26,7 @@ const styles = theme => ({
   }
 })
 
-export const LoginForm = ({ classes, tokensErrors, login, loading }) => {
+export const LoginForm = ({ classes, tokensErrors, login, loading, status }) => {
   return (
     <Formik
       initialValues={{
@@ -39,46 +40,51 @@ export const LoginForm = ({ classes, tokensErrors, login, loading }) => {
       render={formData => {
         const userFieldProps = fieldProps(formData, tokensErrors)
         return (
-          <form
-            data-test-id="registration-form"
-            onSubmit={formData.handleSubmit}
-          >
-            {
-              loading &&
-              <CircularProgress
-                color="primary"
-                className={classes.spinner}
-              />
-            }
-            <TextField
-              {...userFieldProps('email')}
-              fullWidth
-              className={classes.field}
-            />
-            <TextField
-              {...userFieldProps('password', 'password')}
-              fullWidth
-              className={classes.field}
-            />
-            <Typography
-              variant="body2"
-              align="left"
-              gutterBottom
+          <React.Fragment>
+            <form
+              data-test-id="registration-form"
+              onSubmit={formData.handleSubmit}
             >
-              Do not you have an account yet? <Link
-                component={RouterLink({ to: registration })}
-                color="secondary"
-              >Sign up</Link>
-            </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              type="submit"
-              fullWidth
-              disabled={loading}
-            >Login</Button>
-          </form>
+              {
+                loading &&
+                <CircularProgress
+                  color="primary"
+                  className={classes.spinner}
+                />
+              }
+              <TextField
+                {...userFieldProps('email')}
+                fullWidth
+                className={classes.field}
+              />
+              <TextField
+                {...userFieldProps('password', 'password')}
+                fullWidth
+                className={classes.field}
+              />
+              <Typography
+                variant="body2"
+                align="left"
+                gutterBottom
+              >
+                Do not you have an account yet? <Link
+                  component={RouterLink({ to: registration })}
+                  color="secondary"
+                >Sign up</Link>
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                type="submit"
+                fullWidth
+                disabled={loading}
+              >Login</Button>
+            </form>
+            {status === 'Authorized' &&
+              <Redirect to={dashboard} />
+            }
+          </React.Fragment>
         )
       }}
     />
@@ -89,7 +95,8 @@ LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   tokensErrors: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  status: PropTypes.oneOf(['Authorized', 'Unauthorized'])
 }
 
 export default withStyles(styles)(LoginForm)

@@ -3,6 +3,7 @@ import React from 'react'
 import LoginForm from './LoginForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { createShallow } from '@material-ui/core/test-utils'
+import { Redirect } from 'react-router-dom'
 
 describe('LoginForm component', () => {
   const defaultProps = {
@@ -58,5 +59,10 @@ describe('LoginForm component', () => {
     const wrapper = createShallow({ dive: true })(<LoginForm {...props} login={login} />)
     wrapper.props().onSubmit()
     expect(login.mock.calls.length).toBe(1)
+  })
+
+  it('should show Redirect component, when the status is authorized', () => {
+    const wrapper = createWrapper({ ...defaultProps, status: 'Authorized' })
+    expect(wrapper.find(Redirect).exists()).toBe(true)
   })
 })

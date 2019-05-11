@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import RegistrationForm from '../components/RegistrationForm'
 import { userRegistration } from '../actions/user'
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   userErrors: state.user.errors,
   loading: state.user.loading,
   registrationSuccess: state.user.data.registrationSuccess
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   registration: payload => dispatch(userRegistration(payload))
 })
 

@@ -1,6 +1,7 @@
 
 import { put, call, take } from 'redux-saga/effects'
 import axios from 'axios'
+import { putTokensRequest } from '../actions/tokens'
 
 export const formatErrors = err => {
   const errors = {}
@@ -9,6 +10,10 @@ export const formatErrors = err => {
   })
   return errors
 }
+
+export const headers = () => ({
+  Authorization: `${localStorage.getItem('tokenType')} ${localStorage.getItem('accessToken')}`
+})
 
 export function* fetchEntity(method, link, entity) {
   while (true) {
@@ -27,5 +32,31 @@ export function* fetchEntity(method, link, entity) {
         yield put(entity.loading(false))
       }
     }
+  }
+}
+
+export function* fetchLoggedEntity(method, link, entity) {
+  while (true) {
+    const action = yield take(entity.request)
+    yield put(entity.loading(true))
+    try {
+      let response
+      if (method === 'get') {
+        response = yield call(axios[method], link, { headers: headers(), params: action.payload })
+      } else {
+        response = yield call(axios[method], link, action.payload, headers())
+      }
+      for (let index = 0; index < entity.success.length; index++) {
+        yield entity.success[index](response)
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        yield put(putTokensRequest(action))
+      } else if (error.response.status === 422) {
+        const errors = formatErrors(error.response.data.errors)
+        yield put(entity.error(errors))
+      }
+    }
+    yield put(entity.loading(false))
   }
 }
