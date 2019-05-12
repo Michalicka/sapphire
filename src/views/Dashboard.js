@@ -95,11 +95,11 @@ Dashboard.propTypes = {
 
 }
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   status: state.tokens.status
 })
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   refreshTokenWatch: () => dispatch(refreshTokenWatch()),
   getMe: () => dispatch(getMeRequest())
 })
