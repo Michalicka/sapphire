@@ -96,7 +96,7 @@ describe('sagas user', () => {
       expect(gen.next().value).toEqual(take(GET_ME_REQUEST))
     })
 
-    it('should return getMe error authorization flow', () => {
+    it('should return getMe error authentication flow', () => {
       const errorBody = {
         response: {
           status: 401
@@ -110,7 +110,7 @@ describe('sagas user', () => {
       expect(gen.next().value).toEqual(take(GET_ME_REQUEST))
     })
 
-    it('should return getMe error authorization flow', () => {
+    it('should return getMe error validation flow', () => {
       const errorBody = {
         response: {
           status: 422,

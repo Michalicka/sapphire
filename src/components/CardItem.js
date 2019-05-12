@@ -16,7 +16,7 @@ export const CardItem = ({ item, options }) => {
             options={options}
           />
         }
-        title={item.title}
+        title={item.name}
       />
       <CardContent>
         <Typography

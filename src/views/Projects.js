@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import CardContainer from '../components/CardContainer'
+import CardContainer from '../containers/CardContainer'
 
 const styles = theme => ({})
 
@@ -65,7 +65,6 @@ export const Projects = ({ classes }) => {
         xs={12}
       >
         <CardContainer
-          items={projects}
           options={options}
         />
       </Grid>
