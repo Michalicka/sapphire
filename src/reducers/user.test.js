@@ -7,7 +7,8 @@ describe('user reducer', () => {
     data: {
       id: 1,
       name: 'John Doe',
-      email: 'john@doe.com'
+      email: 'john@doe.com',
+      avatar: ''
     },
     errors: {},
     loading: false
@@ -18,7 +19,8 @@ describe('user reducer', () => {
       data: {
         id: null,
         name: '',
-        email: ''
+        email: '',
+        avatar: ''
       },
       errors: {},
       loading: false
@@ -30,7 +32,8 @@ describe('user reducer', () => {
     const data = {
       id: 2,
       name: 'Jane Doe',
-      email: 'jane@doe.com'
+      email: 'jane@doe.com',
+      avatar: ''
     }
     const newState = { ...state, data }
     expect(user(undefined, changeUserData(data))).toEqual(newState)

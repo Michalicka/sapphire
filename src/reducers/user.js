@@ -5,7 +5,8 @@ const initialState = {
   data: {
     id: null,
     name: '',
-    email: ''
+    email: '',
+    avatar: ''
   },
   errors: {},
   loading: false

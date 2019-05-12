@@ -4,9 +4,9 @@ import AppBar from '@material-ui/core/AppBar'
 import ToolBar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MessageIcon from '@material-ui/icons/Message'
-import Avatar from '@material-ui/core/Avatar'
 import Logo from '../components/Logo'
 import Projects from './Projects'
+import ProfileController from '../containers/ProfileController'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { Switch, Redirect, Route } from 'react-router-dom'
@@ -25,13 +25,6 @@ const styles = theme => ({
   },
   logo: {
     width: 160
-  },
-  avatarButton: {
-    padding: 0,
-    marginLeft: theme.spacing.unit / 2
-  },
-  avatar: {
-    backgroundColor: theme.palette.secondary[400]
   },
   container: {
     paddingTop: theme.spacing.unit * 12,
@@ -68,9 +61,7 @@ export class Dashboard extends React.Component {
                 style={{ fill: '#fff' }}
               />
             </IconButton>
-            <IconButton className={classes.avatarButton}>
-              <Avatar className={classes.avatar}>U</Avatar>
-            </IconButton>
+            <ProfileController />
           </ToolBar>
         </AppBar>
         <div className={classes.container}>

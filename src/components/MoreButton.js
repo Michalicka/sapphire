@@ -5,13 +5,6 @@ import IconButton from '@material-ui/core/IconButton'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { withStyles } from '@material-ui/core/styles'
-
-const styles = theme => ({
-  wrap: {
-    position: 'relative'
-  }
-})
 
 export class MoreButton extends React.Component {
   constructor(props) {
@@ -40,7 +33,7 @@ export class MoreButton extends React.Component {
     const { anchorEl } = this.state
     const open = !!anchorEl
     return (
-      <div className={this.props.classes.wrap}>
+      <React.Fragment>
         <IconButton
           onClick={this.handleOpen}
         >
@@ -58,14 +51,13 @@ export class MoreButton extends React.Component {
             >{option.title}</MenuItem>
           ))}
         </Menu>
-      </div>
+      </React.Fragment>
     )
   }
 }
 
 MoreButton.propTypes = {
-  options: PropTypes.array.isRequired,
-  classes: PropTypes.object.isRequired
+  options: PropTypes.array.isRequired
 }
 
-export default withStyles(styles)(MoreButton)
+export default MoreButton

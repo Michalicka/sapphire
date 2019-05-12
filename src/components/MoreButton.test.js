@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { createShallow } from '@material-ui/core/test-utils'
+import { shallow } from 'enzyme'
 import MoreButton from './MoreButton'
 import MenuItem from '@material-ui/core/MenuItem'
 
@@ -11,14 +11,14 @@ describe('MoreButton', () => {
     title: 'Title',
     clickHandler
   }]
-  const wrapper = createShallow()(<MoreButton options={options} />)
+  const wrapper = shallow(<MoreButton options={options} />)
   it('should render expected count of menu items', () => {
-    const items = wrapper.dive().find(MenuItem)
+    const items = wrapper.find(MenuItem)
     expect(items.length).toBe(1)
   })
 
   it('should call clickHandler', () => {
-    const item = wrapper.dive().find(MenuItem)
+    const item = wrapper.find(MenuItem)
     item.simulate('click')
     expect(clickHandler.mock.calls.length).toBe(1)
   })

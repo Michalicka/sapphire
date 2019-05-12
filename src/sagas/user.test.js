@@ -34,14 +34,12 @@ describe('sagas user', () => {
         id: null,
         name: '',
         email: '',
-        password: '',
-        passwordConfirmation: ''
+        avatar: ''
       }
       expect(gen.next().value).toEqual(take(USER_REGISTRATION))
       expect(gen.next(registrationAction).value).toEqual(put(toggleUserLoading(true)))
       const apiCall = call(axios.post, usersLink, registrationAction.payload)
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(put(changeUserData(response)))
       expect(gen.next(response).value).toEqual(put(changeUserParam('registrationSuccess', true)))
       expect(gen.next(response).value).toEqual(put(changeUserErrors({})))
       expect(gen.next(response).value).toEqual(put(changeMessagebarParam('variant', 'success')))
