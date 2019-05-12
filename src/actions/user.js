@@ -1,5 +1,5 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG } from '../actionTypes/user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST } from '../actionTypes/user'
 
 export function userRegistration(payload) {
   return {
@@ -34,5 +34,11 @@ export function toggleUserLoading(value) {
   return {
     type: TOGGLE_USER_LOADNIG,
     value
+  }
+}
+
+export function getMeRequest() {
+  return {
+    type: GET_ME_REQUEST
   }
 }

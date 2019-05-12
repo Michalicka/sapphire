@@ -1,9 +1,9 @@
 
 import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam } from '../actions/user'
 import { changeMessagebarParam } from '../actions/messagebar'
-import { users as usersLink } from '../apiLinks'
-import { USER_REGISTRATION } from '../actionTypes/user'
-import { fetchEntity } from './utils'
+import { users as usersLink, me as meLink } from '../apiLinks'
+import { USER_REGISTRATION, GET_ME_REQUEST } from '../actionTypes/user'
+import { fetchEntity, fetchLoggedEntity } from './utils'
 import { put } from 'redux-saga/effects'
 
 export const postUsers = fetchEntity.bind(
@@ -13,12 +13,26 @@ export const postUsers = fetchEntity.bind(
   {
     request: USER_REGISTRATION,
     success: [
-      response => put(changeUserData({ id: null, name: '', email: '', password: '', passwordConfirmation: '' })),
+      () => put(changeUserData({ id: null, name: '', email: '', password: '', passwordConfirmation: '' })),
       () => put(changeUserParam('registrationSuccess', true)),
       () => put(changeUserErrors({})),
       () => put(changeMessagebarParam('variant', 'success')),
       () => put(changeMessagebarParam('message', 'Registration was successful')),
       () => put(changeMessagebarParam('open', true))
+    ],
+    error: errors => changeUserErrors(errors),
+    loading: value => toggleUserLoading(value)
+  }
+)
+
+export const getMe = fetchLoggedEntity.bind(
+  null,
+  'get',
+  meLink,
+  {
+    request: GET_ME_REQUEST,
+    success: [
+      response => put(changeUserData({ ...response.data.data }))
     ],
     error: errors => changeUserErrors(errors),
     loading: value => toggleUserLoading(value)

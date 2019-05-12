@@ -81,7 +81,7 @@ describe('sagas tokens', () => {
     const gen = refreshToken()
     const delayTime = Math.round((tokenExpiresIn - new Date().getTime()) * 0.8)
 
-    localStorage.setItem('tokensExpiresIn', tokenExpiresIn)
+    localStorage.setItem('tokenExpiresIn', tokenExpiresIn)
 
     expect(gen.next().value).toEqual(take(REFRESH_TOKEN_WATCH))
     expect(gen.next().value).toEqual(delay(delayTime))
@@ -145,10 +145,10 @@ describe('sagas tokens', () => {
   })
 
   describe('localStorage update tests', () => {
-    const token = 'token'
-    const type = 'type'
-    const time = new Date().getTime()
     /* eslint-disable camelcase */
+    const access_token = 'token'
+    const token_type = 'type'
+    const time = new Date().getTime()
     const expires_in = 3600
 
     beforeEach(() => {
@@ -156,15 +156,15 @@ describe('sagas tokens', () => {
     })
 
     it('should add items for authentication to localStorage', () => {
-      setToken({ token, type, expires_in })
-      expect(localStorage.getItem('accessToken')).toBe(token)
-      expect(localStorage.getItem('tokenType')).toBe(type)
-      const expectedExpiration = Math.round(time + expires_in * 1000)
+      setToken({ access_token, token_type, expires_in })
+      expect(localStorage.getItem('accessToken')).toBe(access_token)
+      expect(localStorage.getItem('tokenType')).toBe(token_type)
+      const expectedExpiration = Math.round(time + expires_in * 60000)
       expect(parseInt(localStorage.getItem('tokenExpiresIn'))).toBe(expectedExpiration)
     })
 
     it('should remove items for authentication from localStorage', () => {
-      setToken({ token, type, expires_in })
+      setToken({ access_token, token_type, expires_in })
       removeToken()
       expect(localStorage.getItem('accessToken')).toBe(null)
       expect(localStorage.getItem('tokenType')).toBe(null)

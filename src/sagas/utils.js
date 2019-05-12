@@ -11,9 +11,11 @@ export const formatErrors = err => {
   return errors
 }
 
-export const headers = () => ({
-  Authorization: `${localStorage.getItem('tokenType')} ${localStorage.getItem('accessToken')}`
-})
+export const headers = () => {
+  return {
+    Authorization: `${localStorage.getItem('tokenType')} ${localStorage.getItem('accessToken')}`
+  }
+}
 
 export function* fetchEntity(method, link, entity) {
   while (true) {

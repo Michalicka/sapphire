@@ -7,9 +7,9 @@ import { put, call, delay, take, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
 
 export function setToken(data) {
-  localStorage.setItem('accessToken', data.token)
-  localStorage.setItem('tokenType', data.type)
-  localStorage.setItem('tokenExpiresIn', new Date().getTime() + data.expires_in * 1000)
+  localStorage.setItem('accessToken', data.access_token)
+  localStorage.setItem('tokenType', data.token_type)
+  localStorage.setItem('tokenExpiresIn', new Date().getTime() + data.expires_in * 60000)
 }
 
 export function removeToken() {
@@ -37,7 +37,7 @@ export const postTokens = fetchEntity.bind(
 export function* refreshToken() {
   while (true) {
     yield take(REFRESH_TOKEN_WATCH)
-    const expiresIn = parseInt(localStorage.getItem('tokensExpiresIn'))
+    const expiresIn = parseInt(localStorage.getItem('tokenExpiresIn'))
     const delayTime = Math.round((expiresIn - new Date().getTime()) * 0.8)
     yield delay(delayTime)
     yield put(putTokensRequest())
