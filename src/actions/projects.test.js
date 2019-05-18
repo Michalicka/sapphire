@@ -1,6 +1,6 @@
 
-import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING } from '../actionTypes/projects'
-import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading } from './projects'
+import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT } from '../actionTypes/projects'
+import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject } from './projects'
 
 describe('projects actions', () => {
   it('getProjectsRequest', () => {
@@ -44,5 +44,28 @@ describe('projects actions', () => {
       value
     }
     expect(toggleProjectsLoading(value)).toEqual(expectedValue)
+  })
+
+  it('postProjectRequest', () => {
+    const payload = {}
+    const expectedValue = {
+      type: POST_PROJECTS_REQUEST,
+      payload
+    }
+    expect(postProjectRequest(payload)).toEqual(expectedValue)
+  })
+
+  it('pushProject', () => {
+    const project = {
+      id: 1,
+      name: 'Project',
+      description: 'description'
+    }
+    const expectedValue = {
+      type: PUSH_PROJECT,
+      project
+    }
+
+    expect(pushProject(project)).toEqual(expectedValue)
   })
 })

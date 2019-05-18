@@ -1,7 +1,7 @@
 
-import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading } from '../actions/projects'
+import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject } from '../actions/projects'
 import { projects as projectsLink } from '../apiLinks'
-import { GET_PROJECTS_REQUEST } from '../actionTypes/projects'
+import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST } from '../actionTypes/projects'
 import { fetchLoggedEntity } from './utils'
 import { put } from 'redux-saga/effects'
 
@@ -13,6 +13,21 @@ export const getProjects = fetchLoggedEntity.bind(
     request: GET_PROJECTS_REQUEST,
     success: [
       response => put(changeProjectsData(response.data.data))
+    ],
+    error: errors => changeProjectsErrors(errors),
+    loading: value => toggleProjectsLoading(value)
+  }
+)
+
+export const postProjects = fetchLoggedEntity.bind(
+  null,
+  'post',
+  projectsLink,
+  {
+    request: POST_PROJECTS_REQUEST,
+    success: [
+      () => put(changeProjectsErrors({})),
+      ({ data }) => put(pushProject(data.data))
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)

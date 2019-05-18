@@ -1,6 +1,6 @@
 
 import projects from './projects'
-import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading } from '../actions/projects'
+import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject } from '../actions/projects'
 
 describe('projects reducer', () => {
   const expectedState = {
@@ -34,5 +34,16 @@ describe('projects reducer', () => {
   it('should return state after toggleProjectsLoading', () => {
     const loading = true
     expect(projects(undefined, toggleProjectsLoading(true))).toEqual({ ...expectedState, loading })
+  })
+
+  it('should return state after pushProject', () => {
+    const project = {
+      id: 1,
+      name: 'project',
+      description: 'description'
+    }
+    const data = [...expectedState.data, project]
+    const newState = { ...expectedState, data }
+    expect(projects(undefined, pushProject(project))).toEqual(newState)
   })
 })

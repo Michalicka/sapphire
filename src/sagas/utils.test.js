@@ -131,19 +131,7 @@ describe('sagas utils', () => {
 
     it('should return fetchLoggedEntity success flow with post method', () => {
       const gen = generator('post')
-      const apiCall = call(axios.post, link, fakeAction.payload, headers())
-
-      expect(gen.next().value).toEqual(take(request))
-      expect(gen.next(fakeAction).value).toEqual(put(loading(true)))
-      expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(success[0](response))
-      expect(gen.next().value).toEqual(put(loading(false)))
-      expect(gen.next().value).toEqual(take(request))
-    })
-
-    it('should return fetchLoggedEntity success flow with post method', () => {
-      const gen = generator('post')
-      const apiCall = call(axios.post, link, fakeAction.payload, headers())
+      const apiCall = call(axios.post, link, fakeAction.payload, { headers: headers() })
 
       expect(gen.next().value).toEqual(take(request))
       expect(gen.next(fakeAction).value).toEqual(put(loading(true)))
@@ -155,7 +143,7 @@ describe('sagas utils', () => {
 
     it('should return fetchLoggedEntity error authorization flow', () => {
       const gen = generator('post')
-      const apiCall = call(axios.post, link, fakeAction.payload, headers())
+      const apiCall = call(axios.post, link, fakeAction.payload, { headers: headers() })
       const errorBody = {
         response: {
           status: 401
@@ -172,7 +160,7 @@ describe('sagas utils', () => {
 
     it('should return fetchLoggedEntity error validation flow', () => {
       const gen = generator('post')
-      const apiCall = call(axios.post, link, fakeAction.payload, headers())
+      const apiCall = call(axios.post, link, fakeAction.payload, { headers: headers() })
       const errorBody = {
         response: {
           status: 422,

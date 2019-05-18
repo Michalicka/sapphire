@@ -1,10 +1,10 @@
 
-import { getProjects } from './projects'
+import { getProjects, postProjects } from './projects'
 import { put, take, call } from 'redux-saga/effects'
-import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading } from '../actions/projects'
+import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject } from '../actions/projects'
 import { putTokensRequest } from '../actions/tokens'
 import { projects as projectsLink } from '../apiLinks'
-import { GET_PROJECTS_REQUEST } from '../actionTypes/projects'
+import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST } from '../actionTypes/projects'
 import { headers, formatErrors } from './utils'
 import axios from 'axios'
 
@@ -68,6 +68,39 @@ describe('projects saga', () => {
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
       expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+    })
+  })
+
+  describe('postProjects', () => {
+    let gen
+    const actionData = {
+      name: 'project',
+      description: 'description'
+    }
+    const fakeAction = postProjectRequest(actionData)
+
+    beforeEach(() => {
+      gen = postProjects()
+    })
+
+    it('shloud return postProjects success flow', () => {
+      const response = {
+        data: {
+          data: {
+            id: 1,
+            ...actionData
+          }
+        }
+      }
+      const apiCall = call(axios.post, projectsLink, fakeAction.payload, { headers: headers() })
+
+      expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next(response).value).toEqual(put(pushProject(response.data.data)))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
     })
   })
 })

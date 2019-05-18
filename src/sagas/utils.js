@@ -46,7 +46,7 @@ export function* fetchLoggedEntity(method, link, entity) {
       if (method === 'get') {
         response = yield call(axios[method], link, { headers: headers(), params: action.payload })
       } else {
-        response = yield call(axios[method], link, action.payload, headers())
+        response = yield call(axios[method], link, action.payload, { headers: headers() })
       }
       for (let index = 0; index < entity.success.length; index++) {
         yield entity.success[index](response)
