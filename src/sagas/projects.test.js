@@ -78,6 +78,7 @@ describe('projects saga', () => {
       description: 'description'
     }
     const fakeAction = postProjectRequest(actionData)
+    const apiCall = call(axios.post, projectsLink, fakeAction.payload, { headers: headers() })
 
     beforeEach(() => {
       gen = postProjects()
@@ -92,13 +93,34 @@ describe('projects saga', () => {
           }
         }
       }
-      const apiCall = call(axios.post, projectsLink, fakeAction.payload, { headers: headers() })
 
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
       expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
       expect(gen.next(response).value).toEqual(put(pushProject(response.data.data)))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
+    })
+
+    it('shloud return postProjects error flow', () => {
+      const errors = {
+        name: ['error'],
+        description: ['error']
+      }
+      const errorBody = {
+        response: {
+          status: 422,
+          data: {
+            errors
+          }
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
       expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
     })
