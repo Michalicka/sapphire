@@ -9,14 +9,34 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { Formik } from 'formik'
 import { fieldProps } from '../utils'
+import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
-export const FormDialog = ({ title, fields, send, open, handleClose, validationSchema, initialValues, errors }) => {
+const styles = theme => ({
+  field: {
+    marginBottom: theme.spacing.unit * 2
+  },
+  loader: {
+    textAlign: 'center',
+    marginTop: theme.spacing.unit
+  }
+})
+
+export const FormDialog = ({ title, fields, send, open, handleClose, validationSchema, initialValues, errors, classes, loading }) => {
   return (
     <Dialog
       open={open}
-      handleClose={handleClose}
+      onClose={handleClose}
+      maxWidth="md"
     >
       <DialogTitle>{title}</DialogTitle>
+      <div className={classes.loader}>
+        {loading &&
+          <CircularProgress
+            color="primary"
+          />
+        }
+      </div>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -31,6 +51,7 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
                 {fields.map(field => (
                   <TextField
                     key={field.name}
+                    className={classes.field}
                     {...formFieldProps(field.name, field.type)}
                     fullWidth
                   />
@@ -39,10 +60,12 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
               <DialogActions>
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="primary"
+                  type="submit"
+                  disabled={loading}
                 >Send</Button>
                 <Button
-                  color="secondary"
+                  color="primary"
                   onClick={e => {
                     e.preventDefault()
                     handleClose()
@@ -65,7 +88,9 @@ FormDialog.propTypes = {
   handleClose: PropTypes.func.isRequired,
   validationSchema: PropTypes.object.isRequired,
   initialValues: PropTypes.object,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 }
 
-export default FormDialog
+export default withStyles(styles)(FormDialog)

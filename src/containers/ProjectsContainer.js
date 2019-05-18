@@ -4,7 +4,8 @@ import CardContainer from '../components/CardContainer'
 import { getProjectsRequest } from '../actions/projects'
 
 export const mapStateToProps = state => ({
-  items: state.projects.data
+  items: state.projects.data,
+  loading: state.projects.loading
 })
 
 export const mapDispatchToProps = dispatch => ({

@@ -1,5 +1,6 @@
 
 import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject } from '../actions/projects'
+import { changeModal } from '../actions/modal'
 import { projects as projectsLink } from '../apiLinks'
 import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST } from '../actionTypes/projects'
 import { fetchLoggedEntity } from './utils'
@@ -27,7 +28,8 @@ export const postProjects = fetchLoggedEntity.bind(
     request: POST_PROJECTS_REQUEST,
     success: [
       () => put(changeProjectsErrors({})),
-      ({ data }) => put(pushProject(data.data))
+      ({ data }) => put(pushProject(data.data)),
+      () => put(changeModal(''))
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)

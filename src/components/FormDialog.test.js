@@ -6,6 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogActions from '@material-ui/core/DialogActions'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { Formik } from 'formik'
 import { shallow } from 'enzyme'
 
@@ -23,11 +24,12 @@ describe('FormDialog component', () => {
     handleClose: jest.fn(),
     validationSchema: {},
     initialValues: { name: 'value', name2: 'value2', name3: 'value3' },
-    errors: { name: 'error', name2: 'error2', name3: 'error3' }
+    errors: { name: 'error', name2: 'error2', name3: 'error3' },
+    loading: true
   }
 
   beforeEach(() => {
-    wrapper = shallow(<FormDialog {...props} />)
+    wrapper = shallow(<FormDialog {...props} />).dive()
   })
 
   it('should render title in dialog title component', () => {
@@ -71,5 +73,10 @@ describe('FormDialog component', () => {
     expect(textFields.at(0).props().helperText).toBe(errors.name)
     expect(textFields.at(1).props().helperText).toBe(errors.name2)
     expect(textFields.at(2).props().helperText).toBe(errors.name3)
+  })
+
+  it('should show loader when loading prop is true', () => {
+    const isDisplayed = wrapper.exists(CircularProgress)
+    expect(isDisplayed).toBe(true)
   })
 })

@@ -3,6 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import CardContainer from './CardContainer'
 import CardItem from './CardItem'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 describe('Card container component', () => {
   let wrapper
@@ -22,7 +23,7 @@ describe('Card container component', () => {
 
   beforeEach(() => {
     getItems = jest.fn()
-    wrapper = shallow(<CardContainer items={items} options={[]} getItems={getItems} />)
+    wrapper = shallow(<CardContainer items={items} options={[]} getItems={getItems} loading={false} />).dive()
   })
 
   it('should render expected count of items', () => {
@@ -32,5 +33,11 @@ describe('Card container component', () => {
 
   it('should call getItems props', () => {
     expect(getItems.mock.calls.length).toBe(1)
+  })
+
+  it('should show loader when loading prop is true', () => {
+    const wrapper = shallow(<CardContainer items={[]} options={[]} getItems={jest.fn()} loading={true} />).dive()
+
+    expect(wrapper.exists(CircularProgress)).toBe(true)
   })
 })

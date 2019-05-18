@@ -5,8 +5,12 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import ProjectsContainer from '../containers/ProjectsContainer'
+import CreateProjectDialog from '../containers/CreateProjectDialog'
+import { connect } from 'react-redux'
+import CreateProjectButton from '../containers/CreateProjectButton'
 
-const styles = theme => ({})
+const styles = theme => ({
+})
 
 const options = [
   {
@@ -26,36 +30,41 @@ const options = [
   }
 ]
 
-export const Projects = ({ classes }) => {
+export const Projects = ({ classes, dispatch }) => {
   return (
-    <Grid
-      container
-      justify="center"
-      spacing={16}
-    >
+    <React.Fragment>
       <Grid
-        item
-        xs={12}
+        container
+        justify="center"
+        spacing={16}
       >
-        <Typography
-          variant="h4"
-          color="primary"
-        >Projects</Typography>
+        <Grid
+          item
+          xs={12}
+        >
+          <Typography
+            variant="h4"
+            color="primary"
+          >Projects</Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+        >
+          <ProjectsContainer
+            options={options}
+          />
+        </Grid>
       </Grid>
-      <Grid
-        item
-        xs={12}
-      >
-        <ProjectsContainer
-          options={options}
-        />
-      </Grid>
-    </Grid>
+      <CreateProjectDialog />
+      <CreateProjectButton />
+    </React.Fragment>
   )
 }
 
 Projects.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(Projects)
+export default connect()(withStyles(styles)(Projects))

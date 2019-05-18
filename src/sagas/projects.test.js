@@ -2,6 +2,7 @@
 import { getProjects, postProjects } from './projects'
 import { put, take, call } from 'redux-saga/effects'
 import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject } from '../actions/projects'
+import { changeModal } from '../actions/modal'
 import { putTokensRequest } from '../actions/tokens'
 import { projects as projectsLink } from '../apiLinks'
 import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST } from '../actionTypes/projects'
@@ -99,6 +100,7 @@ describe('projects saga', () => {
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
       expect(gen.next(response).value).toEqual(put(pushProject(response.data.data)))
+      expect(gen.next(response).value).toEqual(put(changeModal('')))
       expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
     })
