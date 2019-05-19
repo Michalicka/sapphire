@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FormDialog from './FormDialog'
+import { PostProject } from '../validation/projects'
 
 const fields = [
   {
@@ -23,7 +24,7 @@ export const CreateProjectDialog = ({ open, handleClose, errors, send, loading, 
         changeErrors({})
         handleClose()
       }}
-      validationSchema={{}}
+      validationSchema={PostProject}
       initialValues={{ name: '', description: '' }}
       errors={errors}
       loading={loading}

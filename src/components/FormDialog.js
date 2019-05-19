@@ -48,7 +48,7 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
               onSubmit={formData.handleSubmit}
             >
               <DialogContent>
-                {fields.map(field => (
+                {fields.map((field, index) => (
                   <TextField
                     key={field.name}
                     className={classes.field}

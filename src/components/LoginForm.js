@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { fieldProps } from '../utils'
 import RouterLink from './RouterLink'
-import { Login } from '../validation/users'
+import { PostTokens } from '../validation/tokens'
 import { Redirect } from 'react-router-dom'
 import { dashboard, registration } from '../routes'
 
@@ -36,7 +36,7 @@ export const LoginForm = ({ classes, tokensErrors, login, loading, status }) => 
       onSubmit={values => {
         login(values)
       }}
-      validationSchema={Login}
+      validationSchema={PostTokens}
       render={formData => {
         const userFieldProps = fieldProps(formData, tokensErrors)
         return (
