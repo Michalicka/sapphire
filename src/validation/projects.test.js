@@ -24,7 +24,7 @@ describe('projects validation', () => {
 
       PostProject.isValid(invalidValues)
         .then(isValid => {
-          expect(isValid).toBe(true)
+          expect(isValid).toBe(false)
           done()
         })
     })

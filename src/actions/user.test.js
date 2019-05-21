@@ -1,6 +1,6 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST } from '../actionTypes/user'
-import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest } from './user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE } from '../actionTypes/user'
+import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore } from './user'
 
 describe('user actions', () => {
   it('user registration', () => {
@@ -67,6 +67,15 @@ describe('user actions', () => {
     const expectedOutput = {
       type: GET_ME_REQUEST
     }
+
     expect(getMeRequest()).toEqual(expectedOutput)
+  })
+
+  it('userRestore', () => {
+    const expectedOutput = {
+      type: USER_RESTORE
+    }
+
+    expect(userRestore()).toEqual(expectedOutput)
   })
 })

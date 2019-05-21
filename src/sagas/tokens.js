@@ -1,8 +1,9 @@
 
 import { changeTokensErrors, toggleTokensLoading, changeTokensStatus, putTokensRequest, refreshTokenWatch } from '../actions/tokens'
+import { userRestore } from '../actions/user'
 import { tokens as tokensLink } from '../apiLinks'
-import { POST_TOKENS_REQUEST, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST } from '../actionTypes/tokens'
-import { fetchEntity, headers } from './utils'
+import { POST_TOKENS_REQUEST, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST, DELETE_TOKENS_REQUEST } from '../actionTypes/tokens'
+import { fetchEntity, headers, fetchLoggedEntity } from './utils'
 import { put, call, delay, take, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
 
@@ -62,3 +63,19 @@ export function* putTokens(action) {
     yield put(changeTokensStatus('Unauthorized'))
   }
 }
+
+export const deleteTokens = fetchLoggedEntity.bind(
+  null,
+  'delete',
+  tokensLink,
+  {
+    request: DELETE_TOKENS_REQUEST,
+    success: [
+      () => put(changeTokensStatus('Unauthorized')),
+      () => call(removeToken),
+      () => put(userRestore())
+    ],
+    error: errors => changeTokensErrors(errors),
+    loading: value => toggleTokensLoading(value)
+  }
+)

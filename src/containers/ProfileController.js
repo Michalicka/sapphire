@@ -1,6 +1,7 @@
 
 import { connect } from 'react-redux'
 import ProfileController from '../components/ProfileController'
+import { deleteTokensRequest } from '../actions/tokens'
 
 export const mapStateToProps = state => ({
   initial: state.user.data.name.charAt(0).toUpperCase(),
@@ -8,7 +9,7 @@ export const mapStateToProps = state => ({
 })
 
 export const mapDispatchToProps = dispatch => ({
-  logout: () => console.log('logout')
+  logout: () => dispatch(deleteTokensRequest())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileController)

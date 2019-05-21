@@ -1,5 +1,5 @@
 
-import { POST_TOKENS_REQUEST, CHANGE_TOKENS_STATUS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST } from '../actionTypes/tokens'
+import { POST_TOKENS_REQUEST, CHANGE_TOKENS_STATUS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST, DELETE_TOKENS_REQUEST } from '../actionTypes/tokens'
 
 export function postTokensRequest(payload) {
   return {
@@ -39,5 +39,11 @@ export function putTokensRequest(nextAction) {
   return {
     type: PUT_TOKENS_REQUEST,
     nextAction
+  }
+}
+
+export function deleteTokensRequest() {
+  return {
+    type: DELETE_TOKENS_REQUEST
   }
 }

@@ -1,5 +1,5 @@
 
-import { CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG } from '../actionTypes/user'
+import { CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, USER_RESTORE } from '../actionTypes/user'
 
 const initialState = {
   data: {
@@ -23,6 +23,8 @@ function user(state = initialState, action) {
       return { ...state, errors: action.errors }
     case TOGGLE_USER_LOADNIG:
       return { ...state, loading: action.value }
+    case USER_RESTORE:
+      return { ...initialState }
     default:
       return state
   }

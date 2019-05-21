@@ -10,9 +10,12 @@ describe('dasboard view', () => {
     const refreshTokenWatch = jest.fn()
     const getMe = jest.fn()
 
+    localStorage.setItem('accessToken', 'token')
+
     shallow(<Dashboard classes={{}} match={{}} refreshTokenWatch={refreshTokenWatch} getMe={getMe} />)
     expect(refreshTokenWatch.mock.calls.length).toBe(1)
     expect(getMe.mock.calls.length).toBe(1)
+    localStorage.clear()
   })
 
   it('should return mapped state props', () => {

@@ -45,6 +45,8 @@ export function* fetchLoggedEntity(method, link, entity) {
       let response
       if (method === 'get') {
         response = yield call(axios[method], link, { headers: headers(), params: action.payload })
+      } else if (method === 'delete') {
+        response = yield call(axios[method], link, { headers: headers() })
       } else {
         response = yield call(axios[method], link, action.payload, { headers: headers() })
       }

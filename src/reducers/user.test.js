@@ -1,5 +1,5 @@
 
-import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading } from '../actions/user'
+import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, userRestore } from '../actions/user'
 import user from './user'
 
 describe('user reducer', () => {
@@ -61,5 +61,20 @@ describe('user reducer', () => {
   it('toggle user loading', () => {
     const newState = { ...state, loading: true }
     expect(user(state, toggleUserLoading(true))).toEqual(newState)
+  })
+
+  it('should return expected state after userRestore action', () => {
+    const expectedValue = {
+      data: {
+        id: null,
+        name: '',
+        email: '',
+        avatar: ''
+      },
+      errors: {},
+      loading: false
+    }
+
+    expect(user(state, userRestore())).toEqual(expectedValue)
   })
 })

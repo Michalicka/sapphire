@@ -1,6 +1,6 @@
 
-import { postTokensRequest, changeTokensStatus, changeTokensErrors, toggleTokensLoading, refreshTokenWatch, putTokensRequest } from './tokens'
-import { POST_TOKENS_REQUEST, CHANGE_TOKENS_STATUS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST } from '../actionTypes/tokens'
+import { postTokensRequest, changeTokensStatus, changeTokensErrors, toggleTokensLoading, refreshTokenWatch, putTokensRequest, deleteTokensRequest } from './tokens'
+import { POST_TOKENS_REQUEST, CHANGE_TOKENS_STATUS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST, DELETE_TOKENS_REQUEST } from '../actionTypes/tokens'
 
 describe('action tokens', () => {
   it('postTokensRequest', () => {
@@ -55,5 +55,13 @@ describe('action tokens', () => {
       nextAction
     }
     expect(putTokensRequest(nextAction)).toEqual(expectedValue)
+  })
+
+  it('deleteTokensRequest', () => {
+    const expectedValue = {
+      type: DELETE_TOKENS_REQUEST
+    }
+
+    expect(deleteTokensRequest()).toEqual(expectedValue)
   })
 })

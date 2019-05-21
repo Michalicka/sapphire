@@ -141,6 +141,18 @@ describe('sagas utils', () => {
       expect(gen.next().value).toEqual(take(request))
     })
 
+    it('should return fetchLoggedEntity success flow with delete method', () => {
+      const gen = generator('delete')
+      const apiCall = call(axios.delete, link, { headers: headers() })
+
+      expect(gen.next().value).toEqual(take(request))
+      expect(gen.next(fakeAction).value).toEqual(put(loading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next(response).value).toEqual(success[0](response))
+      expect(gen.next().value).toEqual(put(loading(false)))
+      expect(gen.next().value).toEqual(take(request))
+    })
+
     it('should return fetchLoggedEntity error authorization flow', () => {
       const gen = generator('post')
       const apiCall = call(axios.post, link, fakeAction.payload, { headers: headers() })

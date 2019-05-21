@@ -37,8 +37,10 @@ const styles = theme => ({
 
 export class Dashboard extends React.Component {
   componentDidMount() {
-    this.props.refreshTokenWatch()
-    this.props.getMe()
+    if (localStorage.getItem('accessToken') !== null) {
+      this.props.refreshTokenWatch()
+      this.props.getMe()
+    }
   }
 
   render() {

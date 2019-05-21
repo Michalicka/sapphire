@@ -35,7 +35,7 @@ describe('ProfileController component', () => {
   })
 
   it('should call logout function on logout MenuItem click', () => {
-    const logoutMenuItem = wrapper.find(MenuItem).at(1)
+    const logoutMenuItem = wrapper.find(MenuItem).at(2)
     logoutMenuItem.simulate('click')
     expect(logout.mock.calls.length).toBe(1)
   })

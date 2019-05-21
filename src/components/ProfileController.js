@@ -4,10 +4,8 @@ import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import { dashboard } from '../routes'
 
 const styles = theme => ({
   button: {
@@ -36,7 +34,7 @@ export class ProfileController extends React.Component {
     }
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
+    this.itemClick = this.itemClick.bind(this)
   }
 
   handleOpen(e) {
@@ -47,16 +45,15 @@ export class ProfileController extends React.Component {
     this.setState({ anchorEl: null })
   }
 
-  handleLogout() {
+  itemClick(action) {
+    action()
     this.handleClose()
-    this.props.logout()
   }
 
   render() {
-    const { classes, avatar, initial } = this.props
+    const { classes, avatar, initial, logout } = this.props
     const { anchorEl } = this.state
     const open = !!anchorEl
-    const EditLink = props => <Link to={dashboard} {...props} />
     return (
       <React.Fragment>
         <IconButton
@@ -74,11 +71,11 @@ export class ProfileController extends React.Component {
           anchorEl={anchorEl}
         >
           <MenuItem
-            component={EditLink}
-            onClick={this.handleClose}
           >Edit</MenuItem>
           <MenuItem
-            onClick={this.handleLogout}
+          >Change password</MenuItem>
+          <MenuItem
+            onClick={() => this.itemClick(logout)}
           >Log out</MenuItem>
         </Menu>
       </React.Fragment>
