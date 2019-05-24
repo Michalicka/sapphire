@@ -2,21 +2,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FormDialog from './FormDialog'
-import { PutUsers } from '../validation/users'
+import { PutPasswords } from '../validation/users'
 
 const fields = [
   {
-    name: 'name'
+    name: 'password',
+    type: 'password'
   },
   {
-    name: 'email'
+    name: 'password_confirmation',
+    type: 'password'
   }
 ]
 
-export const EditProfileDialog = ({ open, handleClose, errors, send, loading, changeErrors, initialValues, id }) => {
+export const ChangePasswordDialog = ({ open, handleClose, errors, send, loading, changeErrors, id }) => {
   return (
     <FormDialog
-      title="Edit Profile"
+      title="Change Password"
       fields={fields}
       send={values => send(values, { id })}
       open={open}
@@ -24,23 +26,22 @@ export const EditProfileDialog = ({ open, handleClose, errors, send, loading, ch
         changeErrors()
         handleClose()
       }}
-      validationSchema={PutUsers}
-      initialValues={initialValues}
+      validationSchema={PutPasswords}
+      initialValues={{ password: '', password_confirmation: '' }}
       errors={errors}
       loading={loading}
     />
   )
 }
 
-EditProfileDialog.propTypes = {
+ChangePasswordDialog.propTypes = {
   send: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   changeErrors: PropTypes.func.isRequired,
-  initialValues: PropTypes.object.isRequired,
   id: PropTypes.number
 }
 
-export default EditProfileDialog
+export default ChangePasswordDialog

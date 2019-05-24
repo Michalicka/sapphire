@@ -1,9 +1,9 @@
 
 import React from 'react'
 import { shallow } from 'enzyme'
-import EditProfileDialog from './EditProfileDialog'
+import ChangePasswordDialog from './ChangePasswordDialog'
 
-describe('EditProfileDialog component', () => {
+describe('ChangePasswordDialog component', () => {
   let wrapper
   const props = {
     send: jest.fn(),
@@ -12,14 +12,10 @@ describe('EditProfileDialog component', () => {
     errors: {},
     loading: false,
     changeErrors: jest.fn(),
-    id: 1,
-    initialValues: {
-      name: 'name',
-      email: 'email'
-    }
+    id: 1
   }
   beforeEach(() => {
-    wrapper = shallow(<EditProfileDialog {...props} />)
+    wrapper = shallow(<ChangePasswordDialog {...props} />)
   })
 
   it('should call handleClose and changeErrors on handleClose props call', () => {
@@ -30,8 +26,8 @@ describe('EditProfileDialog component', () => {
 
   it('should call end with values and url params', () => {
     const values = {
-      name: 'name',
-      email: 'email'
+      password: 'password',
+      password_confirmation: 'password'
     }
     wrapper.props().send(values)
 

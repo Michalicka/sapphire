@@ -15,6 +15,7 @@ import { connect } from 'react-redux'
 import { refreshTokenWatch } from '../actions/tokens'
 import { getMeRequest } from '../actions/user'
 import EditProfileDialog from '../containers/EditProfileDialog'
+import ChangePasswordDialog from '../containers/ChangePasswordDialog'
 
 const styles = theme => ({
   appBar: {
@@ -84,7 +85,8 @@ export class Dashboard extends React.Component {
         {(status === 'Unauthorized' || localStorage.getItem('accessToken') === null) &&
           <Redirect to={login} />
         }
-        <EditProfileDialog/>
+        <EditProfileDialog />
+        <ChangePasswordDialog />
       </React.Fragment>
     )
   }
