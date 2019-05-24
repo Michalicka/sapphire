@@ -1,6 +1,6 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA } from '../actionTypes/user'
-import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData } from './user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST } from '../actionTypes/user'
+import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest } from './user'
 
 describe('user actions', () => {
   it('user registration', () => {
@@ -107,5 +107,22 @@ describe('user actions', () => {
     }
 
     expect(mergeUserData(data)).toEqual(expectedOutput)
+  })
+
+  it('putPasswordsRequest', () => {
+    const payload = {
+      password: 'password',
+      password_confirmation: 'password_confirmation'
+    }
+    const urlParams = {
+      id: 1
+    }
+    const expectedOutput = {
+      type: PUT_PASSWORDS_REQUEST,
+      payload,
+      urlParams
+    }
+
+    expect(putPasswordsRequest(payload, urlParams)).toEqual(expectedOutput)
   })
 })

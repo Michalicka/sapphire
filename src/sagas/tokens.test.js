@@ -215,7 +215,7 @@ describe('sagas tokens', () => {
       expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
     })
 
-    it.skip('should return putUsers authentication error flow', () => {
+    it('should return putUsers authentication error flow', () => {
       const errorBody = {
         response: {
           status: 401

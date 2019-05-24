@@ -1,13 +1,13 @@
 
 import { put, call, take } from 'redux-saga/effects'
-import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, getMeRequest, mergeUserData } from '../actions/user'
+import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, getMeRequest, mergeUserData, putPasswordsRequest } from '../actions/user'
 import { changeModal } from '../actions/modal'
 import { putTokensRequest } from '../actions/tokens'
 import { changeMessagebarParam } from '../actions/messagebar'
-import { users as usersLink, me as meLink, user as userLink } from '../apiLinks'
-import { USER_REGISTRATION, GET_ME_REQUEST, PUT_USERS_REQUEST } from '../actionTypes/user'
+import { users as usersLink, me as meLink, user as userLink, passwords as passwordsLink } from '../apiLinks'
+import { USER_REGISTRATION, GET_ME_REQUEST, PUT_USERS_REQUEST, PUT_PASSWORDS_REQUEST } from '../actionTypes/user'
 import axios from 'axios'
-import { postUsers, getMe, putUsers } from './user'
+import { postUsers, getMe, putUsers, putPasswords } from './user'
 import { formatErrors, headers } from './utils'
 
 // jest.mock('axios')
@@ -192,6 +192,67 @@ describe('sagas user', () => {
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(putUsersAction)))
       expect(gen.next().value).toEqual(put(toggleUserLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_USERS_REQUEST))
+    })
+  })
+
+  describe('putPasswords tests', () => {
+    let gen
+    const payload = {
+      password: 'password',
+      password_confirmation: 'password_confirmation'
+    }
+    const urlParams = {
+      id: 1
+    }
+    const putPasswordsAction = putPasswordsRequest(payload, urlParams)
+
+    const apiCall = call(axios.put, passwordsLink(putPasswordsAction.urlParams), putPasswordsAction.payload, { headers: headers() })
+
+    beforeEach(() => {
+      gen = putPasswords()
+    })
+
+    it('should return putPasswords success flow', () => {
+      expect(gen.next().value).toEqual(take(PUT_PASSWORDS_REQUEST))
+      expect(gen.next(putPasswordsAction).value).toEqual(put(toggleUserLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next().value).toEqual(put(changeModal('')))
+      expect(gen.next().value).toEqual(put(changeUserErrors({})))
+      expect(gen.next().value).toEqual(put(toggleUserLoading(false)))
+      expect(gen.next().value).toEqual(take(PUT_PASSWORDS_REQUEST))
+    })
+
+    it('should return putPasswords validation error flow', () => {
+      const errorBody = {
+        response: {
+          status: 422,
+          data: {
+            errors: {
+              name: ['error', 'error2']
+            }
+          }
+        }
+      }
+      expect(gen.next().value).toEqual(take(PUT_PASSWORDS_REQUEST))
+      expect(gen.next(putPasswordsAction).value).toEqual(put(toggleUserLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(changeUserErrors(formatErrors(errorBody.response.data.errors))))
+      expect(gen.next().value).toEqual(put(toggleUserLoading(false)))
+      expect(gen.next().value).toEqual(take(PUT_PASSWORDS_REQUEST))
+    })
+
+    it('should return putPasswords authentication error flow', () => {
+      const errorBody = {
+        response: {
+          status: 401
+        }
+      }
+      expect(gen.next().value).toEqual(take(PUT_PASSWORDS_REQUEST))
+      expect(gen.next(putPasswordsAction).value).toEqual(put(toggleUserLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(putPasswordsAction)))
+      expect(gen.next().value).toEqual(put(toggleUserLoading(false)))
+      expect(gen.next().value).toEqual(take(PUT_PASSWORDS_REQUEST))
     })
   })
 })
