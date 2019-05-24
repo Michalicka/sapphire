@@ -25,3 +25,11 @@ export const PutUsers = Yup.object().shape({
     .email(messages.email)
     .required(messages.required)
 })
+
+export const PutPasswords = Yup.object().shape({
+  password: Yup.string()
+    .min(6, messages.min)
+    .required(messages.required),
+  password_confirmation: Yup.string()
+    .equalTo(Yup.ref('password'), messages.equalTo)
+})
