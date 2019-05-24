@@ -67,7 +67,6 @@ export function mergeUserData(data) {
 export function putPasswordsRequest(payload, urlParams) {
   return {
     type: PUT_PASSWORDS_REQUEST,
-    payload,
-    urlParams
+    payload
   }
 }

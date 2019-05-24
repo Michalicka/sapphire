@@ -15,12 +15,12 @@ const fields = [
   }
 ]
 
-export const ChangePasswordDialog = ({ open, handleClose, errors, send, loading, changeErrors, id }) => {
+export const ChangePasswordDialog = ({ open, handleClose, errors, send, loading, changeErrors }) => {
   return (
     <FormDialog
       title="Change Password"
       fields={fields}
-      send={values => send(values, { id })}
+      send={values => send(values)}
       open={open}
       handleClose={() => {
         changeErrors()
@@ -40,8 +40,7 @@ ChangePasswordDialog.propTypes = {
   handleClose: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  changeErrors: PropTypes.func.isRequired,
-  id: PropTypes.number
+  changeErrors: PropTypes.func.isRequired
 }
 
 export default ChangePasswordDialog

@@ -8,9 +8,6 @@ describe('ChangePasswordDialog container', () => {
     const state = {
       modal: 'changePassword',
       user: {
-        data: {
-          id: 1
-        },
         errors: {},
         loading: false
       }
@@ -21,7 +18,6 @@ describe('ChangePasswordDialog container', () => {
     expect(mappedState.open).toBe(true)
     expect(mappedState.errors).toEqual(state.user.errors)
     expect(mappedState.loading).toBe(state.user.loading)
-    expect(mappedState.id).toBe(state.user.data.id)
   })
 
   it('should return expected mapped actions props', () => {
@@ -30,17 +26,14 @@ describe('ChangePasswordDialog container', () => {
       password: 'password',
       password_confirmation: 'password'
     }
-    const urlParams = {
-      id: 1
-    }
 
     const mappedActions = mapDispatchToProps(dispatch)
 
-    mappedActions.send(values, urlParams)
+    mappedActions.send(values)
     mappedActions.handleClose()
     mappedActions.changeErrors()
 
-    expect(dispatch.mock.calls[0][0]).toEqual(putPasswordsRequest(values, urlParams))
+    expect(dispatch.mock.calls[0][0]).toEqual(putPasswordsRequest(values))
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal(''))
     expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors({}))
   })

@@ -201,12 +201,9 @@ describe('sagas user', () => {
       password: 'password',
       password_confirmation: 'password_confirmation'
     }
-    const urlParams = {
-      id: 1
-    }
-    const putPasswordsAction = putPasswordsRequest(payload, urlParams)
+    const putPasswordsAction = putPasswordsRequest(payload)
 
-    const apiCall = call(axios.put, passwordsLink(putPasswordsAction.urlParams), putPasswordsAction.payload, { headers: headers() })
+    const apiCall = call(axios.put, passwordsLink, putPasswordsAction.payload, { headers: headers() })
 
     beforeEach(() => {
       gen = putPasswords()

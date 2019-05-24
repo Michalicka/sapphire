@@ -114,15 +114,11 @@ describe('user actions', () => {
       password: 'password',
       password_confirmation: 'password_confirmation'
     }
-    const urlParams = {
-      id: 1
-    }
     const expectedOutput = {
       type: PUT_PASSWORDS_REQUEST,
-      payload,
-      urlParams
+      payload
     }
 
-    expect(putPasswordsRequest(payload, urlParams)).toEqual(expectedOutput)
+    expect(putPasswordsRequest(payload)).toEqual(expectedOutput)
   })
 })

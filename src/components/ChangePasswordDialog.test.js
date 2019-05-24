@@ -33,6 +33,5 @@ describe('ChangePasswordDialog component', () => {
 
     expect(props.send.mock.calls.length).toBe(1)
     expect(props.send.mock.calls[0][0]).toEqual(values)
-    expect(props.send.mock.calls[0][1]).toEqual({ id: props.id })
   })
 })

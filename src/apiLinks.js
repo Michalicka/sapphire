@@ -5,4 +5,4 @@ export const tokens = `${url}/tokens`
 export const me = `${url}/me`
 export const projects = `${url}/projects`
 export const user = ({ id }) => `${url}/users/${id}`
-export const passwords = ({ id }) => `${url}/passwords`
+export const passwords = `${url}/passwords`
