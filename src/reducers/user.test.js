@@ -1,5 +1,5 @@
 
-import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, userRestore } from '../actions/user'
+import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, userRestore, mergeUserData } from '../actions/user'
 import user from './user'
 
 describe('user reducer', () => {
@@ -76,5 +76,24 @@ describe('user reducer', () => {
     }
 
     expect(user(state, userRestore())).toEqual(expectedValue)
+  })
+
+  it('should return expected state after mergeUserData action', () => {
+    const newData = {
+      name: 'name',
+      email: 'email@email.com'
+    }
+    const expectedValue = {
+      data: {
+        id: 1,
+        name: 'name',
+        email: 'email@email.com',
+        avatar: ''
+      },
+      errors: {},
+      loading: false
+    }
+
+    expect(user(state, mergeUserData(newData))).toEqual(expectedValue)
   })
 })

@@ -1,8 +1,9 @@
 
-import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam } from '../actions/user'
+import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, mergeUserData } from '../actions/user'
+import { changeModal } from '../actions/modal'
 import { changeMessagebarParam } from '../actions/messagebar'
-import { users as usersLink, me as meLink } from '../apiLinks'
-import { USER_REGISTRATION, GET_ME_REQUEST } from '../actionTypes/user'
+import { users as usersLink, me as meLink, user as userLink } from '../apiLinks'
+import { USER_REGISTRATION, GET_ME_REQUEST, PUT_USERS_REQUEST } from '../actionTypes/user'
 import { fetchEntity, fetchLoggedEntity } from './utils'
 import { put } from 'redux-saga/effects'
 
@@ -32,6 +33,22 @@ export const getMe = fetchLoggedEntity.bind(
     request: GET_ME_REQUEST,
     success: [
       response => put(changeUserData({ ...response.data.data }))
+    ],
+    error: errors => changeUserErrors(errors),
+    loading: value => toggleUserLoading(value)
+  }
+)
+
+export const putUsers = fetchLoggedEntity.bind(
+  null,
+  'put',
+  userLink,
+  {
+    request: PUT_USERS_REQUEST,
+    success: [
+      (response, action) => put(mergeUserData(action.payload)),
+      () => put(changeModal('')),
+      () => put(changeUserErrors({}))
     ],
     error: errors => changeUserErrors(errors),
     loading: value => toggleUserLoading(value)

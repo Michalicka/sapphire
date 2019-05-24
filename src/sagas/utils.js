@@ -43,15 +43,16 @@ export function* fetchLoggedEntity(method, link, entity) {
     yield put(entity.loading(true))
     try {
       let response
+      const url = typeof link === 'function' ? link(action.urlParams) : link
       if (method === 'get') {
-        response = yield call(axios[method], link, { headers: headers(), params: action.payload })
+        response = yield call(axios[method], url, { headers: headers(), params: action.payload })
       } else if (method === 'delete') {
-        response = yield call(axios[method], link, { headers: headers() })
+        response = yield call(axios[method], url, { headers: headers() })
       } else {
-        response = yield call(axios[method], link, action.payload, { headers: headers() })
+        response = yield call(axios[method], url, action.payload, { headers: headers() })
       }
       for (let index = 0; index < entity.success.length; index++) {
-        yield entity.success[index](response)
+        yield entity.success[index](response, action)
       }
     } catch (error) {
       if (error.response.status === 401) {

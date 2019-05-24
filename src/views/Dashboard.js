@@ -14,6 +14,7 @@ import { projects as projectsLink, login } from '../routes'
 import { connect } from 'react-redux'
 import { refreshTokenWatch } from '../actions/tokens'
 import { getMeRequest } from '../actions/user'
+import EditProfileDialog from '../containers/EditProfileDialog'
 
 const styles = theme => ({
   appBar: {
@@ -46,7 +47,7 @@ export class Dashboard extends React.Component {
   render() {
     const { classes, match, status } = this.props
     return (
-      <div>
+      <React.Fragment>
         <AppBar
           position="fixed"
           className={classes.appBar}
@@ -83,7 +84,8 @@ export class Dashboard extends React.Component {
         {(status === 'Unauthorized' || localStorage.getItem('accessToken') === null) &&
           <Redirect to={login} />
         }
-      </div>
+        <EditProfileDialog/>
+      </React.Fragment>
     )
   }
 }

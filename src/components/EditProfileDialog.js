@@ -2,43 +2,45 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FormDialog from './FormDialog'
-import { PostProject } from '../validation/projects'
+import { PutUsers } from '../validation/users'
 
 const fields = [
   {
     name: 'name'
   },
   {
-    name: 'description'
+    name: 'email'
   }
 ]
 
-export const CreateProjectDialog = ({ open, handleClose, errors, send, loading, changeErrors }) => {
+export const EditProfileDialog = ({ open, handleClose, errors, send, loading, changeErrors, initialValues, id }) => {
   return (
     <FormDialog
-      title="Create project"
+      title="EditProfile"
       fields={fields}
-      send={send}
+      send={values => send(values, { id })}
       open={open}
       handleClose={() => {
         changeErrors()
         handleClose()
       }}
-      validationSchema={PostProject}
-      initialValues={{ name: '', description: '' }}
+      validationSchema={PutUsers}
+      initialValues={initialValues}
       errors={errors}
       loading={loading}
     />
   )
 }
 
-CreateProjectDialog.propTypes = {
+EditProfileDialog.propTypes = {
   send: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  changeErrors: PropTypes.func.isRequired
+  changeErrors: PropTypes.func.isRequired,
+  initialValues: PropTypes.object.isRequired,
+  id: PropTypes.number
 }
 
-export default CreateProjectDialog
+export default EditProfileDialog

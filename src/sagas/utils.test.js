@@ -101,7 +101,7 @@ describe('sagas utils', () => {
       }
     }
     const success = [
-      response => put(({ type: 'TEST', response }))
+      response => put({ type: 'TEST', response })
     ]
     const error = errors => ({ type: 'TEST_ERROR', errors })
     const loading = value => ({ type: 'LOADING', value })
@@ -188,6 +188,66 @@ describe('sagas utils', () => {
       expect(gen.next(fakeAction).value).toEqual(put(loading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(error(formatErrors(errorBody.response.data.errors))))
+      expect(gen.next().value).toEqual(put(loading(false)))
+      expect(gen.next().value).toEqual(take(request))
+    })
+
+    it('should return fetchLoggedEntity success flow with urlParams', () => {
+      const fakeAction = {
+        type: 'FAKE_ACTION',
+        payload: {},
+        urlParams: {
+          id: 1
+        }
+      }
+      const linkFunction = ({ id }) => `https://www.google.com/${id}`
+      const gen = fetchLoggedEntity(
+        'get',
+        linkFunction,
+        {
+          request,
+          success,
+          error,
+          loading
+        }
+      )
+      const apiCall = call(axios.get, linkFunction(fakeAction.urlParams), { headers: headers(), params: fakeAction.payload })
+
+      expect(gen.next().value).toEqual(take(request))
+      expect(gen.next(fakeAction).value).toEqual(put(loading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next(response).value).toEqual(success[0](response))
+      expect(gen.next().value).toEqual(put(loading(false)))
+      expect(gen.next().value).toEqual(take(request))
+    })
+
+    it('should return fetchLoggedEntity success flow with action in success function', () => {
+      const fakeAction = {
+        type: 'FAKE_ACTION',
+        payload: {},
+        urlParams: {
+          id: 1
+        }
+      }
+      const success = [
+        (response, action) => put({ id: action.urlParams.id, payload: action.payload, response })
+      ]
+      const gen = fetchLoggedEntity(
+        'get',
+        link,
+        {
+          request,
+          success,
+          error,
+          loading
+        }
+      )
+      const apiCall = call(axios.get, link, { headers: headers(), params: fakeAction.payload })
+
+      expect(gen.next().value).toEqual(take(request))
+      expect(gen.next(fakeAction).value).toEqual(put(loading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next(response).value).toEqual(success[0](response, fakeAction))
       expect(gen.next().value).toEqual(put(loading(false)))
       expect(gen.next().value).toEqual(take(request))
     })

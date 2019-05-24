@@ -17,3 +17,11 @@ export const PostUsers = Yup.object().shape({
   password_confirmation: Yup.string()
     .equalTo(Yup.ref('password'), messages.equalTo)
 })
+
+export const PutUsers = Yup.object().shape({
+  name: Yup.string()
+    .required(messages.required),
+  email: Yup.string()
+    .email(messages.email)
+    .required(messages.required)
+})

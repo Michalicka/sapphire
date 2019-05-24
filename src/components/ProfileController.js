@@ -51,7 +51,7 @@ export class ProfileController extends React.Component {
   }
 
   render() {
-    const { classes, avatar, initial, logout } = this.props
+    const { classes, avatar, initial, logout, editProfile } = this.props
     const { anchorEl } = this.state
     const open = !!anchorEl
     return (
@@ -71,6 +71,7 @@ export class ProfileController extends React.Component {
           anchorEl={anchorEl}
         >
           <MenuItem
+            onClick={() => this.itemClick(editProfile)}
           >Edit</MenuItem>
           <MenuItem
           >Change password</MenuItem>
@@ -87,7 +88,8 @@ ProfileController.propTypes = {
   classes: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
   avatar: PropTypes.string.isRequired,
-  initial: PropTypes.string.isRequired
+  initial: PropTypes.string.isRequired,
+  editProfile: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(ProfileController)

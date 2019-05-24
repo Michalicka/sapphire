@@ -1,5 +1,5 @@
 
-import { CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, USER_RESTORE } from '../actionTypes/user'
+import { CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, USER_RESTORE, MERGE_USER_DATA } from '../actionTypes/user'
 
 const initialState = {
   data: {
@@ -25,6 +25,9 @@ function user(state = initialState, action) {
       return { ...state, loading: action.value }
     case USER_RESTORE:
       return { ...initialState }
+    case MERGE_USER_DATA:
+      const mergedData = { ...state.data, ...action.data }
+      return { ...state, data: mergedData }
     default:
       return state
   }

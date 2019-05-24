@@ -1,11 +1,12 @@
 
 import { put, call, take, delay, takeEvery } from 'redux-saga/effects'
-import { changeTokensErrors, toggleTokensLoading, changeTokensStatus, putTokensRequest, refreshTokenWatch } from '../actions/tokens'
+import { changeTokensErrors, toggleTokensLoading, changeTokensStatus, putTokensRequest, refreshTokenWatch, deleteTokensRequest } from '../actions/tokens'
 import { tokens as tokensLink } from '../apiLinks'
-import { POST_TOKENS_REQUEST, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST } from '../actionTypes/tokens'
+import { POST_TOKENS_REQUEST, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST, DELETE_TOKENS_REQUEST } from '../actionTypes/tokens'
 import axios from 'axios'
-import { postTokens, setToken, removeToken, refreshToken, putTokens, putTokensWatch } from './tokens'
+import { postTokens, setToken, removeToken, refreshToken, putTokens, putTokensWatch, deleteTokens } from './tokens'
 import { formatErrors, headers } from './utils'
+import { userRestore } from '../actions/user'
 
 // jest.mock('axios')
 
@@ -169,6 +170,64 @@ describe('sagas tokens', () => {
       expect(localStorage.getItem('accessToken')).toBe(null)
       expect(localStorage.getItem('tokenType')).toBe(null)
       expect(localStorage.getItem('tokenExpiresIn')).toBe(null)
+    })
+  })
+
+  describe('putUsers tests', () => {
+    let gen
+    const deleteTokensAction = deleteTokensRequest()
+    const apiCall = call(axios.delete, tokensLink, { headers: headers() })
+
+    beforeEach(() => {
+      gen = deleteTokens()
+    })
+
+    it('should return putUsers success flow', () => {
+      const response = {}
+
+      expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
+      expect(gen.next(deleteTokensAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next(response).value).toEqual(put(changeTokensStatus('Unauthorized')))
+      expect(gen.next().value).toEqual(call(removeToken))
+      expect(gen.next().value).toEqual(put(userRestore()))
+      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
+    })
+
+    it('should return putUsers validation error flow', () => {
+      const errorBody = {
+        response: {
+          status: 422,
+          data: {
+            errors: {
+              name: ['error', 'error2']
+            }
+          }
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
+      expect(gen.next(deleteTokensAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(changeTokensErrors(formatErrors(errorBody.response.data.errors))))
+      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
+    })
+
+    it.skip('should return putUsers authentication error flow', () => {
+      const errorBody = {
+        response: {
+          status: 401
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
+      expect(gen.next(deleteTokensAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(deleteTokensAction)))
+      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
     })
   })
 })

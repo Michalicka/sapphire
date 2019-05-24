@@ -9,8 +9,9 @@ describe('ProfileController component', () => {
   let wrapper
   const logout = jest.fn()
   const avatarSrc = 'https://www.google.com/'
+  const editProfile = jest.fn()
   beforeEach(() => {
-    wrapper = shallow(<ProfileController logout={logout} initial="A" avatar={avatarSrc} />).dive()
+    wrapper = shallow(<ProfileController logout={logout} initial="A" avatar={avatarSrc} editProfile={editProfile} />).dive()
   })
 
   it('should show have src when avatar is set', () => {
@@ -21,7 +22,7 @@ describe('ProfileController component', () => {
 
   it('should show initial when src is empty string', () => {
     const initial = 'A'
-    const wrapper = shallow(<ProfileController logout={logout} initial={initial} avatar="" />).dive()
+    const wrapper = shallow(<ProfileController logout={logout} initial={initial} avatar="" editProfile={editProfile}/>).dive()
     const avatar = wrapper.find(Avatar)
     expect(avatar.props().children).toBe(initial)
   })
@@ -38,5 +39,11 @@ describe('ProfileController component', () => {
     const logoutMenuItem = wrapper.find(MenuItem).at(2)
     logoutMenuItem.simulate('click')
     expect(logout.mock.calls.length).toBe(1)
+  })
+
+  it('should call editProfile function on edit profile MenuItem click', () => {
+    const editProfileMenuItem = wrapper.find(MenuItem).at(0)
+    editProfileMenuItem.simulate('click')
+    expect(editProfile.mock.calls.length).toBe(1)
   })
 })
