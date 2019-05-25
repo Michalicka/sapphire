@@ -1,7 +1,7 @@
 
 import { mapStateToProps, mapDispatchToProps } from './CreateProjectDialog'
 import { changeModal } from '../actions/modal'
-import { postProjectRequest } from '../actions/projects'
+import { postProjectRequest, changeProjectsErrors } from '../actions/projects'
 
 describe('CreateProjectDialog containers', () => {
   it('should return mapped state props', () => {
@@ -30,8 +30,10 @@ describe('CreateProjectDialog containers', () => {
     const mappedAction = mapDispatchToProps(dispatch)
     mappedAction.send(project)
     mappedAction.handleClose()
+    mappedAction.changeErrors()
 
     expect(dispatch.mock.calls[0][0]).toEqual(postProjectRequest(project))
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal(''))
+    expect(dispatch.mock.calls[2][0]).toEqual(changeProjectsErrors({}))
   })
 })
