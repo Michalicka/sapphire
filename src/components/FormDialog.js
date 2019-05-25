@@ -11,6 +11,7 @@ import { Formik } from 'formik'
 import { fieldProps } from '../utils'
 import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import ImageInput from './ImageInput'
 
 const styles = theme => ({
   field: {
@@ -48,14 +49,28 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
               onSubmit={formData.handleSubmit}
             >
               <DialogContent>
-                {fields.map((field, index) => (
-                  <TextField
-                    key={field.name}
-                    className={classes.field}
-                    {...formFieldProps(field.name, field.type)}
-                    fullWidth
-                  />
-                ))}
+                {fields.map((field, index) => {
+                  if (field.type === 'file') {
+                    console.log(formFieldProps(field.name, field.type))
+                    return (
+                      <ImageInput
+                        key={field.name}
+                        className={classes.field}
+                        {...formFieldProps(field.name, field.type)}
+                        setFieldValue={formData.setFieldValue}
+                      />
+                    )
+                  } else {
+                    return (
+                      <TextField
+                        key={field.name}
+                        className={classes.field}
+                        {...formFieldProps(field.name, field.type)}
+                        fullWidth
+                      />
+                    )
+                  }
+                })}
               </DialogContent>
               <DialogActions>
                 <Button
