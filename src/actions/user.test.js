@@ -1,6 +1,6 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST } from '../actionTypes/user'
-import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest } from './user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/user'
+import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from './user'
 
 describe('user actions', () => {
   it('user registration', () => {
@@ -120,5 +120,17 @@ describe('user actions', () => {
     }
 
     expect(putPasswordsRequest(payload)).toEqual(expectedOutput)
+  })
+
+  it('putPasswordsRequest', () => {
+    const payload = {
+      avatar: 'image'
+    }
+    const expectedOutput = {
+      type: POST_AVATAR_REQUEST,
+      payload
+    }
+
+    expect(postAvatarRequest(payload)).toEqual(expectedOutput)
   })
 })

@@ -1,5 +1,5 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST } from '../actionTypes/user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/user'
 
 export function userRegistration(payload) {
   return {
@@ -67,6 +67,13 @@ export function mergeUserData(data) {
 export function putPasswordsRequest(payload, urlParams) {
   return {
     type: PUT_PASSWORDS_REQUEST,
+    payload
+  }
+}
+
+export function postAvatarRequest(payload) {
+  return {
+    type: POST_AVATAR_REQUEST,
     payload
   }
 }

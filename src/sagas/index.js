@@ -1,6 +1,6 @@
 
 import { all, fork } from 'redux-saga/effects'
-import { postUsers, getMe, putUsers, putPasswords } from './user'
+import { postUsers, getMe, putUsers, putPasswords, postAvatar } from './user'
 import { postTokens, putTokensWatch, refreshToken, deleteTokens } from './tokens'
 import { getProjects, postProjects } from './projects'
 
@@ -15,6 +15,7 @@ export default function* rootSaga() {
     fork(postProjects),
     fork(deleteTokens),
     fork(putUsers),
-    fork(putPasswords)
+    fork(putPasswords),
+    fork(postAvatar)
   ])
 }

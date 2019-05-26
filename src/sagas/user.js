@@ -2,8 +2,8 @@
 import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, mergeUserData } from '../actions/user'
 import { changeModal } from '../actions/modal'
 import { changeMessagebarParam } from '../actions/messagebar'
-import { users as usersLink, me as meLink, user as userLink, passwords as passwordsLink } from '../apiLinks'
-import { USER_REGISTRATION, GET_ME_REQUEST, PUT_USERS_REQUEST, PUT_PASSWORDS_REQUEST } from '../actionTypes/user'
+import { users as usersLink, me as meLink, user as userLink, passwords as passwordsLink, avatars as avatarsLink } from '../apiLinks'
+import { USER_REGISTRATION, GET_ME_REQUEST, PUT_USERS_REQUEST, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/user'
 import { fetchEntity, fetchLoggedEntity } from './utils'
 import { put } from 'redux-saga/effects'
 
@@ -62,6 +62,22 @@ export const putPasswords = fetchLoggedEntity.bind(
   {
     request: PUT_PASSWORDS_REQUEST,
     success: [
+      () => put(changeModal('')),
+      () => put(changeUserErrors({}))
+    ],
+    error: errors => changeUserErrors(errors),
+    loading: value => toggleUserLoading(value)
+  }
+)
+
+export const postAvatar = fetchLoggedEntity.bind(
+  null,
+  'post',
+  avatarsLink,
+  {
+    request: POST_AVATAR_REQUEST,
+    success: [
+      (response, action) => put(mergeUserData({ avatar: action.payload.photo })),
       () => put(changeModal('')),
       () => put(changeUserErrors({}))
     ],
