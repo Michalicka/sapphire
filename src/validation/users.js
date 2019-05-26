@@ -1,9 +1,10 @@
 
 import * as Yup from 'yup'
 import messages from '../validationMessages'
-import { equalTo } from './yupMethods'
+import { equalTo, fileType } from './yupMethods'
 
 Yup.addMethod(Yup.string, 'equalTo', equalTo)
+Yup.addMethod(Yup.string, 'fileType', fileType)
 
 export const PostUsers = Yup.object().shape({
   name: Yup.string()
@@ -32,4 +33,10 @@ export const PutPasswords = Yup.object().shape({
     .required(messages.required),
   password_confirmation: Yup.string()
     .equalTo(Yup.ref('password'), messages.equalTo)
+})
+
+export const PostAvatar = Yup.object().shape({
+  photo: Yup.string()
+    .required(messages.required)
+    .fileType(['jpeg', 'jpg', 'png'], messages.fileType)
 })

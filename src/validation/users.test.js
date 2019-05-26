@@ -1,5 +1,5 @@
 
-import { PostUsers, PutUsers, PutPasswords } from './users'
+import { PostUsers, PutUsers, PutPasswords, PostAvatar } from './users'
 
 describe('users validation', () => {
   describe('PostUsers', () => {
@@ -77,6 +77,30 @@ describe('users validation', () => {
         password_confirmation: ''
       }
       PutPasswords.isValid(invalidValues)
+        .then(isValid => {
+          expect(isValid).toBe(false)
+          done()
+        })
+    })
+  })
+
+  describe('PostAvatar', () => {
+    it('should be valid PostAvatar validation', done => {
+      const validValues = {
+        photo: 'data:image/jpeg;base64'
+      }
+      PostAvatar.isValid(validValues)
+        .then(isValid => {
+          expect(isValid).toBe(true)
+          done()
+        })
+    })
+
+    it('should not be valid PostAvatar validation', done => {
+      const invalidValues = {
+        photo: 'image'
+      }
+      PostAvatar.isValid(invalidValues)
         .then(isValid => {
           expect(isValid).toBe(false)
           done()

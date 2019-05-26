@@ -12,7 +12,7 @@ describe('yup methods', () => {
 
   describe('fileType', () => {
     let fileTypeMethod
-    const acceptsTypes = ['jpeg']
+    const acceptsTypes = ['jpeg', 'png']
     const message = 'ęrror'
 
     beforeEach(() => {
@@ -24,7 +24,10 @@ describe('yup methods', () => {
       const expectedArgumentObject = {
         name: 'fileType',
         exclusive: false,
-        message
+        message,
+        params: {
+          acceptsTypes: 'jpeg, png'
+        }
       }
 
       expect(yupMock.test.mock.calls.length).toBe(1)
@@ -34,6 +37,7 @@ describe('yup methods', () => {
       expect(argumentObject.name).toBe(expectedArgumentObject.name)
       expect(argumentObject.exclusive).toBe(expectedArgumentObject.exclusive)
       expect(argumentObject.message).toBe(expectedArgumentObject.message)
+      expect(argumentObject.params).toEqual(expectedArgumentObject.params)
     })
 
     it('should return validation success', () => {

@@ -51,7 +51,6 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
               <DialogContent>
                 {fields.map((field, index) => {
                   if (field.type === 'file') {
-                    console.log(formFieldProps(field.name, field.type))
                     return (
                       <ImageInput
                         key={field.name}
