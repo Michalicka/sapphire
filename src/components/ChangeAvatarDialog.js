@@ -2,23 +2,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FormDialog from './FormDialog'
-import { PutPasswords } from '../validation/users'
+import { PostAvatar } from '../validation/users'
 
 const fields = [
   {
-    name: 'password',
-    type: 'password'
-  },
-  {
-    name: 'password_confirmation',
-    type: 'password'
+    name: 'photo',
+    type: 'file'
   }
 ]
 
-export const ChangePasswordDialog = ({ open, handleClose, errors, send, loading, changeErrors }) => {
+export const ChangeAvatarDialog = ({ open, handleClose, errors, send, loading, changeErrors }) => {
   return (
     <FormDialog
-      title="Change Password"
+      title="Change Avatar"
       fields={fields}
       send={values => send(values)}
       open={open}
@@ -26,15 +22,15 @@ export const ChangePasswordDialog = ({ open, handleClose, errors, send, loading,
         changeErrors()
         handleClose()
       }}
-      validationSchema={PutPasswords}
-      initialValues={{ password: '', password_confirmation: '' }}
+      validationSchema={PostAvatar}
+      initialValues={{ photo: '' }}
       errors={errors}
       loading={loading}
     />
   )
 }
 
-ChangePasswordDialog.propTypes = {
+ChangeAvatarDialog.propTypes = {
   send: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
@@ -43,4 +39,4 @@ ChangePasswordDialog.propTypes = {
   changeErrors: PropTypes.func.isRequired
 }
 
-export default ChangePasswordDialog
+export default ChangeAvatarDialog

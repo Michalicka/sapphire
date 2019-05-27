@@ -16,6 +16,7 @@ import { refreshTokenWatch } from '../actions/tokens'
 import { getMeRequest } from '../actions/user'
 import EditProfileDialog from '../containers/EditProfileDialog'
 import ChangePasswordDialog from '../containers/ChangePasswordDialog'
+import ChangeAvatarDialog from '../containers/ChangeAvatarDialog'
 
 const styles = theme => ({
   appBar: {
@@ -87,6 +88,7 @@ export class Dashboard extends React.Component {
         }
         <EditProfileDialog />
         <ChangePasswordDialog />
+        <ChangeAvatarDialog />
       </React.Fragment>
     )
   }

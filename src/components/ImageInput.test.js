@@ -12,12 +12,11 @@ describe('ImageInput component', () => {
   beforeEach(() => {
     props = {
       name: 'imageInput',
-      onChange: jest.fn(),
-      onBlur: jest.fn(),
       error: false,
       helperText: '',
       value: '',
-      setFieldValue: jest.fn()
+      setFieldValue: jest.fn(),
+      setFieldTouched: jest.fn()
     }
   })
 
@@ -44,7 +43,8 @@ describe('ImageInput component', () => {
 
     expect(props.setFieldValue.mock.calls[0][0]).toBe(props.name)
     expect(props.setFieldValue.mock.calls[0][1]).toBe(result)
-    expect(props.onBlur.mock.calls.length).toBe(1)
+    expect(props.setFieldTouched.mock.calls[0][0]).toBe(props.name)
+    expect(props.setFieldTouched.mock.calls[0][1]).toBe(true)
   })
 
   it('should show avatar when value is set', () => {
@@ -74,6 +74,7 @@ describe('ImageInput component', () => {
 
     expect(props.setFieldValue.mock.calls[0][0]).toBe(props.name)
     expect(props.setFieldValue.mock.calls[0][1]).toBe('')
-    expect(props.onBlur.mock.calls.length).toBe(1)
+    expect(props.setFieldTouched.mock.calls[0][0]).toBe(props.name)
+    expect(props.setFieldTouched.mock.calls[0][1]).toBe(true)
   })
 })

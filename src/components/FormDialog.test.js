@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Formik } from 'formik'
 import { shallow } from 'enzyme'
+import ImageInput from './ImageInput'
 
 describe('FormDialog component', () => {
   let wrapper
@@ -17,7 +18,10 @@ describe('FormDialog component', () => {
     fields: [
       { name: 'name' },
       { name: 'name2' },
-      { name: 'name3' }
+      {
+        name: 'name3',
+        type: 'file'
+      }
     ],
     send: jest.fn(),
     open: true,
@@ -39,7 +43,8 @@ describe('FormDialog component', () => {
 
   it('should render expected count of textFields', () => {
     const textFields = wrapper.find(Formik).dive().find(TextField)
-    expect(textFields.length).toBe(props.fields.length)
+    const imageInput = wrapper.find(Formik).dive().find(ImageInput)
+    expect(textFields.length + imageInput.length).toBe(props.fields.length)
   })
 
   it('should call send function after submit form', () => {
@@ -61,18 +66,20 @@ describe('FormDialog component', () => {
 
   it('should add initialValues to textFields', () => {
     const textFields = wrapper.find(Formik).dive().find(TextField)
+    const imageInput = wrapper.find(Formik).dive().find(ImageInput)
     const { initialValues } = props
     expect(textFields.at(0).props().value).toBe(initialValues.name)
     expect(textFields.at(1).props().value).toBe(initialValues.name2)
-    expect(textFields.at(2).props().value).toBe(initialValues.name3)
+    expect(imageInput.props().value).toBe(initialValues.name3)
   })
 
   it('should add initialValues to textFields', () => {
     const textFields = wrapper.find(Formik).dive().find(TextField)
+    const imageInput = wrapper.find(Formik).dive().find(ImageInput)
     const { errors } = props
     expect(textFields.at(0).props().helperText).toBe(errors.name)
     expect(textFields.at(1).props().helperText).toBe(errors.name2)
-    expect(textFields.at(2).props().helperText).toBe(errors.name3)
+    expect(imageInput.props().helperText).toBe(errors.name3)
   })
 
   it('should show loader when loading prop is true', () => {

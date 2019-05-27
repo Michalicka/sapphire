@@ -11,8 +11,10 @@ describe('ProfileController component', () => {
   const avatarSrc = 'https://www.google.com/'
   const editProfile = jest.fn()
   const changePassword = jest.fn()
+  const changeAvatar = jest.fn()
+
   beforeEach(() => {
-    wrapper = shallow(<ProfileController logout={logout} initial="A" avatar={avatarSrc} editProfile={editProfile} changePassword={changePassword} />).dive()
+    wrapper = shallow(<ProfileController logout={logout} initial="A" avatar={avatarSrc} editProfile={editProfile} changePassword={changePassword} changeAvatar={changeAvatar} />).dive()
   })
 
   it('should show have src when avatar is set', () => {
@@ -23,7 +25,7 @@ describe('ProfileController component', () => {
 
   it('should show initial when src is empty string', () => {
     const initial = 'A'
-    const wrapper = shallow(<ProfileController logout={logout} initial={initial} avatar="" editProfile={editProfile} changePassword={changePassword} />).dive()
+    const wrapper = shallow(<ProfileController logout={logout} initial={initial} avatar="" editProfile={editProfile} changePassword={changePassword} changeAvatar={changeAvatar} />).dive()
     const avatar = wrapper.find(Avatar)
     expect(avatar.props().children).toBe(initial)
   })
@@ -37,7 +39,7 @@ describe('ProfileController component', () => {
   })
 
   it('should call logout function on logout MenuItem click', () => {
-    const logoutMenuItem = wrapper.find(MenuItem).at(2)
+    const logoutMenuItem = wrapper.find(MenuItem).at(3)
     logoutMenuItem.simulate('click')
     expect(logout.mock.calls.length).toBe(1)
   })
@@ -52,5 +54,11 @@ describe('ProfileController component', () => {
     const editProfileMenuItem = wrapper.find(MenuItem).at(1)
     editProfileMenuItem.simulate('click')
     expect(changePassword.mock.calls.length).toBe(1)
+  })
+
+  it('should call changeAvatar function on edit profile MenuItem click', () => {
+    const changeAvatarMenuItem = wrapper.find(MenuItem).at(2)
+    changeAvatarMenuItem.simulate('click')
+    expect(changeAvatar.mock.calls.length).toBe(1)
   })
 })

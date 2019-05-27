@@ -47,6 +47,7 @@ export class ImageInput extends React.Component {
 
   setValue(value) {
     this.props.setFieldValue(this.props.name, value)
+    this.props.setFieldTouched(this.props.name, true)
   }
 
   handleChange(e) {
@@ -54,14 +55,11 @@ export class ImageInput extends React.Component {
       const reader = new FileReader()
       const event = { ...e }
       reader.onload = (ev) => {
-        console.log(ev.target)
         this.setValue(ev.target.result)
-        this.props.onBlur()
       }
       reader.readAsDataURL(event.currentTarget.files[0])
     } else {
       this.setValue('')
-      this.props.onBlur()
     }
   }
 
@@ -115,12 +113,11 @@ export class ImageInput extends React.Component {
 ImageInput.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.bool,
   helperText: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  setFieldValue: PropTypes.func.isRequired
+  setFieldValue: PropTypes.func.isRequired,
+  setFieldTouched: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(ImageInput)

@@ -14,6 +14,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import ImageInput from './ImageInput'
 
 const styles = theme => ({
+  dialog: {
+    minWidth: 320
+  },
   field: {
     marginBottom: theme.spacing.unit * 2
   },
@@ -48,7 +51,7 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
             <form
               onSubmit={formData.handleSubmit}
             >
-              <DialogContent>
+              <DialogContent className={classes.dialog}>
                 {fields.map((field, index) => {
                   if (field.type === 'file') {
                     return (
@@ -57,6 +60,7 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
                         className={classes.field}
                         {...formFieldProps(field.name, field.type)}
                         setFieldValue={formData.setFieldValue}
+                        setFieldTouched={formData.setFieldTouched}
                       />
                     )
                   } else {

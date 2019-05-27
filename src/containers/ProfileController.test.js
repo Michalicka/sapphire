@@ -25,9 +25,11 @@ describe('ProfileController container', () => {
     mappedActions.logout()
     mappedActions.editProfile()
     mappedActions.changePassword()
+    mappedActions.changeAvatar()
 
     expect(dispatch.mock.calls[0][0]).toEqual(deleteTokensRequest())
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal('editProfile'))
     expect(dispatch.mock.calls[2][0]).toEqual(changeModal('changePassword'))
+    expect(dispatch.mock.calls[3][0]).toEqual(changeModal('changeAvatar'))
   })
 })
