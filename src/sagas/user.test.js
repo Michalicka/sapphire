@@ -266,7 +266,7 @@ describe('sagas user', () => {
       gen = postAvatar()
     })
 
-    it('should return putPasswords success flow', () => {
+    it('should return postAvatars success flow', () => {
       expect(gen.next().value).toEqual(take(POST_AVATAR_REQUEST))
       expect(gen.next(postAvatarAction).value).toEqual(put(toggleUserLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
@@ -277,7 +277,7 @@ describe('sagas user', () => {
       expect(gen.next().value).toEqual(take(POST_AVATAR_REQUEST))
     })
 
-    it('should return putPasswords validation error flow', () => {
+    it('should return postAvatars validation error flow', () => {
       const errorBody = {
         response: {
           status: 422,
@@ -296,7 +296,7 @@ describe('sagas user', () => {
       expect(gen.next().value).toEqual(take(POST_AVATAR_REQUEST))
     })
 
-    it('should return putPasswords authentication error flow', () => {
+    it('should return postAvatars authentication error flow', () => {
       const errorBody = {
         response: {
           status: 401
