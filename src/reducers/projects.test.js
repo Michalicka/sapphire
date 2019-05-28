@@ -1,6 +1,6 @@
 
 import projects from './projects'
-import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject } from '../actions/projects'
+import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject, removeProject, editProject } from '../actions/projects'
 
 describe('projects reducer', () => {
   const expectedState = {
@@ -45,5 +45,55 @@ describe('projects reducer', () => {
     const data = [...expectedState.data, project]
     const newState = { ...expectedState, data }
     expect(projects(undefined, pushProject(project))).toEqual(newState)
+  })
+
+  it('should return state after editProject', () => {
+    const data = [
+      {
+        id: 1,
+        name: 'project1',
+        description: 'desc'
+      },
+      {
+        id: 2,
+        name: 'project3',
+        description: 'desc'
+      }
+    ]
+    const editedProject = {
+      name: 'project2',
+      description: 'desc'
+    }
+    const id = 2
+    const newData = [ { ...data[0] }, { id, ...editedProject } ]
+    const newState = {
+      ...expectedState,
+      data: newData
+    }
+
+    expect(projects({ ...expectedState, data }, editProject(id, editedProject))).toEqual(newState)
+  })
+
+  it('should return state after removeProject', () => {
+    const data = [
+      {
+        id: 1,
+        name: 'project1',
+        description: 'desc'
+      },
+      {
+        id: 2,
+        name: 'project2',
+        description: 'desc'
+      }
+    ]
+    const id = 2
+    const newData = [ { ...data[0] } ]
+    const newState = {
+      ...expectedState,
+      data: newData
+    }
+
+    expect(projects({ ...expectedState, data }, removeProject(id))).toEqual(newState)
   })
 })
