@@ -1,6 +1,6 @@
 
-import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT } from '../actionTypes/projects'
-import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject } from './projects'
+import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT, PUT_PROJECTS_REQUEST, EDIT_PROJECT, REMOVE_PROJECT } from '../actionTypes/projects'
+import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, removeProject } from './projects'
 
 describe('projects actions', () => {
   it('getProjectsRequest', () => {
@@ -67,5 +67,45 @@ describe('projects actions', () => {
     }
 
     expect(pushProject(project)).toEqual(expectedValue)
+  })
+
+  it('putProjectsRequest', () => {
+    const payload = {
+      name: 'name'
+    }
+    const urlParams = {
+      id: 1
+    }
+    const expectedValue = {
+      type: PUT_PROJECTS_REQUEST,
+      payload,
+      urlParams
+    }
+
+    expect(putProjectsRequest(payload, urlParams)).toEqual(expectedValue)
+  })
+
+  it('editProject', () => {
+    const id = 1
+    const data = {
+      name: 'name'
+    }
+    const expectedValue = {
+      type: EDIT_PROJECT,
+      id,
+      data
+    }
+
+    expect(editProject(id, data)).toEqual(expectedValue)
+  })
+
+  it('removeProject', () => {
+    const id = 1
+    const expectedValue = {
+      type: REMOVE_PROJECT,
+      id
+    }
+
+    expect(removeProject(id)).toEqual(expectedValue)
   })
 })
