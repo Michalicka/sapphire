@@ -44,7 +44,7 @@ export const putProjects = fetchLoggedEntity.bind(
     request: PUT_PROJECTS_REQUEST,
     success: [
       () => put(changeProjectsErrors({})),
-      (response, action) => put(editProject(action.id, action.payload)),
+      (response, action) => put(editProject(action.urlParams.id, action.payload)),
       () => put(changeModal('editProject', { show: false }))
     ],
     error: errors => changeProjectsErrors(errors),

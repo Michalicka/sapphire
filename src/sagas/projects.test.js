@@ -171,7 +171,7 @@ describe('projects saga', () => {
       expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
-      expect(gen.next().value).toEqual(put(editProject(fakeAction.id, fakeAction.payload)))
+      expect(gen.next().value).toEqual(put(editProject(fakeAction.urlParams.id, fakeAction.payload)))
       expect(gen.next().value).toEqual(put(changeModal('editProject', { show: false })))
       expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
@@ -239,7 +239,7 @@ describe('projects saga', () => {
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
     })
 
-    it('should return putProjects authentication error flow', () => {
+    it('should return deleteProjects authentication error flow', () => {
       const errorBody = {
         response: {
           status: 401
