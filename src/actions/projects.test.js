@@ -1,6 +1,6 @@
 
-import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT, PUT_PROJECTS_REQUEST, EDIT_PROJECT, REMOVE_PROJECT } from '../actionTypes/projects'
-import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, removeProject } from './projects'
+import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT, PUT_PROJECTS_REQUEST, EDIT_PROJECT, REMOVE_PROJECT, DELETE_PROJECTS_REQUEST } from '../actionTypes/projects'
+import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, removeProject, deleteProjectsRequest } from './projects'
 
 describe('projects actions', () => {
   it('getProjectsRequest', () => {
@@ -107,5 +107,17 @@ describe('projects actions', () => {
     }
 
     expect(removeProject(id)).toEqual(expectedValue)
+  })
+
+  it('deleteProjectRequest', () => {
+    const urlParams = {
+      id: 1
+    }
+    const expectedValue = {
+      type: DELETE_PROJECTS_REQUEST,
+      urlParams
+    }
+
+    expect(deleteProjectsRequest(urlParams)).toEqual(expectedValue)
   })
 })
