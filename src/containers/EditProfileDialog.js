@@ -5,7 +5,7 @@ import { changeModal } from '../actions/modal'
 import EditProfileDialog from '../components/EditProfileDialog'
 
 export const mapStateToProps = state => ({
-  open: state.modal === 'editProfile',
+  open: state.modal.editProfile.show,
   errors: state.user.errors,
   loading: state.user.loading,
   id: state.user.data.id,
@@ -17,7 +17,7 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   send: (values, urlParams) => dispatch(putUserRequest(values, urlParams)),
-  handleClose: () => dispatch(changeModal('')),
+  handleClose: () => dispatch(changeModal('editProfile', { show: false })),
   changeErrors: () => dispatch(changeUserErrors({}))
 })
 

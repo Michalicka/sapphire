@@ -14,6 +14,7 @@ export class MoreButton extends React.Component {
     }
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.itemClick = this.itemClick.bind(this)
   }
 
   handleClose() {
@@ -25,7 +26,7 @@ export class MoreButton extends React.Component {
   }
 
   itemClick(clickHandler) {
-    clickHandler()
+    clickHandler(...this.props.args)
     this.handleClose()
   }
 
@@ -46,8 +47,8 @@ export class MoreButton extends React.Component {
         >
           {this.props.options.map(option => (
             <MenuItem
-              key={option.key}
-              onClick={this.itemClick.bind(this, option.clickHandler)}
+              key={option.title}
+              onClick={() => this.itemClick(option.clickHandler)}
             >{option.title}</MenuItem>
           ))}
         </Menu>
@@ -57,7 +58,8 @@ export class MoreButton extends React.Component {
 }
 
 MoreButton.propTypes = {
-  options: PropTypes.array.isRequired
+  options: PropTypes.array.isRequired,
+  args: PropTypes.array
 }
 
 export default MoreButton

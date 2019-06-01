@@ -14,6 +14,7 @@ export const CardItem = ({ item, options }) => {
         action={
           <MoreButton
             options={options}
+            args={[item.id]}
           />
         }
         title={item.name}

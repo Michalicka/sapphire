@@ -18,7 +18,7 @@ export class CardContainer extends React.Component {
   }
 
   render() {
-    const { items, options, loading, classes } = this.props
+    const { items, loading, classes, options } = this.props
     return (
       <Grid
         container
@@ -59,10 +59,10 @@ export class CardContainer extends React.Component {
 
 CardContainer.propTypes = {
   items: PropTypes.array.isRequired,
-  options: PropTypes.array.isRequired,
   getItems: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired
 }
 
 export default withStyles(styles)(CardContainer)

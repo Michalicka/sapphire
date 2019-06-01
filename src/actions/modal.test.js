@@ -4,12 +4,16 @@ import { CHANGE_MODAL } from '../actionTypes/modal'
 
 describe('modal actions', () => {
   it('changeModal', () => {
-    const value = 'modal'
+    const key = 'modal'
+    const data = {
+      show: true
+    }
     const expectedValue = {
       type: CHANGE_MODAL,
-      value
+      key,
+      data
     }
 
-    expect(changeModal(value)).toEqual(expectedValue)
+    expect(changeModal(key, data)).toEqual(expectedValue)
   })
 })

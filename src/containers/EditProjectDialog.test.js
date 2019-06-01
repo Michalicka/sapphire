@@ -1,25 +1,33 @@
 
-import { mapStateToProps, mapDispatchToProps } from './CreateProjectDialog'
+import { mapStateToProps, mapDispatchToProps } from './EditProjectDialog'
 import { changeModal } from '../actions/modal'
-import { postProjectRequest, changeProjectsErrors } from '../actions/projects'
+import { putProjectsRequest, changeProjectsErrors } from '../actions/projects'
 
-describe('CreateProjectDialog containers', () => {
+describe('EditProjectDialog containers', () => {
   it('should return mapped state props', () => {
     const state = {
       modal: {
-        createProject: {
-          show: true
+        editProject: {
+          show: false,
+          id: 1
         }
       },
       projects: {
         errors: {},
-        loading: true
+        loading: true,
+        data: [
+          {
+            id: 1,
+            name: 'project',
+            description: 'description'
+          }
+        ]
       }
     }
 
     const mappedState = mapStateToProps(state)
 
-    expect(mappedState.open).toBe(true)
+    expect(mappedState.open).toBe(false)
     expect(mappedState.errors).toEqual(state.projects.errors)
     expect(mappedState.loading).toBe(state.projects.loading)
   })
@@ -30,14 +38,17 @@ describe('CreateProjectDialog containers', () => {
       name: 'project',
       description: 'description'
     }
+    const urlParams = {
+      id: 1
+    }
 
     const mappedAction = mapDispatchToProps(dispatch)
-    mappedAction.send(project)
+    mappedAction.send(project, urlParams)
     mappedAction.handleClose()
     mappedAction.changeErrors()
 
-    expect(dispatch.mock.calls[0][0]).toEqual(postProjectRequest(project))
-    expect(dispatch.mock.calls[1][0]).toEqual(changeModal('createProject', { show: false }))
+    expect(dispatch.mock.calls[0][0]).toEqual(putProjectsRequest(project, urlParams))
+    expect(dispatch.mock.calls[1][0]).toEqual(changeModal('editProject', { show: false }))
     expect(dispatch.mock.calls[2][0]).toEqual(changeProjectsErrors({}))
   })
 })

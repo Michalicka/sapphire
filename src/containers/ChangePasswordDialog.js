@@ -5,14 +5,14 @@ import { changeModal } from '../actions/modal'
 import ChangePasswordDialog from '../components/ChangePasswordDialog'
 
 export const mapStateToProps = state => ({
-  open: state.modal === 'changePassword',
+  open: state.modal.changePassword.show,
   errors: state.user.errors,
   loading: state.user.loading
 })
 
 export const mapDispatchToProps = dispatch => ({
   send: (values) => dispatch(putPasswordsRequest(values)),
-  handleClose: () => dispatch(changeModal('')),
+  handleClose: () => dispatch(changeModal('changePassword', { show: false })),
   changeErrors: () => dispatch(changeUserErrors({}))
 })
 

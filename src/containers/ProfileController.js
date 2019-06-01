@@ -11,9 +11,9 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(deleteTokensRequest()),
-  editProfile: () => dispatch(changeModal('editProfile')),
-  changePassword: () => dispatch(changeModal('changePassword')),
-  changeAvatar: () => dispatch(changeModal('changeAvatar'))
+  editProfile: () => dispatch(changeModal('editProfile', { show: true })),
+  changePassword: () => dispatch(changeModal('changePassword', { show: true })),
+  changeAvatar: () => dispatch(changeModal('changeAvatar', { show: true }))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileController)

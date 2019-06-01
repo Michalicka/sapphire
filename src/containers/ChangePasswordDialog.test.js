@@ -6,7 +6,11 @@ import { changeModal } from '../actions/modal'
 describe('ChangePasswordDialog container', () => {
   it('should return expected mapped state props', () => {
     const state = {
-      modal: 'changePassword',
+      modal: {
+        changePassword: {
+          show: true
+        }
+      },
       user: {
         errors: {},
         loading: false
@@ -34,7 +38,7 @@ describe('ChangePasswordDialog container', () => {
     mappedActions.changeErrors()
 
     expect(dispatch.mock.calls[0][0]).toEqual(putPasswordsRequest(values))
-    expect(dispatch.mock.calls[1][0]).toEqual(changeModal(''))
+    expect(dispatch.mock.calls[1][0]).toEqual(changeModal('changePassword', { show: false }))
     expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors({}))
   })
 })

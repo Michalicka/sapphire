@@ -29,7 +29,7 @@ export const postProjects = fetchLoggedEntity.bind(
     success: [
       () => put(changeProjectsErrors({})),
       ({ data }) => put(pushProject(data.data)),
-      () => put(changeModal(''))
+      () => put(changeModal('createProject', { show: false }))
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)
@@ -45,7 +45,7 @@ export const putProjects = fetchLoggedEntity.bind(
     success: [
       () => put(changeProjectsErrors({})),
       (response, action) => put(editProject(action.id, action.payload)),
-      () => put(changeModal(''))
+      () => put(changeModal('editProject', { show: false }))
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)

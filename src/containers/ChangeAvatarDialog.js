@@ -5,14 +5,14 @@ import { changeModal } from '../actions/modal'
 import ChangeAvatarDialog from '../components/ChangeAvatarDialog'
 
 export const mapStateToProps = state => ({
-  open: state.modal === 'changeAvatar',
+  open: state.modal.changeAvatar.show,
   errors: state.user.errors,
   loading: state.user.loading
 })
 
 export const mapDispatchToProps = dispatch => ({
   send: (values) => dispatch(postAvatarRequest(values)),
-  handleClose: () => dispatch(changeModal('')),
+  handleClose: () => dispatch(changeModal('changeAvatar', { show: false })),
   changeErrors: () => dispatch(changeUserErrors({}))
 })
 

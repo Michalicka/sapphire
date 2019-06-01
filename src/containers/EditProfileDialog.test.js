@@ -6,7 +6,11 @@ import { changeModal } from '../actions/modal'
 describe('EditProfileDialog container', () => {
   it('should return expected mapped state props', () => {
     const state = {
-      modal: 'editProfile',
+      modal: {
+        editProfile: {
+          show: true
+        }
+      },
       user: {
         data: {
           id: 1,
@@ -47,7 +51,7 @@ describe('EditProfileDialog container', () => {
     mappedActions.changeErrors()
 
     expect(dispatch.mock.calls[0][0]).toEqual(putUserRequest(values, urlParams))
-    expect(dispatch.mock.calls[1][0]).toEqual(changeModal(''))
+    expect(dispatch.mock.calls[1][0]).toEqual(changeModal('editProfile', { show: false }))
     expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors({}))
   })
 })

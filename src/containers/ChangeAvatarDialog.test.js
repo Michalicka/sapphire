@@ -6,7 +6,11 @@ import { changeModal } from '../actions/modal'
 describe('ChangeAvatarDialog container', () => {
   it('should return expected mapped state props', () => {
     const state = {
-      modal: 'changeAvatar',
+      modal: {
+        changeAvatar: {
+          show: true
+        }
+      },
       user: {
         errors: {},
         loading: false
@@ -34,7 +38,7 @@ describe('ChangeAvatarDialog container', () => {
     mappedActions.changeErrors()
 
     expect(dispatch.mock.calls[0][0]).toEqual(postAvatarRequest(values))
-    expect(dispatch.mock.calls[1][0]).toEqual(changeModal(''))
+    expect(dispatch.mock.calls[1][0]).toEqual(changeModal('changeAvatar', { show: false }))
     expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors({}))
   })
 })

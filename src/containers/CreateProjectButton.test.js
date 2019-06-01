@@ -9,6 +9,6 @@ describe('CreateProjectButton', () => {
 
     mappedAction.clickHandler()
 
-    expect(dispatch.mock.calls[0][0]).toEqual(changeModal('createProject'))
+    expect(dispatch.mock.calls[0][0]).toEqual(changeModal('createProject', { show: true }))
   })
 })

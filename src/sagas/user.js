@@ -47,7 +47,7 @@ export const putUsers = fetchLoggedEntity.bind(
     request: PUT_USERS_REQUEST,
     success: [
       (response, action) => put(mergeUserData(action.payload)),
-      () => put(changeModal('')),
+      () => put(changeModal('editProfile', { show: false })),
       () => put(changeUserErrors({}))
     ],
     error: errors => changeUserErrors(errors),
@@ -62,7 +62,7 @@ export const putPasswords = fetchLoggedEntity.bind(
   {
     request: PUT_PASSWORDS_REQUEST,
     success: [
-      () => put(changeModal('')),
+      () => put(changeModal('changePassword', { show: false })),
       () => put(changeUserErrors({}))
     ],
     error: errors => changeUserErrors(errors),
@@ -78,7 +78,7 @@ export const postAvatar = fetchLoggedEntity.bind(
     request: POST_AVATAR_REQUEST,
     success: [
       (response, action) => put(mergeUserData({ avatar: action.payload.photo })),
-      () => put(changeModal('')),
+      () => put(changeModal('changeAvatar', { show: false })),
       () => put(changeUserErrors({}))
     ],
     error: errors => changeUserErrors(errors),
