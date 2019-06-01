@@ -27,11 +27,27 @@ export class Search extends React.Component {
     super(props)
     this.state = {
       items: [...props.selectedItems],
+      itemsLoaded: false,
       focus: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleFocus = this.handleFocus.bind(this)
     this.searchChange = this.searchChange.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.getItems(this.props.id)
+  }
+
+  componentDidUpdate() {
+    const { items, itemsLoaded } = this.state
+    if (!itemsLoaded) {
+      const { selectedItems } = this.props
+      const itemsEqual = selectedItems.every((item, index) => item === items[index]) && selectedItems.length === items.length
+      if (!itemsEqual) {
+        this.setState({ items: [...selectedItems], itemsLoaded: true })
+      }
+    }
   }
 
   setValue() {
@@ -108,7 +124,9 @@ Search.propTypes = {
   helperText: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  getNewItems: PropTypes.func.isRequired
+  getNewItems: PropTypes.func.isRequired,
+  getItems: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired
 }
 
 export default withStyles(styles)(Search)

@@ -14,7 +14,9 @@ describe('Search component', () => {
       label: 'search',
       setFieldValue: jest.fn(),
       setFieldTouched: jest.fn(),
+      getItems: jest.fn(),
       getNewItems: jest.fn(),
+      id: 1,
       loading: false,
       error: false,
       helperText: '',
@@ -85,18 +87,36 @@ describe('Search component', () => {
   })
 
   it('should change state and call setValue on handleChange method and add item', () => {
-    wrapper.instance().handleChange(1)
+    wrapper.setState({ itemsLoaded: true }, () => {
+      wrapper.update()
+      wrapper.instance().handleChange(1)
 
-    expect(wrapper.state('items')).toEqual([...props.selectedItems, props.items[0]])
-    expect(props.setFieldValue.mock.calls.length).toBe(1)
-    expect(props.setFieldTouched.mock.calls.length).toBe(1)
+      expect(wrapper.state('items')).toEqual([...props.selectedItems, props.items[0]])
+      expect(props.setFieldValue.mock.calls.length).toBe(1)
+      expect(props.setFieldTouched.mock.calls.length).toBe(1)
+    })
   })
 
   it('should change state and call setValue on handleChange method and remove item', () => {
-    wrapper.instance().handleChange(2)
+    wrapper.setState({ itemsLoaded: true }, () => {
+      wrapper.instance().handleChange(2)
+  
+      expect(wrapper.state('items')).toEqual([])
+      expect(props.setFieldValue.mock.calls.length).toBe(1)
+      expect(props.setFieldTouched.mock.calls.length).toBe(1)
+    })
+  })
 
-    expect(wrapper.state('items')).toEqual([])
-    expect(props.setFieldValue.mock.calls.length).toBe(1)
-    expect(props.setFieldTouched.mock.calls.length).toBe(1)
+  it('should call getItems on mount', () => {
+    expect(props.getItems.mock.calls[0][0]).toBe(props.id)
+  })
+
+  it('should update state on props change', () => {
+    const newItems = [...props.selectedItems, props.items[0]]
+    wrapper.setProps({ selectedItems: newItems })
+    wrapper.update()
+
+    expect(wrapper.state('itemsLoaded')).toBe(true)
+    expect(wrapper.state('items')).toEqual(newItems)
   })
 })
