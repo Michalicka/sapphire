@@ -13,7 +13,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit / 2
   },
   avatar: {
-    backgroundColor: theme.palette.secondary[400]
+    backgroundColor: theme.palette.secondary.main
   },
   link: {
     textDecoration: 'none',
