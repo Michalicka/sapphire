@@ -1,11 +1,11 @@
 
-import { getProjects, postProjects, putProjects, deleteProjects } from './projects'
+import { getProjects, postProjects, putProjects, deleteProjects, getProjectMembers } from './projects'
 import { put, take, call } from 'redux-saga/effects'
-import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, deleteProjectsRequest, removeProject } from '../actions/projects'
+import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, deleteProjectsRequest, removeProject, getProjectMembersRequest } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 import { putTokensRequest } from '../actions/tokens'
-import { projects as projectsLink, project as projectLink } from '../apiLinks'
-import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST, PUT_PROJECTS_REQUEST, DELETE_PROJECTS_REQUEST } from '../actionTypes/projects'
+import { projects as projectsLink, project as projectLink, projectMembers as projectMembersLink } from '../apiLinks'
+import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST, PUT_PROJECTS_REQUEST, DELETE_PROJECTS_REQUEST, GET_PROJECT_MEMBERS_REQUEST } from '../actionTypes/projects'
 import { headers, formatErrors } from './utils'
 import axios from 'axios'
 
@@ -86,7 +86,7 @@ describe('projects saga', () => {
       gen = postProjects()
     })
 
-    it('shloud return postProjects success flow', () => {
+    it('should return postProjects success flow', () => {
       const response = {
         data: {
           data: {
@@ -106,7 +106,7 @@ describe('projects saga', () => {
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
     })
 
-    it('shloud return postProjects error flow', () => {
+    it('should return postProjects error flow', () => {
       const errors = {
         name: ['error'],
         description: ['error']
@@ -160,7 +160,7 @@ describe('projects saga', () => {
       gen = putProjects()
     })
 
-    it('shloud return putProjects success flow', () => {
+    it('should return putProjects success flow', () => {
       const response = {
         data: {
           data: {}
@@ -177,7 +177,7 @@ describe('projects saga', () => {
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
     })
 
-    it('shloud return putProjects error flow', () => {
+    it('should return putProjects error flow', () => {
       const errors = {
         name: ['error'],
         description: ['error']
@@ -227,7 +227,7 @@ describe('projects saga', () => {
       gen = deleteProjects()
     })
 
-    it('shloud return deleteProjects success flow', () => {
+    it('should return deleteProjects success flow', () => {
       const response = {}
 
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
@@ -235,6 +235,28 @@ describe('projects saga', () => {
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
       expect(gen.next().value).toEqual(put(removeProject(fakeAction.urlParams.id)))
+      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
+    })
+
+    it('should return deleteProjects error flow', () => {
+      const errors = {
+        name: ['error'],
+        description: ['error']
+      }
+      const errorBody = {
+        response: {
+          status: 422,
+          data: {
+            errors
+          }
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
       expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
     })
@@ -252,6 +274,77 @@ describe('projects saga', () => {
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
       expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
+    })
+  })
+
+  describe('getProjectMembers', () => {
+    let gen
+    const urlParams = {
+      id: 1
+    }
+    const fakeAction = getProjectMembersRequest(urlParams)
+    const apiCall = call(axios.get, projectMembersLink(fakeAction.urlParams), { headers: headers() })
+
+    beforeEach(() => {
+      gen = getProjectMembers()
+    })
+
+    it('should return getProjectMembers success flow', () => {
+      const response = {
+        data: {
+          data: {
+            id: 1,
+            name: 'member',
+            email: 'member@member.com',
+            avatar: 'https://www.google.com/'
+          }
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next().value).toEqual(put(editProject(fakeAction.urlParams.id, response.data.data)))
+      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
+    })
+
+    it('should return deleteProjects error flow', () => {
+      const errors = {
+        name: ['error'],
+        description: ['error']
+      }
+      const errorBody = {
+        response: {
+          status: 422,
+          data: {
+            errors
+          }
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
+      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
+    })
+
+    it('should return getProjectMembers authentication error flow', () => {
+      const errorBody = {
+        response: {
+          status: 401
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
+      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
     })
   })
 })
