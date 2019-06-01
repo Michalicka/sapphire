@@ -1,6 +1,6 @@
 
 import { mapStateToProps, mapDispatchToProps } from './ProjectsContainer'
-import { getProjectsRequest } from '../actions/projects'
+import { getProjectsRequest, deleteProjectsRequest } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 
 describe('ProjectsContainer container', () => {
@@ -21,9 +21,11 @@ describe('ProjectsContainer container', () => {
     const mappedActions = mapDispatchToProps(dispatch)
 
     mappedActions.getItems()
-    mappedActions.options[0].clickHandler(1)
+    mappedActions.options[0].clickHandler(id)
+    mappedActions.options[1].clickHandler(id)
 
     expect(dispatch.mock.calls[0][0]).toEqual(getProjectsRequest())
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal('editProject', { show: true, id }))
+    expect(dispatch.mock.calls[2][0]).toEqual(deleteProjectsRequest({ id }))
   })
 })

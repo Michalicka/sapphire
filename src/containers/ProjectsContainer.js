@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import CardContainer from '../components/CardContainer'
-import { getProjectsRequest } from '../actions/projects'
+import { getProjectsRequest, deleteProjectsRequest } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 
 export const mapStateToProps = state => ({
@@ -15,6 +15,10 @@ export const mapDispatchToProps = dispatch => ({
     {
       title: 'Edit',
       clickHandler: id => dispatch(changeModal('editProject', { show: true, id }))
+    },
+    {
+      title: 'Delete',
+      clickHandler: id => dispatch(deleteProjectsRequest({ id }))
     }
   ]
 })
