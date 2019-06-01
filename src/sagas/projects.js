@@ -1,8 +1,8 @@
 
-import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject, editProject } from '../actions/projects'
+import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject, editProject, removeProject } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 import { projects as projectsLink, project as projectLink } from '../apiLinks'
-import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST, PUT_PROJECTS_REQUEST } from '../actionTypes/projects'
+import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST, PUT_PROJECTS_REQUEST, DELETE_PROJECTS_REQUEST } from '../actionTypes/projects'
 import { fetchLoggedEntity } from './utils'
 import { put } from 'redux-saga/effects'
 
@@ -46,6 +46,21 @@ export const putProjects = fetchLoggedEntity.bind(
       () => put(changeProjectsErrors({})),
       (response, action) => put(editProject(action.id, action.payload)),
       () => put(changeModal('editProject', { show: false }))
+    ],
+    error: errors => changeProjectsErrors(errors),
+    loading: value => toggleProjectsLoading(value)
+  }
+)
+
+export const deleteProjects = fetchLoggedEntity.bind(
+  null,
+  'delete',
+  projectLink,
+  {
+    request: DELETE_PROJECTS_REQUEST,
+    success: [
+      () => put(changeProjectsErrors({})),
+      (response, action) => put(removeProject(action.urlParams.id))
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)

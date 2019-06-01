@@ -1,11 +1,11 @@
 
-import { getProjects, postProjects, putProjects } from './projects'
+import { getProjects, postProjects, putProjects, deleteProjects } from './projects'
 import { put, take, call } from 'redux-saga/effects'
-import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject } from '../actions/projects'
+import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, deleteProjectsRequest, removeProject } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 import { putTokensRequest } from '../actions/tokens'
 import { projects as projectsLink, project as projectLink } from '../apiLinks'
-import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST, PUT_PROJECTS_REQUEST } from '../actionTypes/projects'
+import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST, PUT_PROJECTS_REQUEST, DELETE_PROJECTS_REQUEST } from '../actionTypes/projects'
 import { headers, formatErrors } from './utils'
 import axios from 'axios'
 
@@ -212,6 +212,46 @@ describe('projects saga', () => {
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
       expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
+    })
+  })
+
+  describe('deleteProjects', () => {
+    let gen
+    const urlParams = {
+      id: 1
+    }
+    const fakeAction = deleteProjectsRequest(urlParams)
+    const apiCall = call(axios.delete, projectLink(fakeAction.urlParams), { headers: headers() })
+
+    beforeEach(() => {
+      gen = deleteProjects()
+    })
+
+    it('shloud return deleteProjects success flow', () => {
+      const response = {}
+
+      expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next().value).toEqual(put(removeProject(fakeAction.urlParams.id)))
+      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
+    })
+
+    it('should return putProjects authentication error flow', () => {
+      const errorBody = {
+        response: {
+          status: 401
+        }
+      }
+
+      expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
+      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next().value).toEqual(apiCall)
+      expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
+      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
     })
   })
 })

@@ -2,7 +2,7 @@
 import { all, fork } from 'redux-saga/effects'
 import { postUsers, getMe, putUsers, putPasswords, postAvatar } from './user'
 import { postTokens, putTokensWatch, refreshToken, deleteTokens } from './tokens'
-import { getProjects, postProjects, putProjects } from './projects'
+import { getProjects, postProjects, putProjects, deleteProjects } from './projects'
 
 export default function* rootSaga() {
   yield all([
@@ -17,6 +17,7 @@ export default function* rootSaga() {
     fork(putUsers),
     fork(putPasswords),
     fork(postAvatar),
-    fork(putProjects)
+    fork(putProjects),
+    fork(deleteProjects)
   ])
 }
