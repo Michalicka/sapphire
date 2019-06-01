@@ -1,5 +1,5 @@
 
-import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT, EDIT_PROJECT, REMOVE_PROJECT, PUT_PROJECTS_REQUEST, DELETE_PROJECTS_REQUEST } from '../actionTypes/projects'
+import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT, EDIT_PROJECT, REMOVE_PROJECT, PUT_PROJECTS_REQUEST, DELETE_PROJECTS_REQUEST, GET_PROJECT_MEMBERS_REQUEST } from '../actionTypes/projects'
 
 export function getProjectsRequest() {
   return {
@@ -68,6 +68,13 @@ export function removeProject(id) {
 export function deleteProjectsRequest(urlParams) {
   return {
     type: DELETE_PROJECTS_REQUEST,
+    urlParams
+  }
+}
+
+export function getProjectMembersRequest(urlParams) {
+  return {
+    type: GET_PROJECT_MEMBERS_REQUEST,
     urlParams
   }
 }
