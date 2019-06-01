@@ -40,7 +40,7 @@ describe('SearchList component', () => {
       }
     ],
     handleClick: jest.fn(),
-    focus: true,
+    focus: true
   }
 
   it('should render items when items length is not 0', () => {

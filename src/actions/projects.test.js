@@ -1,6 +1,6 @@
 
-import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT, PUT_PROJECTS_REQUEST, EDIT_PROJECT, REMOVE_PROJECT, DELETE_PROJECTS_REQUEST, GET_PROJECT_MEMBERS_REQUEST } from '../actionTypes/projects'
-import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, removeProject, deleteProjectsRequest, getProjectMembersRequest } from './projects'
+import { GET_PROJECTS_REQUEST, CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, POST_PROJECTS_REQUEST, PUSH_PROJECT, PUT_PROJECTS_REQUEST, EDIT_PROJECT, REMOVE_PROJECT, DELETE_PROJECTS_REQUEST, GET_PROJECT_MEMBERS_REQUEST, PUT_PROJECT_MEMBERS_REQUEST } from '../actionTypes/projects'
+import { getProjectsRequest, changeProjectsData, changeProjectsErrors, toggleProjectsLoading, postProjectRequest, pushProject, putProjectsRequest, editProject, removeProject, deleteProjectsRequest, getProjectMembersRequest, putProjectMembersRequest } from './projects'
 
 describe('projects actions', () => {
   it('getProjectsRequest', () => {
@@ -131,5 +131,21 @@ describe('projects actions', () => {
     }
 
     expect(getProjectMembersRequest(urlParams)).toEqual(expectedValue)
+  })
+
+  it('putProjectMembersRequest', () => {
+    const urlParams = {
+      id: 1
+    }
+    const payload = {
+      members: [1, 2]
+    }
+    const expectedValue = {
+      type: PUT_PROJECT_MEMBERS_REQUEST,
+      urlParams,
+      payload
+    }
+
+    expect(putProjectMembersRequest(urlParams, payload)).toEqual(expectedValue)
   })
 })
