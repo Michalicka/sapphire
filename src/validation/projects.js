@@ -7,3 +7,7 @@ export const PostProject = Yup.object().shape({
     .required(messages.required)
     .required(messages.required)
 })
+
+export const PutProjectMembers = Yup.object().shape({
+  members: Yup.array()
+})
