@@ -12,6 +12,7 @@ import { fieldProps } from '../utils'
 import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ImageInput from './ImageInput'
+import ProjectMembersSearch from '../containers/ProjectMembersSearch'
 
 const styles = theme => ({
   dialog: {
@@ -59,6 +60,16 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
                         key={field.name}
                         className={classes.field}
                         {...formFieldProps(field.name, field.type)}
+                        setFieldValue={formData.setFieldValue}
+                        setFieldTouched={formData.setFieldTouched}
+                      />
+                    )
+                  } else if (field.type === 'projectMembersSearch') {
+                    return (
+                      <ProjectMembersSearch
+                        key={field.name}
+                        className={classes.field}
+                        {...formFieldProps(field.name)}
                         setFieldValue={formData.setFieldValue}
                         setFieldTouched={formData.setFieldTouched}
                       />
