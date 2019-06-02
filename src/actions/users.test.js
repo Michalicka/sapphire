@@ -51,12 +51,12 @@ describe('users action', () => {
   })
 
   it('toggleUsersLoading', () => {
-    const value = true
+    const loading = true
     const expectedValue = {
       type: TOGGLE_USERS_LOADING,
-      value
+      loading
     }
 
-    expect(toggleUsersLoading(value)).toEqual(expectedValue)
+    expect(toggleUsersLoading(loading)).toEqual(expectedValue)
   })
 })
