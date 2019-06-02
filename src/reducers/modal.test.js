@@ -18,6 +18,9 @@ describe('modal reducer', () => {
     },
     changePassword: {
       show: false
+    },
+    editProjectMembers: {
+      show: false
     }
   }
   it('should return initialState', () => {

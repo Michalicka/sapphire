@@ -18,7 +18,7 @@ export const mapDispatchToProps = dispatch => ({
     },
     {
       title: 'Change members',
-      clickHandler: id => dispatch(changeModal('editMembers', { show: true, id }))
+      clickHandler: id => dispatch(changeModal('editProjectMembers', { show: true, id }))
     },
     {
       title: 'Delete',

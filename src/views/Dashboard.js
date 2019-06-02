@@ -17,6 +17,7 @@ import { getMeRequest } from '../actions/user'
 import EditProfileDialog from '../containers/EditProfileDialog'
 import ChangePasswordDialog from '../containers/ChangePasswordDialog'
 import ChangeAvatarDialog from '../containers/ChangeAvatarDialog'
+import EditProjectMembersDialog from '../containers/EditProjectMembersDialog'
 
 const styles = theme => ({
   appBar: {
@@ -89,6 +90,7 @@ export class Dashboard extends React.Component {
         <EditProfileDialog />
         <ChangePasswordDialog />
         <ChangeAvatarDialog />
+        <EditProjectMembersDialog />
       </React.Fragment>
     )
   }

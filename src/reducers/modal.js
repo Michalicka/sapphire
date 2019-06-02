@@ -16,6 +16,9 @@ const initialState = {
   },
   changePassword: {
     show: false
+  },
+  editProjectMembers: {
+    show: false
   }
 }
 
