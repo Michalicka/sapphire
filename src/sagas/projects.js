@@ -75,7 +75,7 @@ export const getProjectMembers = fetchLoggedEntity.bind(
     request: GET_PROJECT_MEMBERS_REQUEST,
     success: [
       () => put(changeProjectsErrors({})),
-      (response, action) => put(editProject(action.urlParams.id, response.data.data))
+      (response, action) => put(editProject(action.urlParams.id, { members: response.data.data }))
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)
@@ -90,7 +90,8 @@ export const putProjectMembers = fetchLoggedEntity.bind(
     request: PUT_PROJECT_MEMBERS_REQUEST,
     success: [
       () => put(changeProjectsErrors({})),
-      () => put(changeModal('editProjectMembers', { show: false }))
+      () => put(changeModal('editProjectMembers', { show: false })),
+      (respone, { urlParams }) => put(editProject(urlParams.id, { members: undefined }))
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)

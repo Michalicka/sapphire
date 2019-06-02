@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import EditProjectMembersDialog from '../components/EditProjectMembersDialog'
-import { putProjectMembersRequest, changeProjectsErrors } from '../actions/projects'
+import { putProjectMembersRequest, changeProjectsErrors, editProject } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 
 export const mapStateToProps = state => ({
@@ -14,7 +14,8 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
   send: (values, urlParams) => dispatch(putProjectMembersRequest(urlParams, values)),
   handleClose: () => dispatch(changeModal('editProjectMembers', { show: false })),
-  changeErrors: () => dispatch(changeProjectsErrors({}))
+  changeErrors: () => dispatch(changeProjectsErrors({})),
+  changeProjectMembers: (id, members) => dispatch(editProject(id, { members }))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProjectMembersDialog)

@@ -1,5 +1,5 @@
 
-import { getUsersRequest } from '../actions/users'
+import { getUsersRequest, changeUsersData } from '../actions/users'
 import { getProjectMembersRequest } from '../actions/projects'
 import { mapStateToProps, mapDispatchToProps } from './ProjectMembersSearch'
 
@@ -7,7 +7,7 @@ describe('ProjectMembersSearch container', () => {
   it('should return expected mapped state', () => {
     const state = {
       modal: {
-        editMembers: {
+        editProjectMembers: {
           id: 1
         }
       },
@@ -52,7 +52,7 @@ describe('ProjectMembersSearch container', () => {
       }
     }
     const mappedState = mapStateToProps(state)
-    const project = state.projects.data.find(item => item.id === state.modal.editMembers.id)
+    const project = state.projects.data.find(item => item.id === state.modal.editProjectMembers.id)
 
     expect(mappedState.loading).toBe(state.projects.loading)
     expect(mappedState.items).toEqual(state.users.data)
@@ -67,9 +67,11 @@ describe('ProjectMembersSearch container', () => {
     const mappedAction = mapDispatchToProps(dispatch)
 
     mappedAction.getItems(id)
-    expect(dispatch.mock.calls[0][0]).toEqual(getProjectMembersRequest({ id }))
-
     mappedAction.getNewItems(name)
+    mappedAction.changeItems([])
+
+    expect(dispatch.mock.calls[0][0]).toEqual(getProjectMembersRequest({ id }))
     expect(dispatch.mock.calls[1][0]).toEqual(getUsersRequest(name))
+    expect(dispatch.mock.calls[2][0]).toEqual(changeUsersData([]))
   })
 })

@@ -1,6 +1,6 @@
 
 import { mapStateToProps, mapDispatchToProps } from './EditProjectMembersDialog'
-import { putProjectMembersRequest, changeProjectsErrors } from '../actions/projects'
+import { putProjectMembersRequest, changeProjectsErrors, editProject } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 
 describe('EditProjectMembersDialog container', () => {
@@ -53,9 +53,11 @@ describe('EditProjectMembersDialog container', () => {
     mappedActions.send(values, urlParams)
     mappedActions.handleClose()
     mappedActions.changeErrors()
+    mappedActions.changeProjectMembers(urlParams.id, [])
 
     expect(dispatch.mock.calls[0][0]).toEqual(putProjectMembersRequest(urlParams, values))
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal('editProjectMembers', { show: false }))
     expect(dispatch.mock.calls[2][0]).toEqual(changeProjectsErrors({}))
+    expect(dispatch.mock.calls[3][0]).toEqual(editProject(urlParams.id, { members: [] }))
   })
 })

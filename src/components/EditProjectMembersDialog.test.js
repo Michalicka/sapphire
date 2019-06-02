@@ -9,6 +9,7 @@ describe('EditProjectDialog component', () => {
     send: jest.fn(),
     open: true,
     handleClose: jest.fn(),
+    changeProjectMembers: jest.fn(),
     errors: {},
     loading: false,
     id: 1,

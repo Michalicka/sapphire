@@ -11,7 +11,7 @@ const fields = [
   }
 ]
 
-export const EditProjectMembersDialog = ({ open, handleClose, errors, send, loading, changeErrors, id }) => {
+export const EditProjectMembersDialog = ({ open, handleClose, errors, send, loading, changeErrors, id, changeProjectMembers }) => {
   return (
     <FormDialog
       title="Edit members"
@@ -19,6 +19,7 @@ export const EditProjectMembersDialog = ({ open, handleClose, errors, send, load
       send={values => send(values, { id })}
       open={open}
       handleClose={() => {
+        changeProjectMembers(id, [])
         changeErrors()
         handleClose()
       }}
@@ -37,7 +38,8 @@ EditProjectMembersDialog.propTypes = {
   errors: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   changeErrors: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired
+  changeProjectMembers: PropTypes.func.isRequired,
+  id: PropTypes.number
 }
 
 export default EditProjectMembersDialog

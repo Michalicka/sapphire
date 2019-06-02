@@ -16,6 +16,7 @@ describe('Search component', () => {
       setFieldTouched: jest.fn(),
       getItems: jest.fn(),
       getNewItems: jest.fn(),
+      changeItems: jest.fn(),
       id: 1,
       loading: false,
       error: false,
@@ -40,14 +41,7 @@ describe('Search component', () => {
           avatar: 'https://www.google.com/'
         }
       ],
-      selectedItems: [
-        {
-          id: 2,
-          name: 'member2',
-          email: 'member2@email.com',
-          avatar: 'https://www.google.com/'
-        }
-      ]
+      selectedItems: []
     }
     wrapper = shallow(<Search {...props} />).dive()
   })
@@ -60,6 +54,16 @@ describe('Search component', () => {
     expect(textFieldProps.error).toBe(props.error)
     expect(textFieldProps.helperText).toBe(props.helperText)
     expect(searchListProps.items).toBe(props.items)
+    wrapper.setProps({
+      selectedItems: [
+        {
+          id: 2,
+          name: 'member2',
+          email: 'member2@email.com',
+          avatar: 'https://www.google.com/'
+        }
+      ]
+    })
     expect(searchListProps.selectedItems).toEqual(props.selectedItems)
   })
 
@@ -70,20 +74,6 @@ describe('Search component', () => {
     expect(props.setFieldValue.mock.calls[0][1]).toEqual(props.selectedItems.map(item => item.id))
     expect(props.setFieldTouched.mock.calls[0][0]).toBe(props.name)
     expect(props.setFieldTouched.mock.calls[0][1]).toBe(true)
-  })
-
-  it('should call change focus onFocus the TextField', () => {
-    const textField = wrapper.find(TextField)
-
-    expect(wrapper.state('focus')).toBe(false)
-
-    textField.props().onFocus()
-
-    expect(wrapper.state('focus')).toBe(true)
-
-    textField.props().onBlur()
-
-    expect(wrapper.state('focus')).toBe(false)
   })
 
   it('should change state and call setValue on handleChange method and add item', () => {
@@ -98,13 +88,20 @@ describe('Search component', () => {
   })
 
   it('should change state and call setValue on handleChange method and remove item', () => {
-    wrapper.setState({ itemsLoaded: true }, () => {
-      wrapper.instance().handleChange(2)
-
-      expect(wrapper.state('items')).toEqual([])
-      expect(props.setFieldValue.mock.calls.length).toBe(1)
-      expect(props.setFieldTouched.mock.calls.length).toBe(1)
+    wrapper.setProps({
+      selectedItems: [
+        {
+          id: 2,
+          name: 'member2',
+          email: 'member2@email.com',
+          avatar: 'https://www.google.com/'
+        }
+      ]
     })
+    wrapper.instance().handleChange(2)
+
+    expect(props.setFieldTouched.mock.calls.length).toBe(2)
+    expect(props.setFieldValue.mock.calls.length).toBe(2)
   })
 
   it('should call getItems on mount', () => {
@@ -118,5 +115,24 @@ describe('Search component', () => {
 
     expect(wrapper.state('itemsLoaded')).toBe(true)
     expect(wrapper.state('items')).toEqual(newItems)
+  })
+
+  it('should call changeItems on onChange textfield event when target value is ""', () => {
+    wrapper.setState({ value: 'value' }, () => {
+      wrapper.find(TextField).props().onChange({ currentTarget: { value: '' } })
+      expect(props.changeItems.mock.calls[0][0]).toEqual([])
+      expect(wrapper.state('value')).toBe('')
+    })
+  })
+
+  it('should call getNewItems on onChanve textfield event when target value is "value"', () => {
+    const event = {
+      currentTarget: {
+        value: 'value'
+      }
+    }
+    wrapper.find(TextField).props().onChange(event)
+    expect(props.getNewItems.mock.calls[0][0]).toBe(event.currentTarget.value)
+    expect(wrapper.state('value')).toBe(event.currentTarget.value)
   })
 })

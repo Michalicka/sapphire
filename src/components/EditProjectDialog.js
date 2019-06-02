@@ -40,7 +40,7 @@ EditProjectDialog.propTypes = {
   loading: PropTypes.bool.isRequired,
   changeErrors: PropTypes.func.isRequired,
   initialValues: PropTypes.object.isRequired,
-  id: PropTypes.number.isRequired
+  id: PropTypes.number
 }
 
 export default EditProjectDialog

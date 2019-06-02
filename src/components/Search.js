@@ -4,17 +4,15 @@ import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import SearchList from './SearchList'
 import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { debounce } from 'debounce'
 
 const styles = theme => ({
   wrapper: {
     position: 'relative'
   },
   list: {
-    position: 'absolute',
-    top: '100%',
-    left: '0'
+    maxHeight: 125,
+    overflow: 'auto',
+    paddingBottom: 0
   },
   loader: {
     textAlign: 'center',
@@ -26,12 +24,11 @@ export class Search extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      items: [...props.selectedItems],
+      items: [],
       itemsLoaded: false,
-      focus: false
+      value: ''
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleFocus = this.handleFocus.bind(this)
     this.searchChange = this.searchChange.bind(this)
   }
 
@@ -45,7 +42,9 @@ export class Search extends React.Component {
       const { selectedItems } = this.props
       const itemsEqual = selectedItems.every((item, index) => item === items[index]) && selectedItems.length === items.length
       if (!itemsEqual) {
-        this.setState({ items: [...selectedItems], itemsLoaded: true })
+        this.setState({ items: [...selectedItems], itemsLoaded: true }, () => {
+          this.setValue()
+        })
       }
     }
   }
@@ -66,47 +65,40 @@ export class Search extends React.Component {
       const newItem = this.props.items.find(item => item.id === id)
       items.push(newItem)
     }
-    this.setState({ items })
-    this.setValue()
-  }
-
-  handleFocus(focus) {
-    this.setState({
-      focus
-    })
+    this.setState({ items }, this.setValue)
   }
 
   searchChange(e) {
-    debounce(() => {
-      this.props.getNewItems(e.target.value)
-    }, 300)
+    const { value } = e.currentTarget
+    if (value === '') {
+      this.props.changeItems([])
+    } else {
+      this.props.getNewItems(e.currentTarget.value)
+    }
+    this.setState({
+      value
+    })
   }
 
   render() {
     const { label, helperText, error, items, classes, loading } = this.props
     return (
       <div className={classes.wrapper}>
-        {loading &&
-          <div className={classes.loader}>
-            <CircularProgress color="primary" />
-          </div>
-        }
         <TextField
           type="search"
           label={label}
           error={error}
           helperText={helperText}
-          onFocus={() => this.handleFocus(true)}
-          onBlur={() => this.handleFocus(false)}
           onChange={this.searchChange}
           disabled={loading}
+          fullWidth
         />
         <SearchList
           items={items}
           selectedItems={this.state.items}
           handleClick={this.handleChange}
           className={classes.list}
-          focus={this.state.focus}
+          value={this.state.value}
         />
       </div>
     )
@@ -126,7 +118,8 @@ Search.propTypes = {
   loading: PropTypes.bool.isRequired,
   getNewItems: PropTypes.func.isRequired,
   getItems: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired
+  changeItems: PropTypes.func.isRequired,
+  id: PropTypes.number
 }
 
 export default withStyles(styles)(Search)
