@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { Formik } from 'formik'
 import { shallow } from 'enzyme'
 import ImageInput from './ImageInput'
+import ProjectMembersSearch from '../containers/ProjectMembersSearch'
 
 describe('FormDialog component', () => {
   let wrapper
@@ -21,6 +22,10 @@ describe('FormDialog component', () => {
       {
         name: 'name3',
         type: 'file'
+      },
+      {
+        name: 'name4',
+        type: 'projectMembersSearch'
       }
     ],
     send: jest.fn(),
@@ -44,7 +49,8 @@ describe('FormDialog component', () => {
   it('should render expected count of textFields', () => {
     const textFields = wrapper.find(Formik).dive().find(TextField)
     const imageInput = wrapper.find(Formik).dive().find(ImageInput)
-    expect(textFields.length + imageInput.length).toBe(props.fields.length)
+    const projectMembersSearch = wrapper.find(Formik).dive().find(ProjectMembersSearch)
+    expect(textFields.length + imageInput.length + projectMembersSearch.length).toBe(props.fields.length)
   })
 
   it('should call send function after submit form', () => {
