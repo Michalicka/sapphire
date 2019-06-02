@@ -27,4 +27,11 @@ describe('EditProjectDialog component', () => {
     expect(props.handleClose.mock.calls.length).toBe(1)
     expect(props.handleClose.mock.calls.length).toBe(1)
   })
+
+  it('should call send with expected params', () => {
+    wrapper.props().send(props.initialValues)
+
+    expect(props.send.mock.calls[0][0]).toEqual(props.initialValues)
+    expect(props.send.mock.calls[0][1]).toEqual({ id: props.id })
+  })
 })
