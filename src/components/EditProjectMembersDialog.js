@@ -11,7 +11,7 @@ const fields = [
   }
 ]
 
-export const EditProjectDialog = ({ open, handleClose, errors, send, loading, changeErrors, initialValues, id }) => {
+export const EditProjectMembersDialog = ({ open, handleClose, errors, send, loading, changeErrors, id }) => {
   return (
     <FormDialog
       title="Edit members"
@@ -23,22 +23,21 @@ export const EditProjectDialog = ({ open, handleClose, errors, send, loading, ch
         handleClose()
       }}
       validationSchema={PutProjectMembers}
-      initialValues={{ members: [] }}
+      initialValues={{ members: '' }}
       errors={errors}
       loading={loading}
     />
   )
 }
 
-EditProjectDialog.propTypes = {
+EditProjectMembersDialog.propTypes = {
   send: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   changeErrors: PropTypes.func.isRequired,
-  initialValues: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired
 }
 
-export default EditProjectDialog
+export default EditProjectMembersDialog
