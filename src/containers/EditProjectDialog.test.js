@@ -18,8 +18,7 @@ describe('EditProjectDialog containers', () => {
         data: [
           {
             id: 1,
-            name: 'project',
-            description: 'description'
+            name: 'project'
           }
         ]
       }
@@ -30,6 +29,10 @@ describe('EditProjectDialog containers', () => {
     expect(mappedState.open).toBe(false)
     expect(mappedState.errors).toEqual(state.projects.errors)
     expect(mappedState.loading).toBe(state.projects.loading)
+    expect(mappedState.initialValues).toEqual({
+      name: state.projects.data[0].name,
+      description: ''
+    })
   })
 
   it('should return mapped action props', () => {
