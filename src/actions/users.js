@@ -24,9 +24,9 @@ export function changeUsersErrors(errors) {
   }
 }
 
-export function toggleUsersLoading(value) {
+export function toggleUsersLoading(loading) {
   return {
     type: TOGGLE_USERS_LOADING,
-    value
+    loading
   }
 }
