@@ -100,7 +100,7 @@ describe('Search component', () => {
   it('should change state and call setValue on handleChange method and remove item', () => {
     wrapper.setState({ itemsLoaded: true }, () => {
       wrapper.instance().handleChange(2)
-  
+
       expect(wrapper.state('items')).toEqual([])
       expect(props.setFieldValue.mock.calls.length).toBe(1)
       expect(props.setFieldTouched.mock.calls.length).toBe(1)
