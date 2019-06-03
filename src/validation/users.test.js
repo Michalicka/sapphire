@@ -1,5 +1,5 @@
 
-import { PostUsers, Login } from './users'
+import { PostUsers, PutUsers, PutPasswords, PostAvatar } from './users'
 
 describe('users validation', () => {
   describe('PostUsers', () => {
@@ -12,45 +12,97 @@ describe('users validation', () => {
       }
       PostUsers.isValid(validValues)
         .then(isValid => {
-          expect(isValid).toBeTruthy()
+          expect(isValid).toBe(true)
           done()
         })
     })
 
     it('should not be valid PostUsers validation', done => {
-      const unvalidValues = {
+      const invalidValues = {
         name: '',
         email: '',
         password: '',
         password_confirmation: ''
       }
-      PostUsers.isValid(unvalidValues)
+      PostUsers.isValid(invalidValues)
         .then(isValid => {
-          expect(isValid).toBeFalsy()
+          expect(isValid).toBe(false)
           done()
         })
     })
   })
-  describe('Login', () => {
-    it('should be valid Login validation', done => {
+
+  describe('PutUsers', () => {
+    it('should be valid PutUsers validation', done => {
       const validValues = {
-        email: 'john@doe.com',
-        password: 'password'
+        name: 'john',
+        email: 'john@doe.com'
       }
-      Login.isValid(validValues)
+      PutUsers.isValid(validValues)
         .then(isValid => {
-          expect(isValid).toBeTruthy()
+          expect(isValid).toBe(true)
           done()
         })
     })
-    it('should not be valid Login validation', done => {
-      const unvalidValues = {
-        email: '',
-        password: ''
+
+    it('should not be valid PutUsers validation', done => {
+      const invalidValues = {
+        name: '',
+        email: ''
       }
-      Login.isValid(unvalidValues)
+      PutUsers.isValid(invalidValues)
         .then(isValid => {
-          expect(isValid).toBeFalsy()
+          expect(isValid).toBe(false)
+          done()
+        })
+    })
+  })
+
+  describe('PutPasswotds', () => {
+    it('should be valid PutUsers validation', done => {
+      const validValues = {
+        password: 'password',
+        password_confirmation: 'password'
+      }
+      PutPasswords.isValid(validValues)
+        .then(isValid => {
+          expect(isValid).toBe(true)
+          done()
+        })
+    })
+
+    it('should not be valid PutUsers validation', done => {
+      const invalidValues = {
+        password: '',
+        password_confirmation: ''
+      }
+      PutPasswords.isValid(invalidValues)
+        .then(isValid => {
+          expect(isValid).toBe(false)
+          done()
+        })
+    })
+  })
+
+  describe('PostAvatar', () => {
+    it('should be valid PostAvatar validation', done => {
+      const validValues = {
+        photo: 'data:image/jpeg;base64'
+      }
+      PostAvatar.isValid(validValues)
+        .then(isValid => {
+          expect(isValid).toBe(true)
+          done()
+        })
+    })
+
+    it('should not be valid PostAvatar validation', done => {
+      const invalidValues = {
+        photo: 'image'
+      }
+      PostAvatar.isValid(invalidValues)
+        .then(isValid => {
+          expect(isValid).toBe(false)
           done()
         })
     })

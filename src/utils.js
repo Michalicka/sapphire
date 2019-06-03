@@ -1,5 +1,5 @@
 
-export const fieldProps = (formData, requestErrors) => (name, type) => ({
+export const fieldProps = (formData, requestErrors) => (name, type, others) => ({
   name,
   label: `${name.charAt(0).toUpperCase()}${name.slice(1, name.length).replace(/_/g, ' ')}`,
   value: formData.values[name],

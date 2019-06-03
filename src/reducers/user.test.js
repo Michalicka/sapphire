@@ -1,5 +1,5 @@
 
-import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading } from '../actions/user'
+import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, userRestore, mergeUserData } from '../actions/user'
 import user from './user'
 
 describe('user reducer', () => {
@@ -7,7 +7,8 @@ describe('user reducer', () => {
     data: {
       id: 1,
       name: 'John Doe',
-      email: 'john@doe.com'
+      email: 'john@doe.com',
+      avatar: ''
     },
     errors: {},
     loading: false
@@ -18,7 +19,8 @@ describe('user reducer', () => {
       data: {
         id: null,
         name: '',
-        email: ''
+        email: '',
+        avatar: ''
       },
       errors: {},
       loading: false
@@ -30,7 +32,8 @@ describe('user reducer', () => {
     const data = {
       id: 2,
       name: 'Jane Doe',
-      email: 'jane@doe.com'
+      email: 'jane@doe.com',
+      avatar: ''
     }
     const newState = { ...state, data }
     expect(user(undefined, changeUserData(data))).toEqual(newState)
@@ -58,5 +61,39 @@ describe('user reducer', () => {
   it('toggle user loading', () => {
     const newState = { ...state, loading: true }
     expect(user(state, toggleUserLoading(true))).toEqual(newState)
+  })
+
+  it('should return expected state after userRestore action', () => {
+    const expectedValue = {
+      data: {
+        id: null,
+        name: '',
+        email: '',
+        avatar: ''
+      },
+      errors: {},
+      loading: false
+    }
+
+    expect(user(state, userRestore())).toEqual(expectedValue)
+  })
+
+  it('should return expected state after mergeUserData action', () => {
+    const newData = {
+      name: 'name',
+      email: 'email@email.com'
+    }
+    const expectedValue = {
+      data: {
+        id: 1,
+        name: 'name',
+        email: 'email@email.com',
+        avatar: ''
+      },
+      errors: {},
+      loading: false
+    }
+
+    expect(user(state, mergeUserData(newData))).toEqual(expectedValue)
   })
 })

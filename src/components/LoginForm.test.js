@@ -3,12 +3,13 @@ import React from 'react'
 import LoginForm from './LoginForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { createShallow } from '@material-ui/core/test-utils'
+import { Redirect } from 'react-router-dom'
 
 describe('LoginForm component', () => {
   const defaultProps = {
     classes: {},
     login: jest.fn(),
-    userErrors: {},
+    tokensErrors: {},
     loading: false
   }
   const createWrapper = props => createShallow({ dive: true })(<LoginForm {...props} />).dive()
@@ -31,11 +32,11 @@ describe('LoginForm component', () => {
 
   it('should show error in helperText', () => {
     const error = 'error'
-    const userErrors = {
+    const tokensErrors = {
       email: error,
       password: error
     }
-    const wrapper = createWrapper({ ...defaultProps, userErrors })
+    const wrapper = createWrapper({ ...defaultProps, tokensErrors })
     const email = wrapper.find('[data-test-id="field-email"]')
     const password = wrapper.find('[data-test-id="field-password"]')
     expect(email.props().helperText).toBe(error)
@@ -58,5 +59,10 @@ describe('LoginForm component', () => {
     const wrapper = createShallow({ dive: true })(<LoginForm {...props} login={login} />)
     wrapper.props().onSubmit()
     expect(login.mock.calls.length).toBe(1)
+  })
+
+  it('should show Redirect component, when the status is authorized', () => {
+    const wrapper = createWrapper({ ...defaultProps, status: 'Authorized' })
+    expect(wrapper.find(Redirect).exists()).toBe(true)
   })
 })

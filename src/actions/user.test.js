@@ -1,6 +1,6 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG } from '../actionTypes/user'
-import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading } from './user'
+import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/user'
+import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from './user'
 
 describe('user actions', () => {
   it('user registration', () => {
@@ -61,5 +61,76 @@ describe('user actions', () => {
     }
 
     expect(toggleUserLoading(true)).toEqual(expectedOutput)
+  })
+
+  it('getMeRequest', () => {
+    const expectedOutput = {
+      type: GET_ME_REQUEST
+    }
+
+    expect(getMeRequest()).toEqual(expectedOutput)
+  })
+
+  it('userRestore', () => {
+    const expectedOutput = {
+      type: USER_RESTORE
+    }
+
+    expect(userRestore()).toEqual(expectedOutput)
+  })
+
+  it('putUserRequest', () => {
+    const urlParams = {
+      id: 1
+    }
+    const payload = {
+      name: 'name',
+      email: 'email@email.com'
+    }
+    const expectedOutput = {
+      type: PUT_USERS_REQUEST,
+      payload,
+      urlParams
+    }
+
+    expect(putUserRequest(payload, urlParams)).toEqual(expectedOutput)
+  })
+
+  it('mergeUserData', () => {
+    const data = {
+      name: 'name',
+      email: 'email@email.com'
+    }
+    const expectedOutput = {
+      type: MERGE_USER_DATA,
+      data
+    }
+
+    expect(mergeUserData(data)).toEqual(expectedOutput)
+  })
+
+  it('putPasswordsRequest', () => {
+    const payload = {
+      password: 'password',
+      password_confirmation: 'password_confirmation'
+    }
+    const expectedOutput = {
+      type: PUT_PASSWORDS_REQUEST,
+      payload
+    }
+
+    expect(putPasswordsRequest(payload)).toEqual(expectedOutput)
+  })
+
+  it('putPasswordsRequest', () => {
+    const payload = {
+      avatar: 'image'
+    }
+    const expectedOutput = {
+      type: POST_AVATAR_REQUEST,
+      payload
+    }
+
+    expect(postAvatarRequest(payload)).toEqual(expectedOutput)
   })
 })

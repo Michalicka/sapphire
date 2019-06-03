@@ -1,11 +1,12 @@
 
-import { CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG } from '../actionTypes/user'
+import { CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, USER_RESTORE, MERGE_USER_DATA } from '../actionTypes/user'
 
 const initialState = {
   data: {
     id: null,
     name: '',
-    email: ''
+    email: '',
+    avatar: ''
   },
   errors: {},
   loading: false
@@ -22,6 +23,11 @@ function user(state = initialState, action) {
       return { ...state, errors: action.errors }
     case TOGGLE_USER_LOADNIG:
       return { ...state, loading: action.value }
+    case USER_RESTORE:
+      return { ...initialState }
+    case MERGE_USER_DATA:
+      const mergedData = { ...state.data, ...action.data }
+      return { ...state, data: mergedData }
     default:
       return state
   }
