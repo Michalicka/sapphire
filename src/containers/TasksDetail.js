@@ -1,12 +1,12 @@
 
 import { connect } from 'react-redux'
 import TasksDetail from '../components/TasksDetail'
+import { getItem } from '../reducers/selectors'
 
 export const mapStateToProps = (state, ownProps) => {
-  const project = state.projects.data.find(item => item.id === ownProps.id)
   return {
-    title: project.title,
-    description: project.description
+    title: getItem(state.projects.data, ownProps.id).name,
+    description: getItem(state.projects.data, ownProps.id).description
   }
 }
 

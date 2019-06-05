@@ -10,7 +10,7 @@ describe('TasksDetail component', () => {
       title: 'Title',
       description: 'Description'
     }
-    const wrapper = shallow(<TasksDetail {...props} />)
+    const wrapper = shallow(<TasksDetail {...props} />).dive()
     const typography = wrapper.find(Typography)
 
     expect(typography.at(0).props().children).toBe(props.title)

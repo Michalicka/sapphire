@@ -23,7 +23,7 @@ describe('Card container component', () => {
 
   beforeEach(() => {
     getItems = jest.fn()
-    wrapper = shallow(<CardContainer items={items} options={[]} getItems={getItems} loading={false} />).dive()
+    wrapper = shallow(<CardContainer items={items} options={[]} getItems={getItems} loading={false} baseUrl="/tasks/:id" />).dive()
   })
 
   it('should render expected count of items', () => {
@@ -36,7 +36,7 @@ describe('Card container component', () => {
   })
 
   it('should show loader when loading prop is true', () => {
-    const wrapper = shallow(<CardContainer items={[]} options={[]} getItems={jest.fn()} loading={true} />).dive()
+    const wrapper = shallow(<CardContainer items={[]} options={[]} getItems={jest.fn()} loading={true} baseUrl="/tasks/:id" />).dive()
 
     expect(wrapper.exists(CircularProgress)).toBe(true)
   })

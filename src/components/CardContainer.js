@@ -14,11 +14,14 @@ const styles = theme => ({
 
 export class CardContainer extends React.Component {
   componentDidMount() {
-    this.props.getItems()
+    const { getItems } = this.props
+    if (getItems !== undefined) {
+      getItems()
+    }
   }
 
   render() {
-    const { items, loading, classes, options } = this.props
+    const { items, loading, classes, options, baseUrl } = this.props
     return (
       <Grid
         container
@@ -49,6 +52,7 @@ export class CardContainer extends React.Component {
             <CardItem
               item={item}
               options={options}
+              baseUrl={baseUrl}
             />
           </Grid>
         ))}
@@ -59,10 +63,11 @@ export class CardContainer extends React.Component {
 
 CardContainer.propTypes = {
   items: PropTypes.array.isRequired,
-  getItems: PropTypes.func.isRequired,
+  getItems: PropTypes.func,
   loading: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
-  options: PropTypes.array.isRequired
+  options: PropTypes.array.isRequired,
+  baseUrl: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(CardContainer)

@@ -6,11 +6,12 @@ import IconButton from '@material-ui/core/IconButton'
 import MessageIcon from '@material-ui/icons/Message'
 import Logo from '../components/Logo'
 import Projects from './Projects'
+import Tasks from './Tasks'
 import ProfileController from '../containers/ProfileController'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { Switch, Redirect, Route } from 'react-router-dom'
-import { projects as projectsLink, login } from '../routes'
+import { projects as projectsLink, login, tasks as tasksLink } from '../routes'
 import { connect } from 'react-redux'
 import { refreshTokenWatch } from '../actions/tokens'
 import { getMeRequest } from '../actions/user'
@@ -18,6 +19,7 @@ import EditProfileDialog from '../containers/EditProfileDialog'
 import ChangePasswordDialog from '../containers/ChangePasswordDialog'
 import ChangeAvatarDialog from '../containers/ChangeAvatarDialog'
 import EditProjectMembersDialog from '../containers/EditProjectMembersDialog'
+import { getProjectsRequest } from '../actions/projects'
 
 const styles = theme => ({
   appBar: {
@@ -44,6 +46,7 @@ export class Dashboard extends React.Component {
     if (localStorage.getItem('accessToken') !== null) {
       this.props.refreshTokenWatch()
       this.props.getMe()
+      this.props.getProjects()
     }
   }
 
@@ -78,6 +81,11 @@ export class Dashboard extends React.Component {
               component={Projects}
             />
             <Route
+              path={`${match.url}${projectsLink}${tasksLink}`}
+              exact
+              component={Tasks}
+            />
+            <Route
               path={match.url}
               exact
               render={() => <Redirect to={`${match.url}${projectsLink}`} />}
@@ -101,8 +109,8 @@ Dashboard.propTypes = {
   match: PropTypes.object.isRequired,
   status: PropTypes.oneOf(['Authorized', 'Unauthorized']),
   refreshTokenWatch: PropTypes.func.isRequired,
-  getMe: PropTypes.func.isRequired
-
+  getMe: PropTypes.func.isRequired,
+  getProjects: PropTypes.func.isRequired
 }
 
 export const mapStateToProps = state => ({
@@ -111,7 +119,8 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   refreshTokenWatch: () => dispatch(refreshTokenWatch()),
-  getMe: () => dispatch(getMeRequest())
+  getMe: () => dispatch(getMeRequest()),
+  getProjects: () => dispatch(getProjectsRequest())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard))

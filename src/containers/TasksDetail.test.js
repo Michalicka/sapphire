@@ -8,7 +8,7 @@ describe('TasksDetail container', () => {
         data: [
           {
             id: 1,
-            title: 'title',
+            name: 'title',
             description: 'description'
           }
         ]
@@ -16,7 +16,7 @@ describe('TasksDetail container', () => {
     }
     const mappedState = mapStateToProps(state, { id: 1 })
 
-    expect(mappedState.title).toBe(state.projects.data[0].title)
+    expect(mappedState.title).toBe(state.projects.data[0].name)
     expect(mappedState.description).toBe(state.projects.data[0].description)
   })
 })
