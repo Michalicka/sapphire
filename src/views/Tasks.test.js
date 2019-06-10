@@ -5,6 +5,6 @@ import Tasks from '../views/Tasks'
 
 describe('Tasks view', () => {
   it('should render properly', () => {
-    shallow(<Tasks match={{ params: {} }} />)
+    shallow(<Tasks match={{ params: {}, path: '/:id' }} />)
   })
 })

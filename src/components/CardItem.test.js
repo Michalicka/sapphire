@@ -38,8 +38,6 @@ describe('CardItem component', () => {
   })
 
   it('should call props.history.push with expected params', () => {
-    wrapper.find(CardActions).dive().find(Button).props().onClick()
-
-    expect(props.history.push.mock.calls[0][0]).toBe(props.baseUrl.replace(':id', props.item.id))
+    expect(wrapper.find(CardActions).dive().find(Button).props().to).toBe(props.baseUrl.replace(':id', props.item.id))
   })
 })

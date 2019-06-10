@@ -7,7 +7,7 @@ import ProjectsContainer from '../containers/ProjectsContainer'
 import CreateProjectDialog from '../containers/CreateProjectDialog'
 import EditProjectDialog from '../containers/EditProjectDialog'
 import CreateProjectButton from '../containers/CreateProjectButton'
-import { tasks as tasksLink } from '../routes'
+import { tasks as tasksLink, tasksTypes } from '../routes'
 
 export const Projects = ({ match }) => {
   return (
@@ -31,7 +31,7 @@ export const Projects = ({ match }) => {
           xs={12}
         >
           <ProjectsContainer
-            baseUrl={`${match.url}${tasksLink}`}
+            baseUrl={`${match.url}${tasksLink.replace(':type', tasksTypes[0])}`}
           />
         </Grid>
       </Grid>

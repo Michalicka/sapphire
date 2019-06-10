@@ -1,5 +1,5 @@
 
-export const getItem = (data, id) => data.find(item => item.id === id) || {}
+export const getItem = (data, id) => data.find(item => item.id === parseInt(id)) || {}
 
 export const getValue = type => state => name => state[type][name]
 

@@ -8,22 +8,12 @@ import CardActions from '@material-ui/core/CardActions'
 import MoreButton from './MoreButton'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export class CardItem extends React.Component {
-  constructor(props) {
-    super(props)
-    this.locationPush = this.locationPush.bind(this)
-  }
-
-  locationPush() {
-    const { history, baseUrl, item } = this.props
-    const url = baseUrl.replace(':id', item.id)
-    history.push(url)
-  }
 
   render() {
-    const { item, options } = this.props
+    const { item, options, baseUrl } = this.props
     return (
       <Card>
         <CardHeader
@@ -46,7 +36,8 @@ export class CardItem extends React.Component {
           <Button
             color="secondary"
             variant="outlined"
-            onClick={this.locationPush}
+            component={Link}
+            to={baseUrl.replace(':id', item.id)}
           >GO TO</Button>
         </CardActions>
       </Card>
@@ -57,8 +48,7 @@ export class CardItem extends React.Component {
 CardItem.propTypes = {
   item: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
-  history: PropTypes.object.isRequired,
   baseUrl: PropTypes.string.isRequired
 }
 
-export default withRouter(CardItem)
+export default CardItem

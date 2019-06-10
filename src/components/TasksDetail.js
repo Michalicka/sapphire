@@ -6,13 +6,15 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   title: {
-    marginBottom: theme.spacing.unit * 3
+    marginBottom: theme.spacing.unit * 2
   }
 })
 
-const TasksDetail = ({ title, description, classes }) => {
+const TasksDetail = ({ title, description, classes, className }) => {
   return (
-    <React.Fragment>
+    <div
+      className={className}
+    >
       <Typography
         variant="h4"
         color="primary"
@@ -21,14 +23,15 @@ const TasksDetail = ({ title, description, classes }) => {
       <Typography
         variant="body1"
       >{description}</Typography>
-    </React.Fragment>
+    </div>
   )
 }
 
 TasksDetail.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string
 }
 
 export default withStyles(styles)(TasksDetail)
