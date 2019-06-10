@@ -41,7 +41,7 @@ describe('tasks actions', () => {
       value
     }
 
-    expect(toggleTasksLoading(key, value)).toEqual(expectedValue)
+    expect(toggleTasksLoading(key)(value)).toEqual(expectedValue)
   })
 
   it('changeTasksErrors', () => {
@@ -53,7 +53,7 @@ describe('tasks actions', () => {
       value
     }
 
-    expect(changeTasksErrors(key, value)).toEqual(expectedValue)
+    expect(changeTasksErrors(key)(value)).toEqual(expectedValue)
   })
 
   it('getTasksRequest', () => {

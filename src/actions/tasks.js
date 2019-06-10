@@ -16,15 +16,13 @@ export function editTask(id, data) {
   }
 }
 
-export function toggleTasksLoading(key, value) {
-  return {
-    type: TOGGLE_TASKS_LOADING,
-    key,
-    value
-  }
-}
+export const toggleTasksLoading = key => value => ({
+  type: TOGGLE_TASKS_LOADING,
+  key,
+  value
+})
 
-export function changeTasksErrors(key, value) {
+export const changeTasksErrors = key => value => {
   return {
     type: CHANGE_TASKS_ERRORS,
     key,

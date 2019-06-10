@@ -44,14 +44,14 @@ describe('tasks reducer', () => {
     const errors = { ...initialState.errors, getTasks: error }
     const expectedState = { ...initialState, errors }
 
-    expect(tasks(undefined, changeTasksErrors('getTasks', error))).toEqual(expectedState)
+    expect(tasks(undefined, changeTasksErrors('getTasks')(error))).toEqual(expectedState)
   })
 
-  it('should return expected state after changeErrors action', () => {
+  it('should return expected state after toggleLoading action', () => {
     const value = { show: false }
     const loading = { ...initialState.loading, getTasks: value }
     const expectedState = { ...initialState, loading }
 
-    expect(tasks(undefined, toggleTasksLoading('getTasks', value))).toEqual(expectedState)
+    expect(tasks(undefined, toggleTasksLoading('getTasks')(value))).toEqual(expectedState)
   })
 })
