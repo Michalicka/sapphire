@@ -1,5 +1,5 @@
-import { CHANGE_TASKS_DATA, EDIT_TASK, TOGGLE_TASKS_LOADING, CHANGE_TASKS_ERRORS } from '../actionTypes/tasks'
-import { changeTasksData, editTask, toggleTasksLoading, changeTasksErrors } from './tasks'
+import { CHANGE_TASKS_DATA, EDIT_TASK, TOGGLE_TASKS_LOADING, CHANGE_TASKS_ERRORS, GET_TASKS_REQUEST } from '../actionTypes/tasks'
+import { changeTasksData, editTask, toggleTasksLoading, changeTasksErrors, getTasksRequest } from './tasks'
 
 describe('tasks actions', () => {
   it('changeTasksData', () => {
@@ -54,5 +54,17 @@ describe('tasks actions', () => {
     }
 
     expect(changeTasksErrors(key, value)).toEqual(expectedValue)
+  })
+
+  it('getTasksRequest', () => {
+    const urlParams = {
+      id: 1
+    }
+    const expectedValue = {
+      type: GET_TASKS_REQUEST,
+      urlParams
+    }
+
+    expect(getTasksRequest(urlParams)).toEqual(expectedValue)
   })
 })
