@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper'
 import withWidth from '@material-ui/core/withWidth'
 
-export const TabsLinks = ({ params, match, baseUrl, width }) => {
+export const TabsLinks = ({ params, match, baseUrl, width, className }) => {
   const isSmall = width === 'xs' || width === 'sm'
   return (
-    <Paper>
+    <Paper
+      className={className}
+    >
       <Tabs
         value={match.params.type}
         variant={isSmall ? 'scrollable' : 'standard'}
@@ -42,7 +44,8 @@ TabsLinks.propTypes = {
   params: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
   baseUrl: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired
+  width: PropTypes.string.isRequired,
+  className: PropTypes.string
 }
 
 export default withWidth()(TabsLinks)

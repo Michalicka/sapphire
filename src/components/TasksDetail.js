@@ -3,8 +3,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
 
 const styles = theme => ({
+  wrap: {
+    minHeight: 63
+  },
   title: {
     marginBottom: theme.spacing.unit * 2
   }
@@ -13,7 +17,7 @@ const styles = theme => ({
 const TasksDetail = ({ title, description, classes, className }) => {
   return (
     <div
-      className={className}
+      className={classNames(className, classes.wrap)}
     >
       <Typography
         variant="h4"

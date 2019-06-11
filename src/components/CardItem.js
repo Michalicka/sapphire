@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
 
 export class CardItem extends React.Component {
-
   render() {
     const { item, options, baseUrl } = this.props
     return (
@@ -23,7 +22,7 @@ export class CardItem extends React.Component {
               args={[item.id]}
             />
           }
-          title={item.name}
+          title={item.name || item.title}
         />
         <CardContent>
           <Typography

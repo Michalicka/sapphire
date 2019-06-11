@@ -1,5 +1,5 @@
 
-import { getItem, getValue, getData, getErrors, getLoading } from './selectors'
+import { getItem, getValue, getData, getErrors, getLoading, filterTasks } from './selectors'
 
 describe('selectors', () => {
   describe('getItem', () => {
@@ -71,5 +71,30 @@ describe('selectors', () => {
     }
 
     expect(getLoading(state)('getData')).toEqual(state.loading.getData)
+  })
+
+  it('filterTasks should return expected items', () => {
+    const items = [
+      {
+        status: {
+          id: 1
+        },
+        name: 'task'
+      },
+      {
+        status: {
+          id: 1
+        },
+        name: 'task2'
+      },
+      {
+        status: {
+          id: 3
+        },
+        name: 'task3'
+      }
+    ]
+
+    expect(filterTasks(items, 1)).toEqual([items[0], items[1]])
   })
 })

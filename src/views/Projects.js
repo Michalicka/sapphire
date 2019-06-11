@@ -31,7 +31,7 @@ export const Projects = ({ match }) => {
           xs={12}
         >
           <ProjectsContainer
-            baseUrl={`${match.url}${tasksLink.replace(':type', tasksTypes[0])}`}
+            baseUrl={`${match.url}${tasksLink.replace(':type', tasksTypes[0].name)}`}
           />
         </Grid>
       </Grid>

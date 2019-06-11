@@ -7,9 +7,10 @@ describe('tasks reducer', () => {
   const getTasksValues = getDefaultValues(['getTasks', 'putTasks', 'postTasks', 'putTasksMembers'])
   const initialState = {
     data: [],
-    loading: getTasksValues({ show: false }),
+    loading: getTasksValues(false),
     errors: getTasksValues({})
   }
+
   it('should return expected initialState', () => {
     expect(tasks(undefined, {})).toEqual(initialState)
   })
@@ -48,7 +49,7 @@ describe('tasks reducer', () => {
   })
 
   it('should return expected state after toggleLoading action', () => {
-    const value = { show: false }
+    const value = false
     const loading = { ...initialState.loading, getTasks: value }
     const expectedState = { ...initialState, loading }
 

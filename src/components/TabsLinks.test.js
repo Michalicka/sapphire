@@ -5,7 +5,6 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 import { shallow } from 'enzyme'
 import { tasksTypes, tasks as tasksLink, dashboard as dashboardLink } from '../routes'
-import Paper from '@material-ui/core/Paper'
 
 describe('TabsLinks component', () => {
   let wrapper
@@ -15,10 +14,10 @@ describe('TabsLinks component', () => {
     props = {
       match: {
         params: {
-          type: tasksTypes[0]
+          type: tasksTypes[0].name
         }
       },
-      params: tasksTypes,
+      params: tasksTypes.map(task => task.name),
       baseUrl: `${dashboardLink}/${tasksLink.replace(':id', '1')}`,
       width: 'lg'
     }

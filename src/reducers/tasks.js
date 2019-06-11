@@ -6,7 +6,7 @@ const tasksDefault = getDefaultValues(['getTasks', 'putTasks', 'postTasks', 'put
 
 const initialState = {
   data: [],
-  loading: tasksDefault({ show: false }),
+  loading: tasksDefault(false),
   errors: tasksDefault({})
 }
 

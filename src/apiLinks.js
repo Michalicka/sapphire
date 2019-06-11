@@ -9,4 +9,4 @@ export const projectMembers = ({ id }) => `${url}/projects/${id}/members`
 export const user = ({ id }) => `${url}/users/${id}`
 export const passwords = `${url}/passwords`
 export const avatars = `${url}/avatars`
-export const tasks = ({ id }) => `${project(id)}/tasks`
+export const tasks = params => `${project(params)}/tasks`
