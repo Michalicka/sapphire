@@ -1,11 +1,12 @@
 
 import { connect } from 'react-redux'
-import Search from '../components/Search'
+import SearchContainer from '../components/SearchContainer'
 import { getUsersRequest, changeUsersData } from '../actions/users'
-import { getProjectMembersRequest } from '../actions/projects'
+import { getProjectMembersRequest, editProject } from '../actions/projects'
+import { getItem } from '../reducers/selectors'
 
 export const mapStateToProps = state => {
-  const project = state.projects.data.find(item => item.id === state.modal.editProjectMembers.id) || {}
+  const project = getItem(state.projects.data, state.modal.editProjectMembers.id)
   return {
     loading: state.projects.loading,
     items: state.users.data,
@@ -15,9 +16,10 @@ export const mapStateToProps = state => {
 }
 
 export const mapDispatchToProps = dispatch => ({
-  getItems: id => dispatch(getProjectMembersRequest({ id })),
-  getNewItems: name => dispatch(getUsersRequest(name)),
-  changeItems: items => dispatch(changeUsersData(items))
+  getSelectedItems: id => dispatch(getProjectMembersRequest({ id })),
+  search: name => dispatch(getUsersRequest(name)),
+  changeItems: items => dispatch(changeUsersData(items)),
+  changeSelectedItems: (id, items) => dispatch(editProject(id, { members: items }))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer)

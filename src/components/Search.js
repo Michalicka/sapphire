@@ -20,106 +20,40 @@ const styles = theme => ({
   }
 })
 
-export class Search extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      items: [],
-      itemsLoaded: false,
-      value: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.searchChange = this.searchChange.bind(this)
-  }
-
-  componentDidMount() {
-    this.props.getItems(this.props.id)
-  }
-
-  componentDidUpdate() {
-    const { items, itemsLoaded } = this.state
-    if (!itemsLoaded) {
-      const { selectedItems } = this.props
-      const itemsEqual = selectedItems.every((item, index) => item === items[index]) && selectedItems.length === items.length
-      if (!itemsEqual) {
-        this.setState({ items: [...selectedItems], itemsLoaded: true }, () => {
-          this.setValue()
-        })
-      }
-    }
-  }
-
-  setValue() {
-    const { setFieldValue, setFieldTouched, name } = this.props
-    const newValues = this.state.items.map(item => item.id)
-    setFieldValue(name, newValues)
-    setFieldTouched(name, true)
-  }
-
-  handleChange(id) {
-    const items = this.state.items
-    const itemIndex = items.findIndex(item => item.id === id)
-    if (itemIndex !== -1) {
-      items.splice(itemIndex, 1)
-    } else {
-      const newItem = this.props.items.find(item => item.id === id)
-      items.push(newItem)
-    }
-    this.setState({ items }, this.setValue)
-  }
-
-  searchChange(e) {
-    const { value } = e.currentTarget
-    if (value === '') {
-      this.props.changeItems([])
-    } else {
-      this.props.getNewItems(e.currentTarget.value)
-    }
-    this.setState({
-      value
-    })
-  }
-
-  render() {
-    const { label, helperText, error, items, classes, loading } = this.props
-    return (
-      <div className={classes.wrapper}>
-        <TextField
-          type="search"
-          label={label}
-          error={error}
-          helperText={helperText}
-          onChange={this.searchChange}
-          disabled={loading}
-          fullWidth
-        />
-        <SearchList
-          items={items}
-          selectedItems={this.state.items}
-          handleClick={this.handleChange}
-          className={classes.list}
-          value={this.state.value}
-        />
-      </div>
-    )
-  }
+export function Search({ classes, label, error, loading, helperText, search, items, selectedItems, changeSelectedItems }) {
+  return (
+    <div className={classes.wrapper}>
+      <TextField
+        type="search"
+        label={label}
+        error={error}
+        helperText={helperText}
+        onChange={e => search(e.currentTarget.value)}
+        disabled={loading}
+        fullWidth
+      />
+      <SearchList
+        items={items}
+        selectedItems={selectedItems}
+        handleClick={changeSelectedItems}
+        className={classes.list}
+      />
+    </div>
+  )
 }
 
 Search.propTypes = {
   items: PropTypes.array.isRequired,
   selectedItems: PropTypes.array.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
-  setFieldTouched: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   error: PropTypes.bool.isRequired,
   helperText: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  getNewItems: PropTypes.func.isRequired,
-  getItems: PropTypes.func.isRequired,
-  changeItems: PropTypes.func.isRequired,
-  id: PropTypes.number
+  id: PropTypes.number,
+  search: PropTypes.func.isRequired,
+  changeSelectedItems: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(Search)
