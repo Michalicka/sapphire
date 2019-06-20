@@ -1,25 +1,36 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import Search from './Search'
 
-const SearchContainer = ({ items, changeItems, selectedItems, changeSelectedItems, getSelectedItems, name, setFieldValue, setFieldTouched, oneOnly, search, id, ...others }) => {
+const SearchContainer = ({ items, selectedItems, changeSelectedItems, getSelectedItems, name, setFieldValue, setFieldTouched, oneOnly, search, id, ...others }) => {
   const [valueIsEmpty, setValueIsEmpty] = useState(true)
+  const selectedItemsRef = useRef(selectedItems)
 
   useEffect(() => {
-    const value = oneOnly ? selectedItems[0].id : selectedItems.map(item => item.id)
-    setFieldValue(name, value)
-    setFieldTouched(name, true)
-  }, [selectedItems])
+    if (selectedItems !== selectedItemsRef.current) {
+      let value
+      if (oneOnly) {
+        value = selectedItems[0] ? selectedItems[0].id : null
+      } else {
+        value = selectedItems.map(item => item.id)
+      }
+      selectedItemsRef.current = selectedItems
+      setFieldValue(name, value)
+      setFieldTouched(name, true)
+    }
+  }, [selectedItems, oneOnly, name])
 
   useEffect(() => {
-    getSelectedItems(id)
+    if (getSelectedItems) {
+      getSelectedItems(id)
+    }
   }, [])
 
   const selectedItemsHandler = item => {
     if (oneOnly) {
-      const newItem = item.id !== selectedItems[0].id ? item : null
-      changeSelectedItems(newItem)
+      const newItem = !selectedItems[0] || item.id !== selectedItems[0].id ? item : null
+      changeSelectedItems(id, newItem)
     } else {
       const index = selectedItems.findIndex(selectedItem => selectedItem.id === item.id)
       const newSelectedItems = [...selectedItems]
@@ -61,9 +72,8 @@ SearchContainer.propTypes = {
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
-  changeItems: PropTypes.func.isRequired,
   changeSelectedItems: PropTypes.func.isRequired,
-  getSelectedItems: PropTypes.func.isRequired,
+  getSelectedItems: PropTypes.func,
   id: PropTypes.number
 }
 

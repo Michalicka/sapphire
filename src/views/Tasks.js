@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import TasksDetail from '../containers/TasksDetail'
 import TabsLinks from '../components/TabsLinks'
@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid'
 import { tasksTypes } from '../routes'
 import { withStyles } from '@material-ui/core/styles'
 import TasksContainer from '../containers/TasksContainer'
+import { connect } from 'react-redux'
+import { getProjectMembersRequest } from '../actions/projects'
 
 const styles = theme => ({
   heading: {
@@ -17,7 +19,11 @@ const styles = theme => ({
   }
 })
 
-const Tasks = ({ match, classes }) => {
+const Tasks = ({ match, classes, dispatch }) => {
+  useEffect(() => {
+    dispatch(getProjectMembersRequest({ id: parseInt(match.params.id) }))
+  }, [])
+
   return (
     <React.Fragment>
       <Grid
@@ -58,7 +64,8 @@ const Tasks = ({ match, classes }) => {
 
 Tasks.propTypes = {
   match: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(Tasks)
+export default connect()(withStyles(styles)(Tasks))
