@@ -1,9 +1,10 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import SearchList from './SearchList'
 import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
 
 const styles = theme => ({
   wrapper: {
@@ -20,9 +21,9 @@ const styles = theme => ({
   }
 })
 
-export function Search({ classes, label, error, loading, helperText, search, items, selectedItems, changeSelectedItems }) {
+export function Search({ classes, label, error, loading, helperText, search, items, selectedItems, changeSelectedItems, className }) {
   return (
-    <div className={classes.wrapper}>
+    <div className={classNames(classes.wrapper, className)}>
       <TextField
         type="search"
         label={label}
@@ -53,7 +54,8 @@ Search.propTypes = {
   loading: PropTypes.bool.isRequired,
   id: PropTypes.number,
   search: PropTypes.func.isRequired,
-  changeSelectedItems: PropTypes.func.isRequired
+  changeSelectedItems: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(Search)

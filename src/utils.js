@@ -6,7 +6,7 @@ export const fieldProps = (formData, requestErrors) => (name, type) => ({
   type,
   onChange: formData.handleChange,
   onBlur: formData.handleBlur,
-  error: !!requestErrors[name] || (!!formData.errors[name] && formData.touched[name]),
+  error: !!requestErrors[name] || (!!formData.errors[name] && !!formData.touched[name]),
   helperText: (requestErrors[name] || (formData.touched[name] && formData.errors[name])) || '',
   'data-test-id': `field-${name}`
 })

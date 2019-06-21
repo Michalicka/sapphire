@@ -1,23 +1,17 @@
 
 import { connect } from 'react-redux'
-import SearchContainerSync from '../components/SearchContainerSync'
-import { editTask } from '../actions/tasks'
+import SearchContainerSyncState from '../components/SearchContainerSyncState'
 import { getItem } from '../reducers/selectors'
 
-export const mapStateToProps = (state, ownProps) => {
-  const id = state.modal.createTask.id || state.modal.editTask.id
-  const task = getItem(state.tasks.data, id)
-  const project = getItem(state.projects.data, ownProps.id)
+export const mapStateToProps = (state) => {
+  const { createTask, editTask } = state.modal
+  const id = createTask.id || editTask.id
+  const project = getItem(state.projects.data, id)
   return {
     loading: state.projects.loading,
     items: project.members || [],
-    selectedItems: task.assignee ? [task.assignee] : [],
-    id
+    id: id
   }
 }
 
-export const mapDispatchToProps = dispatch => ({
-  changeSelectedItems: (id, assignee) => dispatch(editTask(id, { assignee }))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchContainerSync)
+export default connect(mapStateToProps)(SearchContainerSyncState)

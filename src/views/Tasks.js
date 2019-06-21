@@ -9,6 +9,8 @@ import { withStyles } from '@material-ui/core/styles'
 import TasksContainer from '../containers/TasksContainer'
 import { connect } from 'react-redux'
 import { getProjectMembersRequest } from '../actions/projects'
+import CreateTasksButton from '../containers/CreateTasksButton'
+import CreateTaskDialog from '../containers/CreateTaskDialog'
 
 const styles = theme => ({
   heading: {
@@ -58,6 +60,12 @@ const Tasks = ({ match, classes, dispatch }) => {
         >
         </Grid>
       </Grid>
+      <CreateTasksButton
+        id={parseInt(match.params.id)}
+      />
+      <CreateTaskDialog
+        statusId={tasksTypes.find(type => type.name.toLowerCase() === match.params.type.toLowerCase()).id}
+      />
     </React.Fragment>
   )
 }

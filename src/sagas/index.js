@@ -4,7 +4,7 @@ import { postUsers, getMe, putUsers, putPasswords, postAvatar } from './user'
 import { postTokens, putTokensWatch, refreshToken, deleteTokens } from './tokens'
 import { getProjects, postProjects, putProjects, deleteProjects, putProjectMembers, getProjectMembers } from './projects'
 import { getUsers } from './users'
-import { getTasks } from './tasks'
+import { getTasks, postTasks } from './tasks'
 
 export default function* rootSaga() {
   yield all([
@@ -24,6 +24,7 @@ export default function* rootSaga() {
     fork(getUsers),
     fork(getProjectMembers),
     fork(putProjectMembers),
-    fork(getTasks)
+    fork(getTasks),
+    fork(postTasks)
   ])
 }

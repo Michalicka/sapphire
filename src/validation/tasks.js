@@ -6,11 +6,9 @@ export const PostTasks = Yup.object().shape({
   title: Yup.string()
     .required(messages.required),
   term: Yup.string()
-    .required(messages.required),
-  assignee_id: Yup.number()
-    .required(messages.required),
-  status_id: Yup.number()
-    .required(messages.required),
+    .nullable(),
+  description: Yup.string()
+    .required(),
   duration: Yup.string()
-    .required()
+    .nullable()
 })

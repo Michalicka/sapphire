@@ -1,9 +1,10 @@
 
 import { fetchLoggedEntity } from './utils'
 import { tasks as tasksLink } from '../apiLinks'
-import { changeTasksData, changeTasksErrors, toggleTasksLoading } from '../actions/tasks'
-import { GET_TASKS_REQUEST } from '../actionTypes/tasks'
+import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask } from '../actions/tasks'
+import { GET_TASKS_REQUEST, POST_TASKS_REQUEST } from '../actionTypes/tasks'
 import { put } from 'redux-saga/effects'
+import { changeModal } from '../actions/modal'
 
 const getTasksKey = 'getTasks'
 const getTasksErrors = changeTasksErrors(getTasksKey)
@@ -21,5 +22,25 @@ export const getTasks = fetchLoggedEntity.bind(
     ],
     error: getTasksErrors,
     loading: getTasksLoading
+  }
+)
+
+const postTasksKey = 'postTasks'
+const postTasksErrors = changeTasksErrors(postTasksKey)
+const postTasksLoading = toggleTasksLoading(postTasksKey)
+
+export const postTasks = fetchLoggedEntity.bind(
+  null,
+  'post',
+  tasksLink,
+  {
+    request: POST_TASKS_REQUEST,
+    success: [
+      response => put(addTask(response.data.data)),
+      () => put(postTasksErrors({})),
+      () => put(changeModal('createTask', { show: false }))
+    ],
+    error: postTasksErrors,
+    loading: postTasksLoading
   }
 )

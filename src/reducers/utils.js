@@ -36,6 +36,12 @@ export const editItem = (state, { id, data }) => {
   return { ...state, data: newData }
 }
 
+export const addItem = (state, { item }) => {
+  const newItem = { ...item }
+  const data = [...state.data, newItem]
+  return { ...state, data }
+}
+
 export const deleteItem = (state, { id }) => {
   const newData = [...state.data]
   newData.splice(findItemIndex(state.data, id), 1)
