@@ -10,8 +10,10 @@ const TimeField = ({ setFieldValue, setFieldError, setFieldTouched, name, value,
   const [localDate, setLocalDate] = useState(null)
 
   useEffect(() => {
-    const date = new Date()
-    setValue(new Date(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${value}`))
+    if (value) {
+      const date = new Date()
+      setValue(new Date(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${value}`))
+    }
   }, [])
 
   const setValue = date => {

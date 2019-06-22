@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FormDialog from './FormDialog'
-import { PostTasks } from '../validation/tasks'
+import { PutTasks } from '../validation/tasks'
 import { tasksTypes } from '../routes'
 
 const fields = [
@@ -46,7 +46,7 @@ export const EditTaskDialog = ({ open, handleClose, errors, send, loading, chang
         changeErrors()
         handleClose()
       }}
-      validationSchema={PostTasks}
+      validationSchema={PutTasks}
       initialValues={initialValues}
       errors={errors}
       loading={loading}
