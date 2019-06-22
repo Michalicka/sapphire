@@ -18,6 +18,7 @@ import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import DateTimeField from './DateTimeField'
 import TimeField from './TimeField'
 import AssigneeSearch from '../containers/AssigneeSearch'
+import { MenuItem } from '@material-ui/core'
 
 const styles = theme => ({
   dialog: {
@@ -112,6 +113,25 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
                           setFieldTouched={formData.setFieldTouched}
                           oneOnly
                         />
+                      )
+                    } else if (field.type === 'select') {
+                      return (
+                        <TextField
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name, field.type)}
+                          select
+                          fullWidth
+                        >
+                          {field.options.map(option => (
+                            <MenuItem
+                              key={option.value}
+                              value={option.value}
+                            >
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </TextField>
                       )
                     } else {
                       return (

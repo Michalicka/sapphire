@@ -1,13 +1,18 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { TimePicker } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
 
 const TimeField = ({ setFieldValue, setFieldError, setFieldTouched, name, value, error, helperText, label, className }) => {
   const DateFormatter = new DateFnsUtils()
-  const formatDate = time => DateFormatter.format(new Date(time), 'HH:mm:ss')
+  const formatDate = time => DateFormatter.format(time, 'HH:mm:ss')
   const [localDate, setLocalDate] = useState(null)
+
+  useEffect(() => {
+    const date = new Date()
+    setValue(new Date(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${value}`))
+  }, [])
 
   const setValue = date => {
     setFieldValue(name, formatDate(date), true)

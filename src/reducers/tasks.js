@@ -11,7 +11,6 @@ const initialState = {
 }
 
 export default function tasks(state = initialState, action) {
-  console.log(action.type)
   switch (action.type) {
     case CHANGE_TASKS_DATA:
       return { ...state, data: [...action.data] }

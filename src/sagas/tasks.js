@@ -1,8 +1,8 @@
 
 import { fetchLoggedEntity } from './utils'
-import { tasks as tasksLink } from '../apiLinks'
-import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask } from '../actions/tasks'
-import { GET_TASKS_REQUEST, POST_TASKS_REQUEST } from '../actionTypes/tasks'
+import { tasks as tasksLink, task as taskLink } from '../apiLinks'
+import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask, editTask } from '../actions/tasks'
+import { GET_TASKS_REQUEST, POST_TASKS_REQUEST, PUT_TASKS_REQUEST } from '../actionTypes/tasks'
 import { put } from 'redux-saga/effects'
 import { changeModal } from '../actions/modal'
 
@@ -42,5 +42,25 @@ export const postTasks = fetchLoggedEntity.bind(
     ],
     error: postTasksErrors,
     loading: postTasksLoading
+  }
+)
+
+const putTasksKey = 'putTasks'
+const putTasksErrors = changeTasksErrors(putTasksKey)
+const putTasksLoading = toggleTasksLoading(putTasksKey)
+
+export const putTasks = fetchLoggedEntity.bind(
+  null,
+  'put',
+  taskLink,
+  {
+    request: PUT_TASKS_REQUEST,
+    success: [
+      (response, action) => put(editTask(action.urlParams.taskId, action.payload)),
+      () => put(putTasksErrors({})),
+      () => put(changeModal('editTask', { show: false }))
+    ],
+    error: putTasksErrors,
+    loading: putTasksLoading
   }
 )

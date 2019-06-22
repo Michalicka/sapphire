@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FormDialog from './FormDialog'
 import { PostTasks } from '../validation/tasks'
+import { tasksTypes } from '../routes'
 
 const fields = [
   {
@@ -17,6 +18,14 @@ const fields = [
     type: 'assigneeSearch'
   },
   {
+    name: 'status_id',
+    type: 'select',
+    options: tasksTypes.map(task => ({
+      value: task.id,
+      label: task.name
+    }))
+  },
+  {
     name: 'description'
   },
   {
@@ -25,26 +34,27 @@ const fields = [
   }
 ]
 
-export const CreateTaskDialog = ({ open, handleClose, errors, send, loading, changeErrors, statusId, id }) => {
+export const EditTaskDialog = ({ open, handleClose, errors, send, loading, changeErrors, id, taskId, initialValues }) => {
+  console.log({ initialValues, id, taskId })
   return (
     <FormDialog
-      title="Create Task"
+      title="Edit Task"
       fields={fields}
-      send={values => send({ id }, { ...values, status_id: statusId })}
+      send={values => send({ id, taskId }, values)}
       open={open}
       handleClose={() => {
         changeErrors()
         handleClose()
       }}
       validationSchema={PostTasks}
-      initialValues={{ title: '', term: null, assignee_id: null, description: '', duration: null }}
+      initialValues={initialValues}
       errors={errors}
       loading={loading}
     />
   )
 }
 
-CreateTaskDialog.propTypes = {
+EditTaskDialog.propTypes = {
   send: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
@@ -52,7 +62,8 @@ CreateTaskDialog.propTypes = {
   loading: PropTypes.bool.isRequired,
   changeErrors: PropTypes.func.isRequired,
   id: PropTypes.number,
-  statusId: PropTypes.number.isRequired
+  taskId: PropTypes.number,
+  initialValues: PropTypes.object.isRequired
 }
 
-export default CreateTaskDialog
+export default EditTaskDialog

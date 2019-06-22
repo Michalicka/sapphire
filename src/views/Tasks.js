@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { getProjectMembersRequest } from '../actions/projects'
 import CreateTasksButton from '../containers/CreateTasksButton'
 import CreateTaskDialog from '../containers/CreateTaskDialog'
+import EditTaskDialog from '../containers/EditTaskDialog'
 
 const styles = theme => ({
   heading: {
@@ -66,6 +67,7 @@ const Tasks = ({ match, classes, dispatch }) => {
       <CreateTaskDialog
         statusId={tasksTypes.find(type => type.name.toLowerCase() === match.params.type.toLowerCase()).id}
       />
+      <EditTaskDialog />
     </React.Fragment>
   )
 }

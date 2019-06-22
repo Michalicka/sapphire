@@ -16,10 +16,6 @@ const SearchContainer = ({ items, selectedItems, changeSelectedItems, getSelecte
         value = selectedItems.map(item => item.id)
       }
       selectedItemsRef.current = selectedItems
-      console.log({
-        name,
-        value
-      })
       setFieldValue(name, value)
       setFieldTouched(name, true)
     }

@@ -1,5 +1,5 @@
 
-import { CHANGE_TASKS_DATA, EDIT_TASK, TOGGLE_TASKS_LOADING, CHANGE_TASKS_ERRORS, GET_TASKS_REQUEST, POST_TASKS_REQUEST, ADD_TASK } from '../actionTypes/tasks'
+import { CHANGE_TASKS_DATA, EDIT_TASK, TOGGLE_TASKS_LOADING, CHANGE_TASKS_ERRORS, GET_TASKS_REQUEST, POST_TASKS_REQUEST, ADD_TASK, PUT_TASKS_REQUEST } from '../actionTypes/tasks'
 
 export function changeTasksData(data) {
   return {
@@ -49,5 +49,13 @@ export function addTask(item) {
   return {
     type: ADD_TASK,
     item
+  }
+}
+
+export function putTasksRequest(urlParams, payload) {
+  return {
+    type: PUT_TASKS_REQUEST,
+    urlParams,
+    payload
   }
 }

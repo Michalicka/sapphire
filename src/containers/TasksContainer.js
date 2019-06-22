@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import CardContainer from '../components/CardContainer'
 import { getTasksRequest } from '../actions/tasks'
 import { filterTasks } from '../reducers/selectors'
+import { changeModal } from '../actions/modal'
 
 export const mapStateToProps = (state, { statusId }) => ({
   items: filterTasks(state.tasks.data, statusId),
@@ -11,7 +12,12 @@ export const mapStateToProps = (state, { statusId }) => ({
 
 export const mapDispatchToProps = (dispatch, { id }) => ({
   getItems: () => dispatch(getTasksRequest({ id })),
-  options: []
+  options: [
+    {
+      title: 'Edit',
+      clickHandler: taskId => dispatch(changeModal('editTask', { show: true, id: parseInt(id), taskId }))
+    }
+  ]
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardContainer)

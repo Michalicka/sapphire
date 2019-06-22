@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { DateTimePicker } from 'material-ui-pickers'
 import DateFnsUtils from '@date-io/date-fns'
@@ -7,7 +7,12 @@ import DateFnsUtils from '@date-io/date-fns'
 const DateTimeField = ({ setFieldValue, setFieldError, setFieldTouched, name, value, error, helperText, label, className }) => {
   const DateFormatter = new DateFnsUtils()
   const formatDate = date => DateFormatter.format(new Date(date), 'yyyy-MM-dd HH:mm:ss')
-  console.log({ value })
+
+  useEffect(() => {
+    if (value) {
+      setValue(value)
+    }
+  }, [])
 
   const setValue = date => {
     setFieldValue(name, formatDate(date), true)
@@ -38,7 +43,8 @@ DateTimeField.propTypes = {
   value: PropTypes.string,
   error: PropTypes.bool.isRequired,
   helperText: PropTypes.string.isRequired,
-  label: PropTypes.string
+  label: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default DateTimeField
