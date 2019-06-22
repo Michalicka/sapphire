@@ -17,6 +17,11 @@ export const mapDispatchToProps = (dispatch, { id }) => ({
       title: 'Edit',
       clickHandler: taskId => dispatch(changeModal('editTask', { show: true, id: parseInt(id), taskId }))
     }
+    // currently you can't delete task
+    // {
+    //   title: 'Delete',
+    //   clickHandler: taskId => dispatch(deleteTasksRequest({ id: parseInt(id), taskId }))
+    // }
   ]
 })
 

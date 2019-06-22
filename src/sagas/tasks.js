@@ -1,8 +1,8 @@
 
 import { fetchLoggedEntity } from './utils'
 import { tasks as tasksLink, task as taskLink } from '../apiLinks'
-import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask, editTask } from '../actions/tasks'
-import { GET_TASKS_REQUEST, POST_TASKS_REQUEST, PUT_TASKS_REQUEST } from '../actionTypes/tasks'
+import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask, editTask, getTasksRequest, deleteTask } from '../actions/tasks'
+import { GET_TASKS_REQUEST, POST_TASKS_REQUEST, PUT_TASKS_REQUEST, DELETE_TASKS_REQUEST } from '../actionTypes/tasks'
 import { put } from 'redux-saga/effects'
 import { changeModal } from '../actions/modal'
 
@@ -58,9 +58,30 @@ export const putTasks = fetchLoggedEntity.bind(
     success: [
       (response, action) => put(editTask(action.urlParams.taskId, action.payload)),
       () => put(putTasksErrors({})),
-      () => put(changeModal('editTask', { show: false }))
+      () => put(changeModal('editTask', { show: false })),
+      (response, { urlParams }) => put(getTasksRequest({ id: urlParams.id }))
     ],
     error: putTasksErrors,
     loading: putTasksLoading
+  }
+)
+
+const deleteTasksKey = 'deleteTasks'
+const deleteTasksErrors = changeTasksErrors(deleteTasksKey)
+const deleteTasksLoading = toggleTasksLoading(deleteTasksKey)
+
+export const deleteTasks = fetchLoggedEntity.bind(
+  null,
+  'delete',
+  taskLink,
+  {
+    request: DELETE_TASKS_REQUEST,
+    success: [
+      (response, action) => put(deleteTask(action.urlParams.taskId)),
+      () => put(deleteTasksErrors({})),
+      (response, { urlParams }) => put(deleteTask(urlParams.id))
+    ],
+    error: deleteTasksErrors,
+    loading: deleteTasksLoading
   }
 )
