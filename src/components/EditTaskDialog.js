@@ -35,7 +35,6 @@ const fields = [
 ]
 
 export const EditTaskDialog = ({ open, handleClose, errors, send, loading, changeErrors, id, taskId, initialValues }) => {
-  console.log({ initialValues, id, taskId })
   return (
     <FormDialog
       title="Edit Task"

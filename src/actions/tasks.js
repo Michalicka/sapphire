@@ -1,5 +1,5 @@
 
-import { CHANGE_TASKS_DATA, EDIT_TASK, TOGGLE_TASKS_LOADING, CHANGE_TASKS_ERRORS, GET_TASKS_REQUEST, POST_TASKS_REQUEST, ADD_TASK, PUT_TASKS_REQUEST, DELETE_TASKS_REQUEST } from '../actionTypes/tasks'
+import { CHANGE_TASKS_DATA, EDIT_TASK, TOGGLE_TASKS_LOADING, CHANGE_TASKS_ERRORS, GET_TASKS_REQUEST, POST_TASKS_REQUEST, ADD_TASK, PUT_TASKS_REQUEST, DELETE_TASKS_REQUEST, GET_TASKS_DETAIL_REQUEST } from '../actionTypes/tasks'
 
 export function changeTasksData(data) {
   return {
@@ -71,5 +71,12 @@ export function deleteTask(id) {
   return {
     type: DELETE_TASKS_REQUEST,
     id
+  }
+}
+
+export function getTasksDetailRequest(urlParams) {
+  return {
+    type: GET_TASKS_DETAIL_REQUEST,
+    urlParams
   }
 }

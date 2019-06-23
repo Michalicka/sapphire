@@ -12,6 +12,7 @@ import { getProjectMembersRequest } from '../actions/projects'
 import CreateTasksButton from '../containers/CreateTasksButton'
 import CreateTaskDialog from '../containers/CreateTaskDialog'
 import EditTaskDialog from '../containers/EditTaskDialog'
+import TaskDetailDialog from '../components/TaskDetailDialog'
 
 const styles = theme => ({
   heading: {
@@ -66,6 +67,19 @@ const Tasks = ({ match, classes, dispatch }) => {
       />
       <CreateTaskDialog
         statusId={tasksTypes.find(type => type.name.toLowerCase() === match.params.type.toLowerCase()).id}
+      />
+      <TaskDetailDialog
+        title="Task"
+        status="backlog"
+        description="description and more"
+        assignee={{
+          name: 'lubiik',
+          avatar: null
+        }}
+        term="14 jun 2019 16:00:00"
+        duration="6"
+        handleClose={() => console.log('close')}
+        loading={false}
       />
       <EditTaskDialog />
     </React.Fragment>

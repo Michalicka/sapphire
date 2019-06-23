@@ -1,8 +1,8 @@
 
 import { fetchLoggedEntity } from './utils'
-import { tasks as tasksLink, task as taskLink } from '../apiLinks'
+import { tasks as tasksLink, task as taskLink, taskDetail as taskDetailLink } from '../apiLinks'
 import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask, editTask, getTasksRequest, deleteTask } from '../actions/tasks'
-import { GET_TASKS_REQUEST, POST_TASKS_REQUEST, PUT_TASKS_REQUEST, DELETE_TASKS_REQUEST } from '../actionTypes/tasks'
+import { GET_TASKS_REQUEST, POST_TASKS_REQUEST, PUT_TASKS_REQUEST, DELETE_TASKS_REQUEST, GET_TASKS_DETAIL_REQUEST } from '../actionTypes/tasks'
 import { put } from 'redux-saga/effects'
 import { changeModal } from '../actions/modal'
 
@@ -83,5 +83,24 @@ export const deleteTasks = fetchLoggedEntity.bind(
     ],
     error: deleteTasksErrors,
     loading: deleteTasksLoading
+  }
+)
+
+const getTasksDetailKey = 'getTasksDetail'
+const getTasksDetailErrors = changeTasksErrors(getTasksDetailKey)
+const getTasksDetailLoading = toggleTasksLoading(getTasksDetailKey)
+
+export const getTasksDetail = fetchLoggedEntity.bind(
+  null,
+  'get',
+  taskDetailLink,
+  {
+    request: GET_TASKS_DETAIL_REQUEST,
+    success: [
+      ({ data }, { urlParams }) => put(editTask(urlParams.id, data.data)),
+      () => (getTasksDetailErrors({}))
+    ],
+    error: getTasksDetailErrors,
+    loading: getTasksDetailLoading
   }
 )
