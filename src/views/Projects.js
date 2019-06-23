@@ -1,13 +1,15 @@
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import ProjectsContainer from '../containers/ProjectsContainer'
 import CreateProjectDialog from '../containers/CreateProjectDialog'
 import EditProjectDialog from '../containers/EditProjectDialog'
 import CreateProjectButton from '../containers/CreateProjectButton'
+import { tasks as tasksLink, tasksTypes } from '../routes'
 
-export const Projects = () => {
+export const Projects = ({ match }) => {
   return (
     <React.Fragment>
       <Grid
@@ -28,7 +30,9 @@ export const Projects = () => {
           item
           xs={12}
         >
-          <ProjectsContainer />
+          <ProjectsContainer
+            baseUrl={`${match.url}${tasksLink.replace(':type', tasksTypes[0].name)}`}
+          />
         </Grid>
       </Grid>
       <CreateProjectDialog />
@@ -36,6 +40,10 @@ export const Projects = () => {
       <EditProjectDialog />
     </React.Fragment>
   )
+}
+
+Projects.propTypes = {
+  match: PropTypes.object.isRequired
 }
 
 export default Projects

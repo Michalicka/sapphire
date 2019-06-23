@@ -75,7 +75,9 @@ export const getProjectMembers = fetchLoggedEntity.bind(
     request: GET_PROJECT_MEMBERS_REQUEST,
     success: [
       () => put(changeProjectsErrors({})),
-      (response, action) => put(editProject(action.urlParams.id, { members: response.data.data }))
+      (response, action) => {
+        return put(editProject(action.urlParams.id, { members: response.data.data }))
+      }
     ],
     error: errors => changeProjectsErrors(errors),
     loading: value => toggleProjectsLoading(value)

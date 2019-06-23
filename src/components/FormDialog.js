@@ -13,6 +13,12 @@ import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ImageInput from './ImageInput'
 import ProjectMembersSearch from '../containers/ProjectMembersSearch'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import DateTimeField from './DateTimeField'
+import TimeField from './TimeField'
+import AssigneeSearch from '../containers/AssigneeSearch'
+import { MenuItem } from '@material-ui/core'
 
 const styles = theme => ({
   dialog: {
@@ -53,38 +59,92 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
               onSubmit={formData.handleSubmit}
             >
               <DialogContent className={classes.dialog}>
-                {fields.map((field, index) => {
-                  if (field.type === 'file') {
-                    return (
-                      <ImageInput
-                        key={field.name}
-                        className={classes.field}
-                        {...formFieldProps(field.name, field.type)}
-                        setFieldValue={formData.setFieldValue}
-                        setFieldTouched={formData.setFieldTouched}
-                      />
-                    )
-                  } else if (field.type === 'projectMembersSearch') {
-                    return (
-                      <ProjectMembersSearch
-                        key={field.name}
-                        className={classes.field}
-                        {...formFieldProps(field.name)}
-                        setFieldValue={formData.setFieldValue}
-                        setFieldTouched={formData.setFieldTouched}
-                      />
-                    )
-                  } else {
-                    return (
-                      <TextField
-                        key={field.name}
-                        className={classes.field}
-                        {...formFieldProps(field.name, field.type)}
-                        fullWidth
-                      />
-                    )
-                  }
-                })}
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  {fields.map((field, index) => {
+                    if (field.type === 'file') {
+                      return (
+                        <ImageInput
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name, field.type)}
+                          setFieldValue={formData.setFieldValue}
+                          setFieldTouched={formData.setFieldTouched}
+                        />
+                      )
+                    } else if (field.type === 'projectMembersSearch') {
+                      return (
+                        <ProjectMembersSearch
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name)}
+                          setFieldValue={formData.setFieldValue}
+                          setFieldTouched={formData.setFieldTouched}
+                        />
+                      )
+                    } else if (field.type === 'dateTime') {
+                      return (
+                        <DateTimeField
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name)}
+                          setFieldValue={formData.setFieldValue}
+                          setFieldError={formData.setFieldError}
+                          setFieldTouched={formData.setFieldTouched}
+                        />
+                      )
+                    } else if (field.type === 'time') {
+                      return (
+                        <TimeField
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name)}
+                          setFieldValue={formData.setFieldValue}
+                          setFieldError={formData.setFieldError}
+                          setFieldTouched={formData.setFieldTouched}
+                        />
+                      )
+                    } else if (field.type === 'assigneeSearch') {
+                      return (
+                        <AssigneeSearch
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name)}
+                          setFieldValue={formData.setFieldValue}
+                          setFieldTouched={formData.setFieldTouched}
+                          oneOnly
+                        />
+                      )
+                    } else if (field.type === 'select') {
+                      return (
+                        <TextField
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name, field.type)}
+                          select
+                          fullWidth
+                        >
+                          {field.options.map(option => (
+                            <MenuItem
+                              key={option.value}
+                              value={option.value}
+                            >
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      )
+                    } else {
+                      return (
+                        <TextField
+                          key={field.name}
+                          className={classes.field}
+                          {...formFieldProps(field.name, field.type)}
+                          fullWidth
+                        />
+                      )
+                    }
+                  })}
+                </MuiPickersUtilsProvider>
               </DialogContent>
               <DialogActions>
                 <Button

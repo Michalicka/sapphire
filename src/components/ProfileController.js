@@ -1,19 +1,16 @@
 
 import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
-import Avatar from '@material-ui/core/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { withStyles } from '@material-ui/core/styles'
+import AvatarWrap from './AvatarWrap'
 import PropTypes from 'prop-types'
 
 const styles = theme => ({
   button: {
     padding: 0,
     marginLeft: theme.spacing.unit / 2
-  },
-  avatar: {
-    backgroundColor: theme.palette.secondary.main
   },
   link: {
     textDecoration: 'none',
@@ -60,10 +57,10 @@ export class ProfileController extends React.Component {
           className={classes.button}
           onClick={this.handleOpen}
         >
-          <Avatar
-            className={classes.avatar}
-            src={avatar || undefined}
-          >{avatar === '' ? initial : ''}</Avatar>
+          <AvatarWrap
+            avatar={avatar}
+            initial={initial}
+          />
         </IconButton>
         <Menu
           open={open}

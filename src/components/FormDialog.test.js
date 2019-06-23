@@ -11,6 +11,7 @@ import { Formik } from 'formik'
 import { shallow } from 'enzyme'
 import ImageInput from './ImageInput'
 import ProjectMembersSearch from '../containers/ProjectMembersSearch'
+import DateTimeField from './DateTimeField'
 
 describe('FormDialog component', () => {
   let wrapper
@@ -26,6 +27,10 @@ describe('FormDialog component', () => {
       {
         name: 'name4',
         type: 'projectMembersSearch'
+      },
+      {
+        name: 'name5',
+        type: 'dateTime'
       }
     ],
     send: jest.fn(),
@@ -47,10 +52,12 @@ describe('FormDialog component', () => {
   })
 
   it('should render expected count of textFields', () => {
-    const textFields = wrapper.find(Formik).dive().find(TextField)
-    const imageInput = wrapper.find(Formik).dive().find(ImageInput)
-    const projectMembersSearch = wrapper.find(Formik).dive().find(ProjectMembersSearch)
-    expect(textFields.length + imageInput.length + projectMembersSearch.length).toBe(props.fields.length)
+    const form = wrapper.find(Formik).dive()
+    const textFields = form.find(TextField)
+    const imageInput = form.find(ImageInput)
+    const projectMembersSearch = form.find(ProjectMembersSearch)
+    const dateTimeField = form.find(DateTimeField)
+    expect(textFields.length + imageInput.length + projectMembersSearch.length + dateTimeField.length).toBe(props.fields.length)
   })
 
   it('should call send function after submit form', () => {

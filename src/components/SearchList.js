@@ -7,17 +7,16 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { ListItemIcon } from '@material-ui/core'
 import DoneIcon from '@material-ui/icons/Done'
 
-export const SearchList = ({ items, selectedItems, handleClick, className, value }) => {
-  const showingItems = value !== '' ? items : selectedItems
+export const SearchList = ({ items, selectedItems, handleClick, className }) => {
   return (
     <List
       className={className}
     >
       {
-        showingItems.map(item => (
+        items.map(item => (
           <ListItem
             key={item.id}
-            onClick={() => handleClick(item.id)}
+            onClick={() => handleClick(item)}
             button
           >
             <ListItemText
@@ -39,8 +38,7 @@ SearchList.propTypes = {
   items: PropTypes.array.isRequired,
   selectedItems: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  className: PropTypes.string
 }
 
 export default SearchList

@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import CardContainer from '../components/CardContainer'
-import { getProjectsRequest, deleteProjectsRequest } from '../actions/projects'
+import { deleteProjectsRequest } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 
 export const mapStateToProps = state => ({
@@ -10,7 +10,6 @@ export const mapStateToProps = state => ({
 })
 
 export const mapDispatchToProps = dispatch => ({
-  getItems: () => dispatch(getProjectsRequest()),
   options: [
     {
       title: 'Edit',

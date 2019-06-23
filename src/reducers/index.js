@@ -6,6 +6,7 @@ import tokens from './tokens'
 import projects from './projects'
 import modal from './modal'
 import users from './users'
+import tasks from './tasks'
 
 export default combineReducers({
   user,
@@ -13,5 +14,6 @@ export default combineReducers({
   tokens,
   projects,
   modal,
-  users
+  users,
+  tasks
 })
