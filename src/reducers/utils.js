@@ -7,7 +7,7 @@ export const getDefaultValues = keys => defaultValue => {
   return obj
 }
 
-export const findItemIndex = (data, id) => data.findIndex(item => item.id === id)
+export const findItemIndex = (data, id) => data.findIndex(item => item.id === parseInt(id))
 
 export const mergeData = (state, { data }) => {
   let newData
@@ -19,14 +19,14 @@ export const mergeData = (state, { data }) => {
   return { ...state, data: newData }
 }
 
-export const editParam = area => (state, { key, value }) => {
+export const changeParam = area => (state, { key, value }) => {
   const areaValue = { ...state[area], [key]: value }
   return { ...state, [area]: areaValue }
 }
 
-export const editDataParam = editParam('data')
-export const editErrorsParam = editParam('errors')
-export const editLoadingParam = editParam('loading')
+export const changeDataParam = changeParam('data')
+export const changeErrorsParam = changeParam('errors')
+export const changeLoadingParam = changeParam('loading')
 
 export const editItem = (state, { id, data }) => {
   const index = findItemIndex(state.data, id)

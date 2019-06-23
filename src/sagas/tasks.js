@@ -1,8 +1,8 @@
 
 import { fetchLoggedEntity } from './utils'
-import { tasks as tasksLink, task as taskLink, taskDetail as taskDetailLink } from '../apiLinks'
-import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask, editTask, getTasksRequest, deleteTask } from '../actions/tasks'
-import { GET_TASKS_REQUEST, POST_TASKS_REQUEST, PUT_TASKS_REQUEST, DELETE_TASKS_REQUEST, GET_TASKS_DETAIL_REQUEST } from '../actionTypes/tasks'
+import { tasks as tasksLink, task as taskLink, taskDetail as taskDetailLink, tasksComments as tasksCommentsLink } from '../apiLinks'
+import { changeTasksData, changeTasksErrors, toggleTasksLoading, addTask, editTask, getTasksRequest, deleteTask, addTaskComment } from '../actions/tasks'
+import { GET_TASKS_REQUEST, POST_TASKS_REQUEST, PUT_TASKS_REQUEST, DELETE_TASKS_REQUEST, GET_TASKS_DETAIL_REQUEST, GET_TASKS_COMMENTS_REQUEST, POST_TASKS_COMMENTS_REQUEST } from '../actionTypes/tasks'
 import { put } from 'redux-saga/effects'
 import { changeModal } from '../actions/modal'
 
@@ -102,5 +102,43 @@ export const getTasksDetail = fetchLoggedEntity.bind(
     ],
     error: getTasksDetailErrors,
     loading: getTasksDetailLoading
+  }
+)
+
+const getTasksCommentsKey = 'getTasksComments'
+const getTasksCommentsErrors = changeTasksErrors(getTasksCommentsKey)
+const getTasksCommentsLoading = toggleTasksLoading(getTasksCommentsKey)
+
+export const getTasksComments = fetchLoggedEntity.bind(
+  null,
+  'get',
+  tasksCommentsLink,
+  {
+    request: GET_TASKS_COMMENTS_REQUEST,
+    success: [
+      ({ data }, { urlParams }) => put(editTask(urlParams.id, { comments: data.data })),
+      () => put(getTasksCommentsErrors({}))
+    ],
+    error: getTasksCommentsErrors,
+    loading: getTasksCommentsLoading
+  }
+)
+
+export const postTasksCommentsKey = 'postTasksComments'
+export const postTasksCommentsErrors = changeTasksErrors(postTasksCommentsKey)
+export const postTasksCommentsLoading = toggleTasksLoading(postTasksCommentsKey)
+
+export const postTasksComments = fetchLoggedEntity.bind(
+  null,
+  'post',
+  tasksCommentsLink,
+  {
+    request: POST_TASKS_COMMENTS_REQUEST,
+    success: [
+      ({ data }, { urlParams }) => put(addTaskComment(urlParams.id, data.data)),
+      () => put(postTasksCommentsErrors({}))
+    ],
+    error: postTasksCommentsErrors,
+    loading: postTasksCommentsLoading
   }
 )

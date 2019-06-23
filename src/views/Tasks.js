@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import TasksDetail from '../containers/TasksDetail'
 import TabsLinks from '../components/TabsLinks'
 import Grid from '@material-ui/core/Grid'
-import { tasksTypes } from '../routes'
+import { tasksTypes, taskDetail as taskDetailUrl, tasks as tasksLink, dashboard as dashboardLink, projects as projectsLink } from '../routes'
 import { withStyles } from '@material-ui/core/styles'
 import TasksContainer from '../containers/TasksContainer'
 import { connect } from 'react-redux'
@@ -12,7 +12,8 @@ import { getProjectMembersRequest } from '../actions/projects'
 import CreateTasksButton from '../containers/CreateTasksButton'
 import CreateTaskDialog from '../containers/CreateTaskDialog'
 import EditTaskDialog from '../containers/EditTaskDialog'
-import TaskDetailDialog from '../components/TaskDetailDialog'
+import TaskDetailDialog from '../containers/TaskDetailDialog'
+import { Route } from 'react-router-dom'
 
 const styles = theme => ({
   heading: {
@@ -53,7 +54,8 @@ const Tasks = ({ match, classes, dispatch }) => {
             id={match.params.id}
             statusId={tasksTypes.find(task => task.name === match.params.type).id}
             type={match.params.type}
-            baseUrl=""
+            baseUrl={`${match.url}${taskDetailUrl}`}
+            urlSelector=":taskId"
           />
         </Grid>
         <Grid
@@ -68,18 +70,17 @@ const Tasks = ({ match, classes, dispatch }) => {
       <CreateTaskDialog
         statusId={tasksTypes.find(type => type.name.toLowerCase() === match.params.type.toLowerCase()).id}
       />
-      <TaskDetailDialog
-        title="Task"
-        status="backlog"
-        description="description and more"
-        assignee={{
-          name: 'lubiik',
-          avatar: null
+      <Route
+        path={`${match.path}${taskDetailUrl}`}
+        render={({ history, match }) => {
+          const url = `${dashboardLink}${projectsLink}${tasksLink}`.replace(':id', match.params.id).replace(':type', match.params.type)
+          return (
+            <TaskDetailDialog
+              handleClose={() => history.push(url)}
+              match={match}
+            />
+          )
         }}
-        term="14 jun 2019 16:00:00"
-        duration="6"
-        handleClose={() => console.log('close')}
-        loading={false}
       />
       <EditTaskDialog />
     </React.Fragment>

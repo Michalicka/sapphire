@@ -82,7 +82,6 @@ export class Dashboard extends React.Component {
             />
             <Route
               path={`${match.url}${projectsLink}${tasksLink}`}
-              exact
               component={Tasks}
             />
             <Route

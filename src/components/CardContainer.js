@@ -21,7 +21,7 @@ export class CardContainer extends React.Component {
   }
 
   render() {
-    const { items, loading, classes, options, baseUrl } = this.props
+    const { items, loading, classes, options, baseUrl, urlSelector } = this.props
     return (
       <Grid
         container
@@ -53,6 +53,7 @@ export class CardContainer extends React.Component {
               item={item}
               options={options}
               baseUrl={baseUrl}
+              urlSelector={urlSelector}
             />
           </Grid>
         ))}
@@ -67,7 +68,8 @@ CardContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
-  baseUrl: PropTypes.string.isRequired
+  baseUrl: PropTypes.string.isRequired,
+  urlSelector: PropTypes.string
 }
 
 export default withStyles(styles)(CardContainer)

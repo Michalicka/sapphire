@@ -4,6 +4,7 @@ export const login = '/login'
 export const dashboard = '/dashboard'
 export const projects = '/projects'
 export const tasks = '/:id/tasks/:type'
+export const taskDetail = '/detail/:taskId'
 export const tasksTypes = [
   {
     id: 1,

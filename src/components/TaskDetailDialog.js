@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -10,25 +10,17 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 import Toolbar from '@material-ui/core/Toolbar'
 import AvatarWrap from './AvatarWrap'
+import CommentContainer from './CommentContainer'
+import TaskDetailHistory from './TaskDetailHistory'
 
 const styles = theme => ({
-  dialog: {
-    minWidth: 320
-  },
-  field: {
-    marginBottom: theme.spacing.unit * 2
-  },
-  loader: {
-    textAlign: 'center',
-    marginTop: theme.spacing.unit
-  },
   title: {
     flexGrow: 1
   },
   toolbar: {
     minHeight: 0
   },
-  content: {
+  wrap: {
     textAlign: 'left'
   },
   profileText: {
@@ -36,19 +28,25 @@ const styles = theme => ({
   },
   item: {
     marginBottom: theme.spacing.unit * 2
+  },
+  content: {
+    marginBottom: theme.spacing.unit * 4
+  },
+  loading: {
+    textAlign: 'center'
   }
 })
 
-export const TaskDetailDialog = ({ title, description, handleClose, status, classes, loading, assignee, initial, avatar, term, duration }) => {
-  console.log({
-    title,
-    description
-  })
+export const TaskDetailDialog = ({ title, description, handleClose, status, classes, loading, assignee, term, duration, commentsLoading, postCommentLoading, changes, comments, getTasksDetail, getTasksComments, postTasksComments }) => {
+  useEffect(() => {
+    getTasksDetail()
+  }, [])
+
   return (
     <Dialog
       open={true}
       onClose={handleClose}
-      maxWidth="md"
+      maxWidth="sm"
       scroll="body"
     >
       <DialogTitle>
@@ -63,15 +61,16 @@ export const TaskDetailDialog = ({ title, description, handleClose, status, clas
           >{status}</Typography>
         </Toolbar>
       </DialogTitle>
-      <div className={classes.loader}>
+      <DialogContent className={classes.wrap}>
         {loading &&
-          <CircularProgress
-            color="primary"
-          />
+          <div className={classes.loading}>
+            <CircularProgress
+              color="primary"
+            />
+          </div>
         }
-
-        <DialogContent className={classes.content}>
-          {assignee &&
+        <div className={classes.content}>
+          {assignee && assignee.name &&
             <div className={classes.item}>
               <Typography variant="h6">Assignee:</Typography>
               <Toolbar
@@ -88,10 +87,12 @@ export const TaskDetailDialog = ({ title, description, handleClose, status, clas
               </Toolbar>
             </div>
           }
-          <div className={classes.item}>
-            <Typography variant="h6">Description:</Typography>
-            <DialogContentText>{description}</DialogContentText>
-          </div>
+          {description &&
+            <div className={classes.item}>
+              <Typography variant="h6">Description:</Typography>
+              <DialogContentText>{description}</DialogContentText>
+            </div>
+          }
           {term &&
             <div className={classes.item}>
               <Typography variant="h6">Term:</Typography>
@@ -104,22 +105,53 @@ export const TaskDetailDialog = ({ title, description, handleClose, status, clas
               <DialogContentText>{duration}</DialogContentText>
             </div>
           }
-        </DialogContent>
-      </div>
+        </div>
+        <div className={classes.content}>
+          <Typography
+            variant="h6"
+          >Comments:</Typography>
+          <CommentContainer
+            list={comments}
+            errors={{}}
+            send={postTasksComments}
+            loading={commentsLoading}
+            sendLoading={postCommentLoading}
+            getComments={getTasksComments}
+            taskId={1}
+          />
+        </div>
+        {changes && changes.length !== 0 &&
+          <div className={classes.content}>
+            <Typography
+              variant="h6"
+            >History:</Typography>
+            <TaskDetailHistory
+              list={changes}
+            />
+          </div>
+        }
+      </DialogContent>
     </Dialog >
   )
 }
 
 TaskDetailDialog.propTypes = {
-  title: PropTypes.string.isRequired,
-  assignee: PropTypes.object.isRequired,
-  term: PropTypes.string.isRequired,
-  duration: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  assignee: PropTypes.object,
+  term: PropTypes.string,
+  duration: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  status: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  status: PropTypes.string,
+  comments: PropTypes.array.isRequired,
+  description: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  commentsLoading: PropTypes.bool.isRequired,
+  postCommentLoading: PropTypes.bool.isRequired,
+  changes: PropTypes.array,
+  getTasksDetail: PropTypes.func.isRequired,
+  getTasksComments: PropTypes.func.isRequired,
+  postTasksComments: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(TaskDetailDialog)

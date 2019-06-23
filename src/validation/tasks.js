@@ -25,3 +25,8 @@ export const PutTasks = Yup.object().shape({
   duration: Yup.string()
     .nullable()
 })
+
+export const PostTaskComment = Yup.object().shape({
+  content: Yup.string()
+    .required(messages.required)
+})
