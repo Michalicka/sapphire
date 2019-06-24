@@ -28,6 +28,12 @@ export const changeDataParam = changeParam('data')
 export const changeErrorsParam = changeParam('errors')
 export const changeLoadingParam = changeParam('loading')
 
+export const pushToDataParam = (state, { key, value }) => {
+  const param = [...state.data[key], value]
+  const data = { ...state.data, [key]: param }
+  return { ...state, data }
+}
+
 export const editItem = (state, { id, data }) => {
   const index = findItemIndex(state.data, id)
   const newItem = { ...state.data[index], ...data }
