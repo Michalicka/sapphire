@@ -13,3 +13,5 @@ export const tasks = params => `${project(params)}/tasks`
 export const task = ({ id, taskId }) => `${tasks({ id })}/${taskId}`
 export const taskDetail = ({ id }) => `${url}/tasks/${id}`
 export const tasksComments = params => `${taskDetail(params)}/comments`
+export const conversations = `${url}/conversations`
+export const messages = ({ id }) => `${conversations}/${id}/messages`

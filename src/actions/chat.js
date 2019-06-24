@@ -1,5 +1,5 @@
 
-import { CHANGE_CONVERSATIONS, ADD_CONVERSATION, CHANGE_MESSAGES, ADD_MESSAGE, GET_CONVERSATIONS_REQUEST, POST_CONVERSATIONS_REQUEST, GET_MESSAGES_REQUEST, POST_MESSAGES_REQUEST } from '../actionTypes/chat'
+import { CHANGE_CONVERSATIONS, ADD_CONVERSATION, CHANGE_MESSAGES, ADD_MESSAGE, GET_CONVERSATIONS_REQUEST, POST_CONVERSATIONS_REQUEST, GET_MESSAGES_REQUEST, POST_MESSAGES_REQUEST, TOGGLE_CHAT_LOADING, CHANGE_CHAT_ERRORS } from '../actionTypes/chat'
 
 const converastionsKey = 'conversations'
 
@@ -62,5 +62,19 @@ export function postMessagesRequest(urlParams, payload) {
     type: POST_MESSAGES_REQUEST,
     urlParams,
     payload
+  }
+}
+
+export const toggleChatLoading = key => value => ({
+  type: TOGGLE_CHAT_LOADING,
+  key,
+  value
+})
+
+export const changeChatErrors = key => value => {
+  return {
+    type: CHANGE_CHAT_ERRORS,
+    key,
+    value
   }
 }
