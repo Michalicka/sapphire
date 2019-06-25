@@ -40,12 +40,10 @@ const styles = theme => ({
   }
 })
 
-export const ChatDialog = ({ conversations, messages, actualConversation, getConversations, getMessages, postConversations, postMessages, getConversationsLoading, postConversationsLoading, getMessagesLoading, postMessagesLoading, classes, handleClose, postMessagesErrors, changeActualConversation, postConversationsErrors, myId, changeMessages }) => {
+export const ChatDialog = ({ conversations, messages, actualConversation, getConversations, getMessages, postConversations, postMessages, getConversationsLoading, postConversationsLoading, getMessagesLoading, postMessagesLoading, classes, handleClose, postMessagesErrors, changeActualConversation, postConversationsErrors, myId, changeMessages, open }) => {
   useEffect(() => {
     getConversations()
   }, [])
-
-  console.log(actualConversation)
 
   const [creation, setCreation] = useState(false)
 
@@ -55,7 +53,7 @@ export const ChatDialog = ({ conversations, messages, actualConversation, getCon
 
   return (
     <Dialog
-      open={true}
+      open={open}
       onClose={handleClose}
       maxWidth="sm"
       scroll="body"
@@ -142,7 +140,8 @@ ChatDialog.propTypes = {
   postConversationsErrors: PropTypes.object.isRequired,
   changeActualConversation: PropTypes.func.isRequired,
   myId: PropTypes.number,
-  changeMessages: PropTypes.func.isRequired
+  changeMessages: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired
 }
 
 export default withStyles(styles)(ChatDialog)

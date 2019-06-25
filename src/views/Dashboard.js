@@ -21,6 +21,7 @@ import ChangeAvatarDialog from '../containers/ChangeAvatarDialog'
 import EditProjectMembersDialog from '../containers/EditProjectMembersDialog'
 import ChatDialog from '../containers/ChatDialog'
 import { getProjectsRequest } from '../actions/projects'
+import { changeModal } from '../actions/modal'
 
 const styles = theme => ({
   appBar: {
@@ -42,7 +43,7 @@ const styles = theme => ({
   }
 })
 
-export const Dashboard = ({ classes, match, status, refreshTokenWatch, getMe, getProjects }) => {
+export const Dashboard = ({ classes, match, status, refreshTokenWatch, getMe, getProjects, openChat }) => {
   useEffect(() => {
     if (localStorage.getItem('accessToken') !== null) {
       refreshTokenWatch()
@@ -64,7 +65,9 @@ export const Dashboard = ({ classes, match, status, refreshTokenWatch, getMe, ge
               white
             />
           </div>
-          <IconButton>
+          <IconButton
+            onClick={openChat}
+          >
             <MessageIcon
               style={{ fill: '#fff' }}
             />
@@ -97,7 +100,7 @@ export const Dashboard = ({ classes, match, status, refreshTokenWatch, getMe, ge
       <ChangePasswordDialog />
       <ChangeAvatarDialog />
       <EditProjectMembersDialog />
-      <ChatDialog/>
+      <ChatDialog />
     </React.Fragment>
   )
 }
@@ -108,7 +111,8 @@ Dashboard.propTypes = {
   status: PropTypes.oneOf(['Authorized', 'Unauthorized']),
   refreshTokenWatch: PropTypes.func.isRequired,
   getMe: PropTypes.func.isRequired,
-  getProjects: PropTypes.func.isRequired
+  getProjects: PropTypes.func.isRequired,
+  openChat: PropTypes.func.isRequired
 }
 
 export const mapStateToProps = state => ({
@@ -118,7 +122,8 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
   refreshTokenWatch: () => dispatch(refreshTokenWatch()),
   getMe: () => dispatch(getMeRequest()),
-  getProjects: () => dispatch(getProjectsRequest())
+  getProjects: () => dispatch(getProjectsRequest()),
+  openChat: () => dispatch(changeModal('chat', { show: true }))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard))
