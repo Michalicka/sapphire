@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import ToolBar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -19,6 +19,7 @@ import EditProfileDialog from '../containers/EditProfileDialog'
 import ChangePasswordDialog from '../containers/ChangePasswordDialog'
 import ChangeAvatarDialog from '../containers/ChangeAvatarDialog'
 import EditProjectMembersDialog from '../containers/EditProjectMembersDialog'
+import ChatDialog from '../containers/ChatDialog'
 import { getProjectsRequest } from '../actions/projects'
 
 const styles = theme => ({
@@ -41,66 +42,64 @@ const styles = theme => ({
   }
 })
 
-export class Dashboard extends React.Component {
-  componentDidMount() {
+export const Dashboard = ({ classes, match, status, refreshTokenWatch, getMe, getProjects }) => {
+  useEffect(() => {
     if (localStorage.getItem('accessToken') !== null) {
-      this.props.refreshTokenWatch()
-      this.props.getMe()
-      this.props.getProjects()
+      refreshTokenWatch()
+      getMe()
+      getProjects()
     }
-  }
+  })
 
-  render() {
-    const { classes, match, status } = this.props
-    return (
-      <React.Fragment>
-        <AppBar
-          position="fixed"
-          className={classes.appBar}
-        >
-          <ToolBar>
-            <div className={classes.logoContainer}>
-              <Logo
-                className={classes.logo}
-                white
-              />
-            </div>
-            <IconButton>
-              <MessageIcon
-                style={{ fill: '#fff' }}
-              />
-            </IconButton>
-            <ProfileController />
-          </ToolBar>
-        </AppBar>
-        <div className={classes.container}>
-          <Switch>
-            <Route
-              path={`${match.url}${projectsLink}`}
-              exact
-              component={Projects}
+  return (
+    <React.Fragment>
+      <AppBar
+        position="fixed"
+        className={classes.appBar}
+      >
+        <ToolBar>
+          <div className={classes.logoContainer}>
+            <Logo
+              className={classes.logo}
+              white
             />
-            <Route
-              path={`${match.url}${projectsLink}${tasksLink}`}
-              component={Tasks}
+          </div>
+          <IconButton>
+            <MessageIcon
+              style={{ fill: '#fff' }}
             />
-            <Route
-              path={match.url}
-              exact
-              render={() => <Redirect to={`${match.url}${projectsLink}`} />}
-            />
-          </Switch>
-        </div>
-        {(status === 'Unauthorized' || localStorage.getItem('accessToken') === null) &&
-          <Redirect to={login} />
-        }
-        <EditProfileDialog />
-        <ChangePasswordDialog />
-        <ChangeAvatarDialog />
-        <EditProjectMembersDialog />
-      </React.Fragment>
-    )
-  }
+          </IconButton>
+          <ProfileController />
+        </ToolBar>
+      </AppBar>
+      <div className={classes.container}>
+        <Switch>
+          <Route
+            path={`${match.url}${projectsLink}`}
+            exact
+            component={Projects}
+          />
+          <Route
+            path={`${match.url}${projectsLink}${tasksLink}`}
+            component={Tasks}
+          />
+          <Route
+            path={match.url}
+            exact
+            render={() => <Redirect to={`${match.url}${projectsLink}`} />}
+          />
+        </Switch>
+      </div>
+      {(status === 'Unauthorized' || localStorage.getItem('accessToken') === null) &&
+        <Redirect to={login} />
+      }
+      <EditProfileDialog />
+      <ChangePasswordDialog />
+      <ChangeAvatarDialog />
+      <EditProjectMembersDialog />
+      <ChatDialog/>
+    </React.Fragment>
+  )
 }
 
 Dashboard.propTypes = {

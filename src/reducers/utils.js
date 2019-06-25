@@ -29,9 +29,13 @@ export const changeErrorsParam = changeParam('errors')
 export const changeLoadingParam = changeParam('loading')
 
 export const pushToDataParam = (state, { key, value }) => {
-  const param = [...state.data[key], value]
-  const data = { ...state.data, [key]: param }
-  return { ...state, data }
+  if (state.data[key].every(item => item.id !== value.id)) {
+    const param = [...state.data[key], value]
+    const data = { ...state.data, [key]: param }
+    return { ...state, data }
+  } else {
+    return state
+  }
 }
 
 export const editItem = (state, { id, data }) => {

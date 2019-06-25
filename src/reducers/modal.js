@@ -11,7 +11,8 @@ const keys = [
   'changePassword',
   'editProjectMembers',
   'createTask',
-  'editTask'
+  'editTask',
+  'chat'
 ]
 
 const initialState = getDefaultValues(keys)({ show: false })

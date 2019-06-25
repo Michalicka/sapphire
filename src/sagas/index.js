@@ -5,6 +5,7 @@ import { postTokens, putTokensWatch, refreshToken, deleteTokens } from './tokens
 import { getProjects, postProjects, putProjects, deleteProjects, putProjectMembers, getProjectMembers } from './projects'
 import { getUsers } from './users'
 import { getTasks, postTasks, putTasks, deleteTasks, getTasksDetail, getTasksComments, postTasksComments } from './tasks'
+import { getMessages, postMessages, getConversations, postConversations } from './chat'
 
 export default function* rootSaga() {
   yield all([
@@ -30,6 +31,10 @@ export default function* rootSaga() {
     fork(deleteTasks),
     fork(getTasksDetail),
     fork(getTasksComments),
-    fork(postTasksComments)
+    fork(postTasksComments),
+    fork(getMessages),
+    fork(postMessages),
+    fork(getConversations),
+    fork(postConversations)
   ])
 }
