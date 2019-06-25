@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import SearchContainer from '../components/SearchContainer'
 import { getUsersRequest } from '../actions/users'
 import { getProjectMembersRequest, editProject } from '../actions/projects'
-import { getItem } from '../reducers/selectors'
+import { getItem, getLoading } from '../reducers/selectors'
 
 export const mapStateToProps = state => {
   const project = getItem(state.projects.data, state.modal.editProjectMembers.id)
+  const projectsLoading = getLoading(state.projects)
   return {
-    loading: state.projects.loading,
+    loading: projectsLoading('getProjectsMembers'),
     items: state.users.data,
     selectedItems: project.members || [],
     id: project.id

@@ -1,14 +1,14 @@
 
-import { USER_REGISTRATION, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/user'
-import { userRegistration, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from './user'
+import { POST_USERS_REQUEST, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/profile'
+import { postUsersRequest, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from './user'
 
 describe('user actions', () => {
   it('user registration', () => {
     const expectedOutput = {
-      type: USER_REGISTRATION
+      type: POST_USERS_REQUEST
     }
 
-    expect(userRegistration()).toEqual(expectedOutput)
+    expect(postUsersRequest()).toEqual(expectedOutput)
   })
 
   it('change user data', () => {

@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Dashboard, mapDispatchToProps, mapStateToProps } from './Dashboard'
 import { refreshTokenWatch } from '../actions/tokens'
-import { getMeRequest } from '../actions/user'
+import { getMeRequest } from '../actions/profile'
 import { getProjectsRequest } from '../actions/projects'
 
 describe('dasboard view', () => {

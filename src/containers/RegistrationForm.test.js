@@ -1,6 +1,6 @@
 
 import { mapStateToProps, mapDispatchToProps } from './RegistrationForm'
-import { userRegistration } from '../actions/user'
+import { postUsersRequest } from '../actions/profile'
 
 describe('RegistrationForm container', () => {
   it('should return mapped state props', () => {
@@ -25,6 +25,6 @@ describe('RegistrationForm container', () => {
     const mappedActions = mapDispatchToProps(dispatch)
 
     mappedActions.registration({})
-    expect(dispatch.mock.calls[0][0]).toEqual(userRegistration({}))
+    expect(dispatch.mock.calls[0][0]).toEqual(postUsersRequest({}))
   })
 })

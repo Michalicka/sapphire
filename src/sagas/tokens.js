@@ -1,6 +1,6 @@
 
 import { changeTokensErrors, toggleTokensLoading, changeTokensStatus, putTokensRequest, refreshTokenWatch } from '../actions/tokens'
-import { userRestore } from '../actions/user'
+import { userRestore } from '../actions/profile'
 import { tokens as tokensLink } from '../apiLinks'
 import { POST_TOKENS_REQUEST, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST, DELETE_TOKENS_REQUEST } from '../actionTypes/tokens'
 import { fetchEntity, headers, fetchLoggedEntity } from './utils'
@@ -19,6 +19,10 @@ export function removeToken() {
   localStorage.removeItem('tokenExpiresIn')
 }
 
+const postTokensKey = 'postTokens'
+const postTokensErrors = changeTokensErrors(postTokensKey)
+const postTokensLoading = toggleTokensLoading(postTokensKey)
+
 export const postTokens = fetchEntity.bind(
   null,
   'post',
@@ -27,11 +31,11 @@ export const postTokens = fetchEntity.bind(
     request: POST_TOKENS_REQUEST,
     success: [
       response => call(setToken, response.data.data),
-      () => put(changeTokensErrors({})),
+      () => put(postTokensErrors({})),
       () => put(changeTokensStatus('Authorized'))
     ],
-    error: errors => changeTokensErrors(errors),
-    loading: value => toggleTokensLoading(value)
+    error: postTokensErrors,
+    loading: postTokensLoading
   }
 )
 
@@ -64,6 +68,10 @@ export function* putTokens(action) {
   }
 }
 
+const deleteTokensKey = 'deleteTokens'
+const deleteTokensErrors = changeTokensErrors(deleteTokensKey)
+const deleteTokensLoading = toggleTokensLoading(deleteTokensKey)
+
 export const deleteTokens = fetchLoggedEntity.bind(
   null,
   'delete',
@@ -75,7 +83,7 @@ export const deleteTokens = fetchLoggedEntity.bind(
       () => call(removeToken),
       () => put(userRestore())
     ],
-    error: errors => changeTokensErrors(errors),
-    loading: value => toggleTokensLoading(value)
+    error: deleteTokensErrors,
+    loading: deleteTokensLoading
   }
 )

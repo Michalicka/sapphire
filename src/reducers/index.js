@@ -1,6 +1,6 @@
 
 import { combineReducers } from 'redux'
-import user from './user'
+import profile from './profile'
 import messagebar from './messagebar'
 import tokens from './tokens'
 import projects from './projects'
@@ -10,7 +10,7 @@ import tasks from './tasks'
 import chat from './chat'
 
 export default combineReducers({
-  user,
+  profile,
   messagebar,
   tokens,
   projects,

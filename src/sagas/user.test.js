@@ -1,11 +1,11 @@
 
 import { put, call, take } from 'redux-saga/effects'
-import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, getMeRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from '../actions/user'
+import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, getMeRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from '../actions/profile'
 import { changeModal } from '../actions/modal'
 import { putTokensRequest } from '../actions/tokens'
 import { changeMessagebarParam } from '../actions/messagebar'
 import { users as usersLink, me as meLink, user as userLink, passwords as passwordsLink, avatars as avatarsLink } from '../apiLinks'
-import { USER_REGISTRATION, GET_ME_REQUEST, PUT_USERS_REQUEST, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/user'
+import { POST_USERS_REQUEST, GET_ME_REQUEST, PUT_USERS_REQUEST, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/profile'
 import axios from 'axios'
 import { postUsers, getMe, putUsers, putPasswords, postAvatar } from './user'
 import { formatErrors, headers } from './utils'
@@ -16,7 +16,7 @@ describe('sagas user', () => {
   describe('postUsers tests', () => {
     let gen
     const registrationAction = {
-      type: USER_REGISTRATION,
+      type: POST_USERS_REQUEST,
       payload: {
         name: 'name',
         email: 'john@doe.com',
@@ -37,7 +37,7 @@ describe('sagas user', () => {
         email: '',
         avatar: ''
       }
-      expect(gen.next().value).toEqual(take(USER_REGISTRATION))
+      expect(gen.next().value).toEqual(take(POST_USERS_REQUEST))
       expect(gen.next(registrationAction).value).toEqual(put(toggleUserLoading(true)))
       const apiCall = call(axios.post, usersLink, registrationAction.payload)
       expect(gen.next().value).toEqual(apiCall)
@@ -47,7 +47,7 @@ describe('sagas user', () => {
       expect(gen.next(response).value).toEqual(put(changeMessagebarParam('message', 'Registration was successful')))
       expect(gen.next(response).value).toEqual(put(changeMessagebarParam('open', true)))
       expect(gen.next().value).toEqual(put(toggleUserLoading(false)))
-      expect(gen.next().value).toEqual(take(USER_REGISTRATION))
+      expect(gen.next().value).toEqual(take(POST_USERS_REQUEST))
     })
     it('should return postUsers error flow', () => {
       const errorBody = {
@@ -60,13 +60,13 @@ describe('sagas user', () => {
           }
         }
       }
-      expect(gen.next().value).toEqual(take(USER_REGISTRATION))
+      expect(gen.next().value).toEqual(take(POST_USERS_REQUEST))
       expect(gen.next(registrationAction).value).toEqual(put(toggleUserLoading(true)))
       const apiCall = call(axios.post, usersLink, registrationAction.payload)
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(changeUserErrors(formatErrors(errorBody.response.data.errors))))
       expect(gen.next().value).toEqual(put(toggleUserLoading(false)))
-      expect(gen.next().value).toEqual(take(USER_REGISTRATION))
+      expect(gen.next().value).toEqual(take(POST_USERS_REQUEST))
     })
   })
 

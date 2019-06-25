@@ -3,67 +3,51 @@ import { CHANGE_CONVERSATIONS, ADD_CONVERSATION, CHANGE_MESSAGES, ADD_MESSAGE, G
 
 const converastionsKey = 'conversations'
 
-export function changeConversations(value) {
-  return {
-    type: CHANGE_CONVERSATIONS,
-    key: converastionsKey,
-    value
-  }
-}
+export const changeConversations = value => ({
+  type: CHANGE_CONVERSATIONS,
+  key: converastionsKey,
+  value
+})
 
-export function addConversation(value) {
-  return {
-    type: ADD_CONVERSATION,
-    key: converastionsKey,
-    value
-  }
-}
+export const addConversation = value => ({
+  type: ADD_CONVERSATION,
+  key: converastionsKey,
+  value
+})
 
 const messagesKey = 'messages'
 
-export function changeMessages(value) {
-  return {
-    type: CHANGE_MESSAGES,
-    key: messagesKey,
-    value
-  }
-}
+export const changeMessages = value => ({
+  type: CHANGE_MESSAGES,
+  key: messagesKey,
+  value
+})
 
-export function addMessage(value) {
-  return {
-    type: ADD_MESSAGE,
-    key: messagesKey,
-    value
-  }
-}
+export const addMessage = value => ({
+  type: ADD_MESSAGE,
+  key: messagesKey,
+  value
+})
 
-export function getConversationsRequest() {
-  return {
-    type: GET_CONVERSATIONS_REQUEST
-  }
-}
+export const getConversationsRequest = () => ({
+  type: GET_CONVERSATIONS_REQUEST
+})
 
-export function postConversationsRequest(payload) {
-  return {
-    type: POST_CONVERSATIONS_REQUEST,
-    payload
-  }
-}
+export const postConversationsRequest = payload => ({
+  type: POST_CONVERSATIONS_REQUEST,
+  payload
+})
 
-export function getMessagesRequest(urlParams) {
-  return {
-    type: GET_MESSAGES_REQUEST,
-    urlParams
-  }
-}
+export const getMessagesRequest = urlParams => ({
+  type: GET_MESSAGES_REQUEST,
+  urlParams
+})
 
-export function postMessagesRequest(urlParams, payload) {
-  return {
-    type: POST_MESSAGES_REQUEST,
-    urlParams,
-    payload
-  }
-}
+export const postMessagesRequest = (urlParams, payload) => ({
+  type: POST_MESSAGES_REQUEST,
+  urlParams,
+  payload
+})
 
 export const toggleChatLoading = key => value => ({
   type: TOGGLE_CHAT_LOADING,
@@ -71,18 +55,14 @@ export const toggleChatLoading = key => value => ({
   value
 })
 
-export const changeChatErrors = key => value => {
-  return {
-    type: CHANGE_CHAT_ERRORS,
-    key,
-    value
-  }
-}
+export const changeChatErrors = key => value => ({
+  type: CHANGE_CHAT_ERRORS,
+  key,
+  value
+})
 
-export function changeActualConversation(value) {
-  return {
-    type: CHANGE_ACTUAL_CONVERSATION,
-    key: 'actualConversation',
-    value
-  }
-}
+export const changeActualConversation = value => ({
+  type: CHANGE_ACTUAL_CONVERSATION,
+  key: 'actualConversation',
+  value
+})

@@ -1,20 +1,23 @@
 
 import { CHANGE_USERS_DATA, CHANGE_USERS_ERRORS, TOGGLE_USERS_LOADING } from '../actionTypes/users'
+import { getDefaultValues, changeData, changeErrorsParam, changeLoadingParam } from './utils'
+
+const usersDefault = getDefaultValues(['getUsers'])
 
 const initialState = {
   loading: false,
-  errors: {},
+  errors: usersDefault({}),
   data: []
 }
 
 export default function users(state = initialState, action) {
   switch (action.type) {
     case CHANGE_USERS_DATA:
-      return { ...state, data: action.data }
+      return changeData(state, action)
     case CHANGE_USERS_ERRORS:
-      return { ...state, errors: action.errors }
+      return changeErrorsParam(state, action)
     case TOGGLE_USERS_LOADING:
-      return { ...state, loading: action.loading }
+      return changeLoadingParam(state, action)
     default:
       return state
   }

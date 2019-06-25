@@ -1,29 +1,37 @@
 
-import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, mergeUserData } from '../actions/user'
+import { changeUserData, changeUserErrors, toggleUserLoading, changeUserParam, mergeUserData } from '../actions/profile'
 import { changeModal } from '../actions/modal'
 import { changeMessagebarParam } from '../actions/messagebar'
 import { users as usersLink, me as meLink, user as userLink, passwords as passwordsLink, avatars as avatarsLink } from '../apiLinks'
-import { USER_REGISTRATION, GET_ME_REQUEST, PUT_USERS_REQUEST, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/user'
+import { POST_USERS_REQUEST, GET_ME_REQUEST, PUT_USERS_REQUEST, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/profile'
 import { fetchEntity, fetchLoggedEntity } from './utils'
 import { put } from 'redux-saga/effects'
+
+const postUsersKey = 'postUsers'
+const postUsersErrors = changeUserErrors(postUsersKey)
+const postUsersLoading = toggleUserLoading(postUsersKey)
 
 export const postUsers = fetchEntity.bind(
   null,
   'post',
   usersLink,
   {
-    request: USER_REGISTRATION,
+    request: POST_USERS_REQUEST,
     success: [
       () => put(changeUserParam('registrationSuccess', true)),
-      () => put(changeUserErrors({})),
+      () => put(postUsersErrors({})),
       () => put(changeMessagebarParam('variant', 'success')),
       () => put(changeMessagebarParam('message', 'Registration was successful')),
       () => put(changeMessagebarParam('open', true))
     ],
-    error: errors => changeUserErrors(errors),
-    loading: value => toggleUserLoading(value)
+    error: postUsersErrors,
+    loading: postUsersLoading
   }
 )
+
+const getMeKey = 'getMe'
+const getMeErrors = changeUserErrors(getMeKey)
+const getMeLoading = toggleUserLoading(getMeKey)
 
 export const getMe = fetchLoggedEntity.bind(
   null,
@@ -34,10 +42,14 @@ export const getMe = fetchLoggedEntity.bind(
     success: [
       response => put(changeUserData({ ...response.data.data }))
     ],
-    error: errors => changeUserErrors(errors),
-    loading: value => toggleUserLoading(value)
+    error: getMeErrors,
+    loading: getMeLoading
   }
 )
+
+const putUsersKey = 'putUsers'
+const putUsersErrors = changeUserErrors(putUsersKey)
+const putUsersLoading = toggleUserLoading(putUsersKey)
 
 export const putUsers = fetchLoggedEntity.bind(
   null,
@@ -48,12 +60,16 @@ export const putUsers = fetchLoggedEntity.bind(
     success: [
       (response, action) => put(mergeUserData(action.payload)),
       () => put(changeModal('editProfile', { show: false })),
-      () => put(changeUserErrors({}))
+      () => put(putUsersErrors({}))
     ],
-    error: errors => changeUserErrors(errors),
-    loading: value => toggleUserLoading(value)
+    error: putUsersErrors,
+    loading: putUsersLoading
   }
 )
+
+const putPasswordsKey = 'putPasswords'
+const putPasswordsErrors = changeUserErrors(putPasswordsKey)
+const putPasswordsLoading = toggleUserLoading(putPasswordsKey)
 
 export const putPasswords = fetchLoggedEntity.bind(
   null,
@@ -63,12 +79,16 @@ export const putPasswords = fetchLoggedEntity.bind(
     request: PUT_PASSWORDS_REQUEST,
     success: [
       () => put(changeModal('changePassword', { show: false })),
-      () => put(changeUserErrors({}))
+      () => put(putPasswordsErrors({}))
     ],
-    error: errors => changeUserErrors(errors),
-    loading: value => toggleUserLoading(value)
+    error: putPasswordsErrors,
+    loading: putPasswordsLoading
   }
 )
+
+const postAvatarKey = 'postAvatar'
+const postAvatarErrors = changeUserErrors(postAvatarKey)
+const postAvatarLoading = toggleUserLoading(postAvatarKey)
 
 export const postAvatar = fetchLoggedEntity.bind(
   null,
@@ -79,9 +99,9 @@ export const postAvatar = fetchLoggedEntity.bind(
     success: [
       (response, action) => put(mergeUserData({ avatar: action.payload.photo })),
       () => put(changeModal('changeAvatar', { show: false })),
-      () => put(changeUserErrors({}))
+      () => put(postAvatarErrors({}))
     ],
-    error: errors => changeUserErrors(errors),
-    loading: value => toggleUserLoading(value)
+    error: postAvatarErrors,
+    loading: postAvatarLoading
   }
 )

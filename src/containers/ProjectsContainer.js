@@ -3,11 +3,15 @@ import { connect } from 'react-redux'
 import CardContainer from '../components/CardContainer'
 import { deleteProjectsRequest } from '../actions/projects'
 import { changeModal } from '../actions/modal'
+import { getLoading } from '../reducers/selectors'
 
-export const mapStateToProps = state => ({
-  items: state.projects.data,
-  loading: state.projects.loading
-})
+export const mapStateToProps = state => {
+  const projectsLoading = getLoading(state.projects)
+  return {
+    items: state.projects.data,
+    loading: projectsLoading('getProjects')
+  }
+}
 
 export const mapDispatchToProps = dispatch => ({
   options: [

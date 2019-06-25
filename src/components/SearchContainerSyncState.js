@@ -7,10 +7,14 @@ const SearchContainerSyncState = ({ value, items, ...others }) => {
   const [selectedItems, setSelectedItems] = useState(null)
   useEffect(() => {
     if (value) {
+      console.log({ value, items })
       const selectedItem = items.find(item => item.id === value)
       setSelectedItems(selectedItem)
     }
   }, [])
+
+  console.log({ selectedItems })
+
   return (
     <SearchContainerSync
       selectedItems={selectedItems !== null ? [selectedItems] : []}

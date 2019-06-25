@@ -19,7 +19,7 @@ export const mapStateToProps = state => {
     postMessagesLoading: chatLoading('postMessages'),
     postConversationsErrors: chatErrors('postConversations'),
     postMessagesErrors: chatErrors('postMessages'),
-    myId: state.user.data.id
+    myId: state.profile.data.id
   }
 }
 

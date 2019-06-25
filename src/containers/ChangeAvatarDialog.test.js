@@ -1,6 +1,6 @@
 
 import { mapStateToProps, mapDispatchToProps } from './ChangeAvatarDialog'
-import { postAvatarRequest, changeUserErrors } from '../actions/user'
+import { postAvatarRequest, changeUserErrors } from '../actions/profile'
 import { changeModal } from '../actions/modal'
 
 describe('ChangeAvatarDialog container', () => {

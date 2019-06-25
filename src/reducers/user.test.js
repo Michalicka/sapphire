@@ -1,5 +1,5 @@
 
-import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, userRestore, mergeUserData } from '../actions/user'
+import { changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, userRestore, mergeUserData } from '../actions/profile'
 import user from './user'
 
 describe('user reducer', () => {

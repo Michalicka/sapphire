@@ -1,16 +1,24 @@
 
 import { connect } from 'react-redux'
 import RegistrationForm from '../components/RegistrationForm'
-import { userRegistration } from '../actions/user'
+import { postUsersRequest } from '../actions/profile'
+import { getErrors, getLoading, getData } from '../reducers/selectors'
 
-export const mapStateToProps = state => ({
-  userErrors: state.user.errors,
-  loading: state.user.loading,
-  registrationSuccess: state.user.data.registrationSuccess
-})
+const postUsersKey = 'postUsers'
+
+export const mapStateToProps = state => {
+  const profileErrors = getErrors(state.profile)
+  const profileLoading = getLoading(state.profile)
+  const profileData = getData(state.profile)
+  return {
+    userErrors: profileErrors(postUsersKey),
+    loading: profileLoading(postUsersKey),
+    registrationSuccess: profileData('registrationSuccess')
+  }
+}
 
 export const mapDispatchToProps = dispatch => ({
-  registration: payload => dispatch(userRegistration(payload))
+  registration: payload => dispatch(postUsersRequest(payload))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm)

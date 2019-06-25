@@ -14,7 +14,7 @@ import { Switch, Redirect, Route } from 'react-router-dom'
 import { projects as projectsLink, login, tasks as tasksLink } from '../routes'
 import { connect } from 'react-redux'
 import { refreshTokenWatch } from '../actions/tokens'
-import { getMeRequest } from '../actions/user'
+import { getMeRequest } from '../actions/profile'
 import EditProfileDialog from '../containers/EditProfileDialog'
 import ChangePasswordDialog from '../containers/ChangePasswordDialog'
 import ChangeAvatarDialog from '../containers/ChangeAvatarDialog'
@@ -50,7 +50,7 @@ export const Dashboard = ({ classes, match, status, refreshTokenWatch, getMe, ge
       getMe()
       getProjects()
     }
-  })
+  }, [])
 
   return (
     <React.Fragment>
@@ -116,7 +116,7 @@ Dashboard.propTypes = {
 }
 
 export const mapStateToProps = state => ({
-  status: state.tokens.status
+  status: state.tokens.data.status
 })
 
 export const mapDispatchToProps = dispatch => ({

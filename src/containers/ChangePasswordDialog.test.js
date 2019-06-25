@@ -1,6 +1,6 @@
 
 import { mapStateToProps, mapDispatchToProps } from './ChangePasswordDialog'
-import { putPasswordsRequest, changeUserErrors } from '../actions/user'
+import { putPasswordsRequest, changeUserErrors } from '../actions/profile'
 import { changeModal } from '../actions/modal'
 
 describe('ChangePasswordDialog container', () => {

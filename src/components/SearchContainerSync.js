@@ -7,6 +7,8 @@ const SearchContainerSync = ({ items, ...others }) => {
   const [filter, setFilter] = useState('')
   const reg = filter !== '' ? new RegExp(`^${filter}(\\w?)+`) : new RegExp('')
 
+  console.log({ items })
+
   return (
     <SearchContainer
       items={items.filter(item => filter !== '' && reg.test(item.name.toLowerCase()))}

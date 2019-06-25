@@ -1,6 +1,6 @@
 
 import { mapStateToProps, mapDispatchToProps } from './EditProfileDialog'
-import { putUserRequest, changeUserErrors } from '../actions/user'
+import { putUserRequest, changeUserErrors } from '../actions/profile'
 import { changeModal } from '../actions/modal'
 
 describe('EditProfileDialog container', () => {

@@ -6,7 +6,7 @@ import { POST_TOKENS_REQUEST, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST, DELETE_TO
 import axios from 'axios'
 import { postTokens, setToken, removeToken, refreshToken, putTokens, putTokensWatch, deleteTokens } from './tokens'
 import { formatErrors, headers } from './utils'
-import { userRestore } from '../actions/user'
+import { userRestore } from '../actions/profile'
 
 // jest.mock('axios')
 

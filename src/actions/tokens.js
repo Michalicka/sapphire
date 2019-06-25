@@ -1,49 +1,38 @@
 
 import { POST_TOKENS_REQUEST, CHANGE_TOKENS_STATUS, CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING, REFRESH_TOKEN_WATCH, PUT_TOKENS_REQUEST, DELETE_TOKENS_REQUEST } from '../actionTypes/tokens'
 
-export function postTokensRequest(payload) {
-  return {
-    type: POST_TOKENS_REQUEST,
-    payload
-  }
-}
+export const postTokensRequest = payload => ({
+  type: POST_TOKENS_REQUEST,
+  payload
+})
 
-export function changeTokensStatus(value) {
-  return {
-    type: CHANGE_TOKENS_STATUS,
-    value
-  }
-}
+export const changeTokensStatus = value => ({
+  type: CHANGE_TOKENS_STATUS,
+  key: 'status',
+  value
+})
 
-export function changeTokensErrors(errors) {
-  return {
-    type: CHANGE_TOKENS_ERRORS,
-    errors
-  }
-}
+export const changeTokensErrors = key => value => ({
+  type: CHANGE_TOKENS_ERRORS,
+  key,
+  value
+})
 
-export function toggleTokensLoading(value) {
-  return {
-    type: TOGGLE_TOKENS_LOADING,
-    value
-  }
-}
+export const toggleTokensLoading = key => value => ({
+  type: TOGGLE_TOKENS_LOADING,
+  key,
+  value
+})
 
-export function refreshTokenWatch() {
-  return {
-    type: REFRESH_TOKEN_WATCH
-  }
-}
+export const refreshTokenWatch = () => ({
+  type: REFRESH_TOKEN_WATCH
+})
 
-export function putTokensRequest(nextAction) {
-  return {
-    type: PUT_TOKENS_REQUEST,
-    nextAction
-  }
-}
+export const putTokensRequest = nextAction => ({
+  type: PUT_TOKENS_REQUEST,
+  nextAction
+})
 
-export function deleteTokensRequest() {
-  return {
-    type: DELETE_TOKENS_REQUEST
-  }
-}
+export const deleteTokensRequest = () => ({
+  type: DELETE_TOKENS_REQUEST
+})
