@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import SearchList from './SearchList'
@@ -55,7 +55,7 @@ Search.propTypes = {
   id: PropTypes.number,
   search: PropTypes.func.isRequired,
   changeSelectedItems: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired
+  className: PropTypes.string
 }
 
 export default withStyles(styles)(Search)

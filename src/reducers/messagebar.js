@@ -10,8 +10,7 @@ const initialState = {
 export default function messagebar(state = initialState, action) {
   switch (action.type) {
     case CHANGE_MESSAGEBAR_PARAM:
-      const newState = { ...state, [action.key]: action.value }
-      return newState
+      return { ...state, [action.key]: action.value }
     default:
       return state
   }

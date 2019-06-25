@@ -7,6 +7,7 @@ import projects from './projects'
 import modal from './modal'
 import users from './users'
 import tasks from './tasks'
+import chat from './chat'
 
 export default combineReducers({
   user,
@@ -15,5 +16,6 @@ export default combineReducers({
   projects,
   modal,
   users,
-  tasks
+  tasks,
+  chat
 })
