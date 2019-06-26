@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
-import SearchContainer from '../components/SearchContainer'
-import { getUsersRequest } from '../actions/users'
+import SearchContainer from '../fields/SearchContainer'
+import { getUsersRequest } from '../../actions/users'
 
 export const mapStateToProps = state => ({
   items: state.users.data

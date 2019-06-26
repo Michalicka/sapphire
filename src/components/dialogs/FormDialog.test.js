@@ -10,7 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { Formik } from 'formik'
 import { shallow } from 'enzyme'
 import ImageInput from '../fields/ImageInput'
-import ProjectMembersSearch from '../containers/ProjectMembersSearch'
+import ProjectMembersSearch from '../containers/redux-containers/ProjectMembersSearch'
 import DateTimeField from './DateTimeField'
 
 describe('FormDialog component', () => {

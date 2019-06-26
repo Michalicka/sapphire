@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import TaskDetailDialog from '../components/TaskDetailDialog'
-import { getItem, getLoading } from '../reducers/selectors'
+import TaskDetailDialog from '../../components/dialogs/TaskDetailDialog'
+import { getItem, getLoading } from '../../reducers/selectors'
 import DateFnsUtils from '@date-io/date-fns'
-import { getTasksDetailRequest, getTasksCommentsRequest, postTasksCommentsRequest } from '../actions/tasks'
+import { getTasksDetailRequest, getTasksCommentsRequest, postTasksCommentsRequest } from '../../actions/tasks'
 
 export const mapStateToProps = (state, { match }) => {
   const task = getItem(state.tasks.data, parseInt(match.params.taskId))

@@ -9,9 +9,9 @@ import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 import Toolbar from '@material-ui/core/Toolbar'
-import AvatarWrap from './AvatarWrap'
-import CommentContainer from './CommentContainer'
-import TaskDetailHistory from './TaskDetailHistory'
+import AvatarWrap from '../base/AvatarWrap'
+import CommentContainer from '../../containers/comments/CommentContainer'
+import TaskDetailHistory from '../tasks/TaskDetailHistory'
 
 const styles = theme => ({
   title: {

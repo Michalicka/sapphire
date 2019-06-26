@@ -1,7 +1,7 @@
 
 import { mapStateToProps, mapDispatchToProps } from './ProfileController'
-import { deleteTokensRequest } from '../actions/tokens'
-import { changeModal } from '../actions/modal'
+import { deleteTokensRequest } from '../../actions/tokens'
+import { changeModal } from '../../actions/modal'
 
 describe('ProfileController container', () => {
   it('should return mapped state to props', () => {

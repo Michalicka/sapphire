@@ -21,11 +21,9 @@ const TimeField = ({ setFieldError, name, value, error, helperText, label, class
 }
 
 TimeField.propTypes = {
-  setFieldValue: PropTypes.func.isRequired,
-  setFieldTouched: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   setFieldError: PropTypes.func.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.instanceOf(Date),
   error: PropTypes.bool.isRequired,
   helperText: PropTypes.string.isRequired,
   label: PropTypes.string,

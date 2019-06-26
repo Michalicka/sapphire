@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import EditProjectMembersDialog from '../components/EditProjectMembersDialog'
-import { putProjectMembersRequest, changeProjectsErrors, editProject } from '../actions/projects'
-import { changeModal } from '../actions/modal'
-import { getErrors, getLoading } from '../reducers/selectors'
+import EditProjectMembersDialog from '../dialogs/EditProjectMembersDialog'
+import { putProjectMembersRequest, changeProjectsErrors, editProject } from '../../actions/projects'
+import { changeModal } from '../../actions/modal'
+import { getErrors, getLoading } from '../../reducers/selectors'
 
 const putProjectsMembersKey = 'putProjectsMembers'
 

@@ -32,7 +32,7 @@ export const MoreButton = ({ anchorEl, handleClose, handleOpen, itemClick, optio
 }
 
 MoreButton.propTypes = {
-  anchorEl: PropTypes.object.isRequired,
+  anchorEl: PropTypes.object,
   handleClose: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
   itemClick: PropTypes.func.isRequired,

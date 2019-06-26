@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import LoginForm from '../containers/LoginForm'
+import LoginForm from '../containers/redux-containers/LoginForm'
 import { withStyles } from '@material-ui/core/styles'
-import Logo from '../components/Logo'
+import Logo from '../components/base/Logo'
 
 const styles = theme => ({
   logo: {

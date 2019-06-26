@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import { changeUserErrors, putPasswordsRequest } from '../actions/profile'
-import { changeModal } from '../actions/modal'
-import ChangePasswordDialog from '../components/ChangePasswordDialog'
-import { getErrors, getLoading } from '../reducers/selectors'
+import { changeUserErrors, putPasswordsRequest } from '../../actions/profile'
+import { changeModal } from '../../actions/modal'
+import ChangePasswordDialog from '../dialogs/ChangePasswordDialog'
+import { getErrors, getLoading } from '../../reducers/selectors'
 
 const putPasswordsKey = 'putPasswords'
 

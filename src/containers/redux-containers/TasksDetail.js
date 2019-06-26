@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
-import TasksDetail from '../components/TasksDetail'
-import { getItem } from '../reducers/selectors'
+import TasksDetail from '../../components/tasks/TasksDetail'
+import { getItem } from '../../reducers/selectors'
 
 export const mapStateToProps = (state, ownProps) => ({
   title: getItem(state.projects.data, ownProps.id).name,

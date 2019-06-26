@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import SearchContainerSyncState from '../../components/SearchContainerSyncState'
+import SearchContainerSyncState from '../fields/SearchContainerSyncState'
 import { getItem, getLoading } from '../../reducers/selectors'
 
 export const mapStateToProps = (state) => {

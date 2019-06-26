@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import EditTaskDialog from '../components/EditTaskDialog'
-import { putTasksRequest, changeTasksErrors } from '../actions/tasks'
-import { changeModal } from '../actions/modal'
-import { getErrors, getLoading, getItem } from '../reducers/selectors'
+import EditTaskDialog from '../dialogs/EditTaskDialog'
+import { putTasksRequest, changeTasksErrors } from '../../actions/tasks'
+import { changeModal } from '../../actions/modal'
+import { getErrors, getLoading, getItem } from '../../reducers/selectors'
 
 const key = 'putTasks'
 const modal = 'editTask'

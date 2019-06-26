@@ -1,6 +1,6 @@
 
-import { getUsersRequest, changeUsersData } from '../actions/users'
-import { getProjectMembersRequest } from '../actions/projects'
+import { getUsersRequest, changeUsersData } from '../../actions/users'
+import { getProjectMembersRequest } from '../../actions/projects'
 import { mapStateToProps, mapDispatchToProps } from './ProjectMembersSearch'
 
 describe('ProjectMembersSearch container', () => {

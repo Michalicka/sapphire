@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import CreateButton from '../../components/CreateButton'
+import CreateButton from '../../components/base/CreateButton'
 import { changeModal } from '../../actions/modal'
 
 export const mapDispatchToProps = (dispatch, ownProps) => ({

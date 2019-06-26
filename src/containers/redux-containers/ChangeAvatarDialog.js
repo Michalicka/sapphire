@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import { changeUserErrors, postAvatarRequest } from '../actions/profile'
-import { changeModal } from '../actions/modal'
-import ChangeAvatarDialog from '../components/ChangeAvatarDialog'
-import { getErrors, getLoading } from '../reducers/selectors'
+import { changeUserErrors, postAvatarRequest } from '../../actions/profile'
+import { changeModal } from '../../actions/modal'
+import ChangeAvatarDialog from '../dialogs/ChangeAvatarDialog'
+import { getErrors, getLoading } from '../../reducers/selectors'
 
 const postAvatarsKey = 'postAvatars'
 

@@ -25,9 +25,9 @@ const TimeFieldContainer = ({ value, name, setFieldValue, setFieldTouched, ...ot
   return (
     <TimeField
       name={name}
-      value={localDate}
       setValue={setValue}
       {...others}
+      value={localDate}
     />
   )
 }

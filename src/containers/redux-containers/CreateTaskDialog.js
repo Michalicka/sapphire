@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import CreateTaskDialog from '../../components/CreateTaskDialog'
+import CreateTaskDialog from '../dialogs/CreateTaskDialog'
 import { postTasksRequest, changeTasksErrors } from '../../actions/tasks'
 import { changeModal } from '../../actions/modal'
 import { getErrors, getLoading } from '../../reducers/selectors'

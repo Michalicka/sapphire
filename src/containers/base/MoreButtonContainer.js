@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import MoreButton from 'MoreButton'
+import MoreButton from '../../components/base/MoreButton'
 
 export const MoreButtonContainer = ({ args, ...others }) => {
   const [anchorEl, setAnchorEl] = useState(null)

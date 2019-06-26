@@ -1,7 +1,7 @@
 
 import { mapStateToProps, mapDispatchToProps } from './ProjectsContainer'
-import { deleteProjectsRequest } from '../actions/projects'
-import { changeModal } from '../actions/modal'
+import { deleteProjectsRequest } from '../../actions/projects'
+import { changeModal } from '../../actions/modal'
 
 describe('ProjectsContainer container', () => {
   it('should return mapped state props', () => {

@@ -1,8 +1,8 @@
 
 import { connect } from 'react-redux'
-import RegistrationForm from '../components/RegistrationForm'
-import { postUsersRequest } from '../actions/profile'
-import { getErrors, getLoading, getData } from '../reducers/selectors'
+import RegistrationForm from '../../components/base/RegistrationForm'
+import { postUsersRequest } from '../../actions/profile'
+import { getErrors, getLoading, getData } from '../../reducers/selectors'
 
 const postUsersKey = 'postUsers'
 
@@ -18,7 +18,7 @@ export const mapStateToProps = state => {
 }
 
 export const mapDispatchToProps = dispatch => ({
-  registration: payload => dispatch(postUsersRequest(payload))
+  registration: payload => dispatch(postUsersRequest(payload)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm)

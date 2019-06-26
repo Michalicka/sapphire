@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { fieldProps } from '../../utils'
-import UsersSearch from '../containers/UsersSearch'
+import UsersSearch from '../../containers/redux-containers/UsersSearch'
 import { Button, withStyles } from '@material-ui/core'
 
 const styles = theme => ({

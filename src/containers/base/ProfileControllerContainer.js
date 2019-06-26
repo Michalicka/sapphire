@@ -7,17 +7,19 @@ export const ProfileControllerContainer = (props) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
   function handleOpen(e) {
-    setAnchorEl(e.currentTaget)
+    setAnchorEl(e.currentTarget)
   }
 
   function handleClose() {
-    this.setState({ anchorEl: null })
+    setAnchorEl(null)
   }
 
   function itemClick(action) {
     action()
-    this.handleClose()
+    handleClose()
   }
+
+  console.log({ anchorEl })
 
   return (
     <ProfileController
@@ -31,7 +33,6 @@ export const ProfileControllerContainer = (props) => {
 }
 
 ProfileController.propTypes = {
-  classes: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
   avatar: PropTypes.string.isRequired,
   initial: PropTypes.string.isRequired,

@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import CardContainer from '../components/CardContainer'
-import { getTasksRequest } from '../actions/tasks'
-import { filterTasks } from '../reducers/selectors'
-import { changeModal } from '../actions/modal'
+import CardContainer from '../../components/cards/CardContainer'
+import { getTasksRequest } from '../../actions/tasks'
+import { filterTasks } from '../../reducers/selectors'
+import { changeModal } from '../../actions/modal'
 
 export const mapStateToProps = (state, { statusId }) => ({
   items: filterTasks(state.tasks.data, statusId),

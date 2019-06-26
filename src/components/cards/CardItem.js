@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
-import MoreButton from '../base/MoreButton'
+import MoreButtonContainer from '../../containers/base/MoreButtonContainer'
 import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ export const CardItem = ({ item, options, baseUrl, urlSelector }) => (
   <Card>
     <CardHeader
       action={
-        <MoreButton
+        <MoreButtonContainer
           options={options}
           args={[item.id]}
         />

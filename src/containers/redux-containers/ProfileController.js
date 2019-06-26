@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import ProfileController from '../components/ProfileController'
-import { deleteTokensRequest } from '../actions/tokens'
-import { changeModal } from '../actions/modal'
-import { getData } from '../reducers/selectors'
+import ProfileControllerContainer from '../base/ProfileControllerContainer'
+import { deleteTokensRequest } from '../../actions/tokens'
+import { changeModal } from '../../actions/modal'
+import { getData } from '../../reducers/selectors'
 
 export const mapStateToProps = state => {
   const profileData = getData(state.profile)
@@ -20,4 +20,4 @@ export const mapDispatchToProps = dispatch => ({
   changeAvatar: () => dispatch(changeModal('changeAvatar', { show: true }))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileController)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileControllerContainer)

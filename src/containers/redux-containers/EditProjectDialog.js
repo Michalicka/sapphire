@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import EditProjectDialog from '../../components/EditProjectDialog'
+import EditProjectDialog from '../dialogs/EditProjectDialog'
 import { putProjectsRequest, changeProjectsErrors } from '../../actions/projects'
 import { changeModal } from '../../actions/modal'
 import { getItem, getErrors, getLoading } from '../../reducers/selectors'

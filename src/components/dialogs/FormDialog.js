@@ -11,13 +11,13 @@ import { Formik } from 'formik'
 import { fieldProps } from '../../utils'
 import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ImageInput from '../fields/ImageInput'
-import ProjectMembersSearch from '../containers/ProjectMembersSearch'
+import ImageInputContainer from '../../containers/fields/ImageInputContainer'
+import ProjectMembersSearch from '../../containers/redux-containers/ProjectMembersSearch'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers'
-import DateTimeField from './DateTimeField'
-import TimeField from '../fields/TimeField'
-import AssigneeSearch from '../containers/AssigneeSearch'
+import DateTimeField from '../fields/DateTimeField'
+import TimeFieldContainer from '../../containers/fields/TimeFieldContainer'
+import AssigneeSearch from '../../containers/redux-containers/AssigneeSearch'
 import { MenuItem } from '@material-ui/core'
 
 const styles = theme => ({
@@ -63,7 +63,7 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
                   {fields.map((field, index) => {
                     if (field.type === 'file') {
                       return (
-                        <ImageInput
+                        <ImageInputContainer
                           key={field.name}
                           className={classes.field}
                           {...formFieldProps(field.name, field.type)}
@@ -94,7 +94,7 @@ export const FormDialog = ({ title, fields, send, open, handleClose, validationS
                       )
                     } else if (field.type === 'time') {
                       return (
-                        <TimeField
+                        <TimeFieldContainer
                           key={field.name}
                           className={classes.field}
                           {...formFieldProps(field.name)}

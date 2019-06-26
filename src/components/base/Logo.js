@@ -1,6 +1,6 @@
 
-import logo from '../assets/brands/logo.png'
-import logoWhite from '../assets/brands/logo-white.png'
+import logo from '../../assets/brands/logo.png'
+import logoWhite from '../../assets/brands/logo-white.png'
 import React from 'react'
 import PropTypes from 'prop-types'
 

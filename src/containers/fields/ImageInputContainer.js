@@ -1,12 +1,12 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import ImageInput from 'ImageInput'
+import ImageInput from '../../components/fields/ImageInput'
 
 export const ImageInputContainer = ({ setFieldValue, name, setFieldTouched, ...others }) => {
   function setValue(value) {
-    setFieldValue(this.props.name, value)
-    setFieldTouched(this.props.name, true)
+    setFieldValue(name, value)
+    setFieldTouched(name, true)
   }
 
   function handleChange(e) {
@@ -36,7 +36,6 @@ ImageInputContainer.propTypes = {
   value: PropTypes.string.isRequired,
   error: PropTypes.bool,
   helperText: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired
 }

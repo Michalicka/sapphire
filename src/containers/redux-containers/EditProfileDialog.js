@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 import { changeUserErrors, putUserRequest } from '../../actions/profile'
 import { changeModal } from '../../actions/modal'
-import EditProfileDialog from '../../components/EditProfileDialog'
+import EditProfileDialog from '../dialogs/EditProfileDialog'
 import { getErrors, getLoading, getData } from '../../reducers/selectors'
 
 const putUsersKey = 'putUsers'

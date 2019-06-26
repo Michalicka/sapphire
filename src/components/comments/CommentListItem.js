@@ -1,7 +1,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import AvatarWrap from './AvatarWrap'
+import AvatarWrap from '../base/AvatarWrap'
 import { Typography, Paper, Toolbar, withStyles } from '@material-ui/core'
 
 const styles = theme => ({

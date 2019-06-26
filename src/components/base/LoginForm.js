@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik } from 'formik'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -26,7 +26,11 @@ const styles = theme => ({
   }
 })
 
-export const LoginForm = ({ classes, tokensErrors, login, loading, status }) => {
+export const LoginForm = ({ classes, tokensErrors, login, loading, status, changeRegistrationSuccess }) => {
+  useEffect(() => {
+    changeRegistrationSuccess()
+  }, [])
+
   return (
     <Formik
       initialValues={{
@@ -96,7 +100,8 @@ LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
   tokensErrors: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  status: PropTypes.oneOf(['Authorized', 'Unauthorized'])
+  status: PropTypes.oneOf(['Authorized', 'Unauthorized']),
+  changeRegistrationSuccess: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(LoginForm)

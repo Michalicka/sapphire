@@ -3,9 +3,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Dialog, DialogTitle, DialogContent, CircularProgress, withStyles, Fab, Button } from '@material-ui/core'
 import { Add as AddIcon, KeyboardArrowLeft as KeyboardArrowLeftIcon } from '@material-ui/icons/'
-import ConversationsList from './ConversationsList'
-import MessagesWrap from '../../components/chat/MessagesWrap'
-import ConversationForm from '../chat/ConversationForm'
+import ConversationsList from '../chat/ConversationsList'
+import MessagesWrap from '../chat/MessagesWrap'
+import ConversationForm from '../../containers/chat/ConversationForm'
 
 const styles = theme => ({
   toolbar: {
@@ -47,7 +47,12 @@ const ChatDialogContent = ({ conversations, messages, actualConversation, getMes
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={() => {
+        changeMessages([])
+        setCreation(false)
+        changeActualConversation(null)
+        handleClose()
+      }}
       maxWidth="sm"
       scroll="body"
     >
@@ -119,7 +124,6 @@ ChatDialogContent.propTypes = {
   conversations: PropTypes.array.isRequired,
   messages: PropTypes.array,
   actualConversation: PropTypes.number,
-  getConversations: PropTypes.func.isRequired,
   getMessages: PropTypes.func.isRequired,
   postConversations: PropTypes.func.isRequired,
   postMessages: PropTypes.func.isRequired,

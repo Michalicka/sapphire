@@ -1,13 +1,15 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import AvatarWrap from './AvatarWrap'
+import AvatarWrap from '../base/AvatarWrap'
 import { Toolbar, Paper, withStyles } from '@material-ui/core'
 import classNames from 'classnames'
 
 const styles = theme => ({
   toolbar: {
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    minHeight: 0,
+    marginBottom: theme.spacing.unit
   },
   avatar: {
     flexShrink: 0,

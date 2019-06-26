@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
-import MessageBar from '../components/MessageBar'
-import { changeMessagebarParam } from '../actions/messagebar'
+import MessageBar from '../../components/base/MessageBar'
+import { changeMessagebarParam } from '../../actions/messagebar'
 
 export const mapStateToProps = state => ({
   open: state.messagebar.open,

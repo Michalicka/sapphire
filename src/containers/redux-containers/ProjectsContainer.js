@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import CardContainer from '../components/CardContainer'
-import { deleteProjectsRequest } from '../actions/projects'
-import { changeModal } from '../actions/modal'
-import { getLoading } from '../reducers/selectors'
+import CardContainer from '../../components/cards/CardContainer'
+import { deleteProjectsRequest } from '../../actions/projects'
+import { changeModal } from '../../actions/modal'
+import { getLoading } from '../../reducers/selectors'
 
 export const mapStateToProps = state => {
   const projectsLoading = getLoading(state.projects)

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import ChatDialog from '../components/ChatDialog'
-import { getConversationsRequest, postConversationsRequest, getMessagesRequest, postMessagesRequest, changeActualConversation, changeMessages } from '../actions/chat'
-import { getLoading, getErrors, getData } from '../reducers/selectors'
-import { changeModal } from '../actions/modal'
+import ChatDialog from '../dialogs/ChatDialog'
+import { getConversationsRequest, postConversationsRequest, getMessagesRequest, postMessagesRequest, changeActualConversation, changeMessages } from '../../actions/chat'
+import { getLoading, getErrors, getData } from '../../reducers/selectors'
+import { changeModal } from '../../actions/modal'
 
 export const mapStateToProps = state => {
   const chatData = getData(state.chat)
