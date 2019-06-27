@@ -1,5 +1,5 @@
 
-import { getDefaultValues, findItemIndex, mergeData, editParam, editDataParam, editErrorsParam, editLoadingParam, editItem, deleteItem } from './utils'
+import { getDefaultValues, findItemIndex, mergeData, changeParam, changeDataParam, changeErrorsParam, changeLoadingParam, editItem, deleteItem } from './utils'
 
 describe('reducers utils', () => {
   it('getDefaultValues', () => {
@@ -91,28 +91,28 @@ describe('reducers utils', () => {
       const expectedData = { ...state.data, value: 'value2' }
       const expectedState = { ...state, data: expectedData }
 
-      expect(editParam('data')(state, { key: 'value', value: 'value2' })).toEqual(expectedState)
+      expect(changeParam('data')(state, { key: 'value', value: 'value2' })).toEqual(expectedState)
     })
 
     it('should return expected state with edited data', () => {
       const expectedData = { ...state.data, value: 'value2' }
       const expectedState = { ...state, data: expectedData }
 
-      expect(editDataParam(state, { key: 'value', value: 'value2' })).toEqual(expectedState)
+      expect(changeDataParam(state, { key: 'value', value: 'value2' })).toEqual(expectedState)
     })
 
     it('should return expected state with edited errors', () => {
       const expectedErrors = { ...state.errors, getData: {} }
       const expectedState = { ...state, errors: expectedErrors }
 
-      expect(editErrorsParam(state, { key: 'getData', value: {} })).toEqual(expectedState)
+      expect(changeErrorsParam(state, { key: 'getData', value: {} })).toEqual(expectedState)
     })
 
     it('should return expected state with edited loading', () => {
       const expectedLoading = { ...state.errors, getData: { show: true } }
       const expectedState = { ...state, loading: expectedLoading }
 
-      expect(editLoadingParam(state, { key: 'getData', value: { show: true } })).toEqual(expectedState)
+      expect(changeLoadingParam(state, { key: 'getData', value: { show: true } })).toEqual(expectedState)
     })
   })
 
@@ -152,9 +152,9 @@ describe('reducers utils', () => {
     }
 
     const expectedState = {
-      data: [{ ...state.data[0] }]
+      data: [{ ...state.data[1] }]
     }
 
-    expect(deleteItem(state, 2)).toEqual(expectedState)
+    expect(deleteItem(state, { id: 1 })).toEqual(expectedState)
   })
 })

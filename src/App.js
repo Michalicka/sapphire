@@ -11,7 +11,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Messagebar from './containers/MessageBar'
+import Messagebar from './containers/redux-containers/MessageBar'
 import Dashboard from './views/Dashboard'
 
 const sagaMiddleware = createSagaMiddleware()

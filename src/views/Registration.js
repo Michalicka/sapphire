@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import RegistrationForm from '../containers/RegistrationForm'
-import Logo from '../components/Logo'
+import RegistrationForm from '../containers/redux-containers/RegistrationForm'
+import Logo from '../components/base/Logo'
 
 const styles = theme => ({
   logo: {

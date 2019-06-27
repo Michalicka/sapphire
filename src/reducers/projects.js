@@ -1,37 +1,34 @@
 
 import { CHANGE_PROJECTS_DATA, CHANGE_PROJECTS_ERRORS, TOGGLE_PROJECTS_LOADING, PUSH_PROJECT, EDIT_PROJECT, REMOVE_PROJECT } from '../actionTypes/projects'
+import { getDefaultValues, changeData, changeErrorsParam, changeLoadingParam, addItem, editItem, deleteItem } from './utils'
+
+const projectDefault = getDefaultValues(['getProjects', 'postProjects', 'putProjects', 'deleteProjects', 'getProjectsMembers', 'putProjectsMembers'])
 
 const initialState = {
   data: [],
-  errors: {},
-  loading: false
+  errors: projectDefault({}),
+  loading: projectDefault(false)
 }
 
 function projects(state = initialState, action) {
   switch (action.type) {
     case CHANGE_PROJECTS_DATA: {
-      return { ...state, data: action.data }
+      return changeData(state, action)
     }
     case CHANGE_PROJECTS_ERRORS: {
-      return { ...state, errors: action.errors }
+      return changeErrorsParam(state, action)
     }
     case TOGGLE_PROJECTS_LOADING: {
-      return { ...state, loading: action.value }
+      return changeLoadingParam(state, action)
     }
     case PUSH_PROJECT: {
-      const data = [...state.data, action.project]
-      return { ...state, data }
+      return addItem(state, action)
     }
     case EDIT_PROJECT: {
-      const projectIndex = state.data.findIndex(item => item.id === action.id)
-      const project = { ...state.data[projectIndex], ...action.data }
-      const data = [...state.data]
-      data.splice(projectIndex, 1, project)
-      return { ...state, data }
+      return editItem(state, action)
     }
     case REMOVE_PROJECT: {
-      const data = state.data.filter(item => item.id !== action.id)
-      return { ...state, data }
+      return deleteItem(state, action)
     }
     default: {
       return state

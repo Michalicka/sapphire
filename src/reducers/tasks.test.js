@@ -4,7 +4,7 @@ import { changeTasksData, editTask, changeTasksErrors, toggleTasksLoading } from
 import tasks from './tasks'
 
 describe('tasks reducer', () => {
-  const getTasksValues = getDefaultValues(['getTasks', 'putTasks', 'postTasks', 'putTasksMembers'])
+  const getTasksValues = getDefaultValues(['getTasks', 'putTasks', 'postTasks', 'putTasksMembers', 'getTasksDetail', 'getTasksComments', 'postTasksComments'])
   const initialState = {
     data: [],
     loading: getTasksValues(false),

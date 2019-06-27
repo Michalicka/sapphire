@@ -1,6 +1,6 @@
 
 import { all, fork } from 'redux-saga/effects'
-import { postUsers, getMe, putUsers, putPasswords, postAvatar } from './user'
+import { postUsers, getMe, putUsers, putPasswords, postAvatar } from './profile'
 import { postTokens, putTokensWatch, refreshToken, deleteTokens } from './tokens'
 import { getProjects, postProjects, putProjects, deleteProjects, putProjectMembers, getProjectMembers } from './projects'
 import { getUsers } from './users'

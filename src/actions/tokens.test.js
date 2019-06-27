@@ -15,30 +15,25 @@ describe('action tokens', () => {
     expect(postTokensRequest(payload)).toEqual(expectedValue)
   })
 
-  it('changeTokensStatus', () => {
-    const authorized = 'Authorized'
-    const expectedValue = {
-      type: CHANGE_TOKENS_STATUS,
-      value: authorized
-    }
-    expect(changeTokensStatus(authorized)).toEqual(expectedValue)
-  })
-
   it('changeTokensError', () => {
-    const errors = {}
+    const key = 'key'
+    const value = {}
     const expectedValue = {
       type: CHANGE_TOKENS_ERRORS,
-      errors
+      key,
+      value
     }
-    expect(changeTokensErrors(errors)).toEqual(expectedValue)
+    expect(changeTokensErrors(key)(value)).toEqual(expectedValue)
   })
 
   it('toggleTokensLoading', () => {
+    const key = 'key'
     const expectedValue = {
       type: TOGGLE_TOKENS_LOADING,
+      key,
       value: true
     }
-    expect(toggleTokensLoading(true)).toEqual(expectedValue)
+    expect(toggleTokensLoading(key)(true)).toEqual(expectedValue)
   })
 
   it('refreshTokenWatch', () => {
@@ -63,5 +58,16 @@ describe('action tokens', () => {
     }
 
     expect(deleteTokensRequest()).toEqual(expectedValue)
+  })
+
+  it('changeTokensStatus', () => {
+    const value = 'Authorized'
+    const expectedValue = {
+      type: CHANGE_TOKENS_STATUS,
+      key: 'status',
+      value
+    }
+
+    expect(changeTokensStatus(value)).toEqual(expectedValue)
   })
 })

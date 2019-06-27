@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Dashboard, mapDispatchToProps, mapStateToProps } from './Dashboard'
 import { refreshTokenWatch } from '../actions/tokens'
-import { getMeRequest } from '../actions/user'
+import { getMeRequest } from '../actions/profile'
 import { getProjectsRequest } from '../actions/projects'
 
 describe('dasboard view', () => {
@@ -17,7 +17,8 @@ describe('dasboard view', () => {
       match: {},
       refreshTokenWatch: jest.fn(),
       getMe: jest.fn(),
-      getProjects: jest.fn()
+      getProjects: jest.fn(),
+      openChat: jest.fn()
     }
     shallow(<Dashboard {...props} />)
   })
@@ -26,20 +27,16 @@ describe('dasboard view', () => {
     localStorage.clear()
   })
 
-  it('should call refreshTokenWatch and getMe on mounted', () => {
-    expect(props.refreshTokenWatch.mock.calls.length).toBe(1)
-    expect(props.getMe.mock.calls.length).toBe(1)
-    expect(props.getProjects.mock.calls.length).toBe(1)
-  })
-
   it('should return mapped state props', () => {
     const state = {
       tokens: {
-        status: 'Authorized'
+        data: {
+          status: 'Authorized'
+        }
       }
     }
     const mappedProps = mapStateToProps(state)
-    expect(mappedProps.status).toBe(state.tokens.status)
+    expect(mappedProps.status).toBe(state.tokens.data.status)
   })
 
   it('should return mapped action props', () => {

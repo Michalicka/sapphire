@@ -4,22 +4,22 @@ import AppBar from '@material-ui/core/AppBar'
 import ToolBar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MessageIcon from '@material-ui/icons/Message'
-import Logo from '../components/Logo'
+import Logo from '../components/base/Logo'
 import Projects from './Projects'
 import Tasks from './Tasks'
-import ProfileController from '../containers/ProfileController'
+import ProfileController from '../containers/redux-containers/ProfileController'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { Switch, Redirect, Route } from 'react-router-dom'
 import { projects as projectsLink, login, tasks as tasksLink } from '../routes'
 import { connect } from 'react-redux'
 import { refreshTokenWatch } from '../actions/tokens'
-import { getMeRequest } from '../actions/user'
-import EditProfileDialog from '../containers/EditProfileDialog'
-import ChangePasswordDialog from '../containers/ChangePasswordDialog'
-import ChangeAvatarDialog from '../containers/ChangeAvatarDialog'
-import EditProjectMembersDialog from '../containers/EditProjectMembersDialog'
-import ChatDialog from '../containers/ChatDialog'
+import { getMeRequest } from '../actions/profile'
+import EditProfileDialog from '../containers/redux-containers/EditProfileDialog'
+import ChangePasswordDialog from '../containers/redux-containers/ChangePasswordDialog'
+import ChangeAvatarDialog from '../containers/redux-containers/ChangeAvatarDialog'
+import EditProjectMembersDialog from '../containers/redux-containers/EditProjectMembersDialog'
+import ChatDialog from '../containers/redux-containers/ChatDialog'
 import { getProjectsRequest } from '../actions/projects'
 import { changeModal } from '../actions/modal'
 
@@ -50,7 +50,7 @@ export const Dashboard = ({ classes, match, status, refreshTokenWatch, getMe, ge
       getMe()
       getProjects()
     }
-  })
+  }, [])
 
   return (
     <React.Fragment>
@@ -116,7 +116,7 @@ Dashboard.propTypes = {
 }
 
 export const mapStateToProps = state => ({
-  status: state.tokens.status
+  status: state.tokens.data.status
 })
 
 export const mapDispatchToProps = dispatch => ({

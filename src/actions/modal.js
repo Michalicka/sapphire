@@ -1,10 +1,8 @@
 
 import { CHANGE_MODAL } from '../actionTypes/modal'
 
-export function changeModal(key, data) {
-  return {
-    type: CHANGE_MODAL,
-    key,
-    data
-  }
-}
+export const changeModal = (key, data) => ({
+  type: CHANGE_MODAL,
+  key,
+  data
+})

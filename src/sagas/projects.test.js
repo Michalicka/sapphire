@@ -11,6 +11,9 @@ import axios from 'axios'
 
 describe('projects saga', () => {
   describe('getProjects', () => {
+    const getProjectsKey = 'getProjects'
+    const getProjectsErrors = changeProjectsErrors(getProjectsKey)
+    const getProjectsLoading = toggleProjectsLoading(getProjectsKey)
     let gen
     const apiCall = call(axios.get, projectsLink, { headers: headers() })
     const fakeAction = {
@@ -32,10 +35,11 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeProjectsData(response.data.data)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(getProjectsErrors({})))
+      expect(gen.next().value).toEqual(put(getProjectsLoading(false)))
     })
 
     it('should return getProjects validation error flow', () => {
@@ -51,10 +55,10 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errorBody.response.data.errors))))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(getProjectsErrors(formatErrors(errorBody.response.data.errors))))
+      expect(gen.next().value).toEqual(put(getProjectsLoading(false)))
     })
 
     it('should return getProjects authentication error flow', () => {
@@ -65,16 +69,19 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(getProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(GET_PROJECTS_REQUEST))
     })
   })
 
   describe('postProjects', () => {
     let gen
+    const postProjectsKey = 'postProjects'
+    const postProjectsErrors = changeProjectsErrors(postProjectsKey)
+    const postProjectsLoading = toggleProjectsLoading(postProjectsKey)
     const actionData = {
       name: 'project',
       description: 'description'
@@ -97,12 +104,12 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(postProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next(response).value).toEqual(put(postProjectsErrors({})))
       expect(gen.next(response).value).toEqual(put(pushProject(response.data.data)))
       expect(gen.next(response).value).toEqual(put(changeModal('createProject', { show: false })))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next(fakeAction).value).toEqual(put(postProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
     })
 
@@ -121,10 +128,10 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(postProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(postProjectsErrors(formatErrors(errors))))
+      expect(gen.next(fakeAction).value).toEqual(put(postProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
     })
 
@@ -136,15 +143,18 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(postProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(postProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(POST_PROJECTS_REQUEST))
     })
   })
 
   describe('putProjects', () => {
+    const putProjectsKey = 'putProjects'
+    const putProjectsErrors = changeProjectsErrors(putProjectsKey)
+    const putProjectsLoading = toggleProjectsLoading(putProjectsKey)
     let gen
     const payload = {
       name: 'project',
@@ -168,12 +178,12 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(putProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next(response).value).toEqual(put(putProjectsErrors({})))
       expect(gen.next().value).toEqual(put(editProject(fakeAction.urlParams.id, fakeAction.payload)))
       expect(gen.next().value).toEqual(put(changeModal('editProject', { show: false })))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(putProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
     })
 
@@ -192,10 +202,10 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(putProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(putProjectsErrors(formatErrors(errors))))
+      expect(gen.next().value).toEqual(put(putProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
     })
 
@@ -207,15 +217,18 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(putProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(putProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECTS_REQUEST))
     })
   })
 
   describe('deleteProjects', () => {
+    const deleteProjectsKey = 'deleteProjects'
+    const deleteProjectsErrors = changeProjectsErrors(deleteProjectsKey)
+    const deleteProjectsLoading = toggleProjectsLoading(deleteProjectsKey)
     let gen
     const urlParams = {
       id: 1
@@ -231,11 +244,11 @@ describe('projects saga', () => {
       const response = {}
 
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(deleteProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next(response).value).toEqual(put(deleteProjectsErrors({})))
       expect(gen.next().value).toEqual(put(removeProject(fakeAction.urlParams.id)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(deleteProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
     })
 
@@ -254,10 +267,10 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(deleteProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(deleteProjectsErrors(formatErrors(errors))))
+      expect(gen.next().value).toEqual(put(deleteProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
     })
 
@@ -269,15 +282,18 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(deleteProjectsLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(deleteProjectsLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_PROJECTS_REQUEST))
     })
   })
 
   describe('getProjectMembers', () => {
+    const getProjectMembersKey = 'getProjectsMembers'
+    const getProjectMembersErrors = changeProjectsErrors(getProjectMembersKey)
+    const getProjectMembersLoading = toggleProjectsLoading(getProjectMembersKey)
     let gen
     const urlParams = {
       id: 1
@@ -302,11 +318,11 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getProjectMembersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next(response).value).toEqual(put(getProjectMembersErrors({})))
       expect(gen.next().value).toEqual(put(editProject(fakeAction.urlParams.id, { members: response.data.data })))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(getProjectMembersLoading(false)))
       expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
     })
 
@@ -325,10 +341,10 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getProjectMembersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(getProjectMembersErrors(formatErrors(errors))))
+      expect(gen.next().value).toEqual(put(getProjectMembersLoading(false)))
       expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
     })
 
@@ -340,15 +356,18 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getProjectMembersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(getProjectMembersLoading(false)))
       expect(gen.next().value).toEqual(take(GET_PROJECT_MEMBERS_REQUEST))
     })
   })
 
   describe('putProjectMembers', () => {
+    const putProjectMembersKey = 'putProjectsMembers'
+    const putProjectMembersErrors = changeProjectsErrors(putProjectMembersKey)
+    const putProjectMembersLoading = toggleProjectsLoading(putProjectMembersKey)
     let gen
     const urlParams = {
       id: 1
@@ -367,12 +386,12 @@ describe('projects saga', () => {
       const response = {}
 
       expect(gen.next().value).toEqual(take(PUT_PROJECT_MEMBERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(putProjectMembersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(put(changeProjectsErrors({})))
+      expect(gen.next(response).value).toEqual(put(putProjectMembersErrors({})))
       expect(gen.next(response).value).toEqual(put(changeModal('editProjectMembers', { show: false })))
       expect(gen.next(response).value).toEqual(put(editProject(fakeAction.urlParams.id, { members: undefined })))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(putProjectMembersLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECT_MEMBERS_REQUEST))
     })
 
@@ -391,10 +410,10 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(PUT_PROJECT_MEMBERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(putProjectMembersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeProjectsErrors(formatErrors(errors))))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(putProjectMembersErrors(formatErrors(errors))))
+      expect(gen.next().value).toEqual(put(putProjectMembersLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECT_MEMBERS_REQUEST))
     })
 
@@ -406,10 +425,10 @@ describe('projects saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(PUT_PROJECT_MEMBERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleProjectsLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(putProjectMembersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
-      expect(gen.next().value).toEqual(put(toggleProjectsLoading(false)))
+      expect(gen.next().value).toEqual(put(putProjectMembersLoading(false)))
       expect(gen.next().value).toEqual(take(PUT_PROJECT_MEMBERS_REQUEST))
     })
   })

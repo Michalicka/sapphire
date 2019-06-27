@@ -1,6 +1,6 @@
 
 import { CHANGE_TASKS_DATA, EDIT_TASK, CHANGE_TASKS_ERRORS, TOGGLE_TASKS_LOADING, ADD_TASK, DELETE_TASK, ADD_TASK_COMMENT } from '../actionTypes/tasks'
-import { getDefaultValues, editItem, changeErrorsParam, changeLoadingParam, addItem, deleteItem, findItemIndex } from './utils'
+import { getDefaultValues, changeData, editItem, changeErrorsParam, changeLoadingParam, addItem, deleteItem, pushToDataParam } from './utils'
 
 const tasksDefault = getDefaultValues(['getTasks', 'putTasks', 'postTasks', 'putTasksMembers', 'getTasksDetail', 'getTasksComments', 'postTasksComments'])
 
@@ -13,7 +13,7 @@ const initialState = {
 export default function tasks(state = initialState, action) {
   switch (action.type) {
     case CHANGE_TASKS_DATA:
-      return { ...state, data: [...action.data] }
+      return changeData(state, action)
     case ADD_TASK:
       return addItem(state, action)
     case EDIT_TASK:
@@ -25,12 +25,7 @@ export default function tasks(state = initialState, action) {
     case TOGGLE_TASKS_LOADING:
       return changeLoadingParam(state, action)
     case ADD_TASK_COMMENT: {
-      const taskIndex = findItemIndex(state.data, action.id)
-      const task = { ...state.data[taskIndex] }
-      const comments = [...task.comments, action.comment]
-      const data = [...state.data]
-      data.splice(taskIndex, 1, { ...task, comments })
-      return { ...state, data }
+      return pushToDataParam(state, action)
     }
     default:
       return state

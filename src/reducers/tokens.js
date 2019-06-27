@@ -1,19 +1,25 @@
 
 import { CHANGE_TOKENS_ERRORS, TOGGLE_TOKENS_LOADING, CHANGE_TOKENS_STATUS } from '../actionTypes/tokens'
+import { getDefaultValues, changeErrorsParam, changeLoadingParam, changeDataParam } from './utils'
+
+const tokensDefault = getDefaultValues(['postTokens', 'putTokens', 'deleteTokens'])
 
 const initialState = {
-  errors: {},
-  loading: false
+  data: {
+    status: null
+  },
+  errors: tokensDefault({}),
+  loading: tokensDefault(false)
 }
 
 function tokens(state = initialState, action) {
   switch (action.type) {
     case CHANGE_TOKENS_ERRORS:
-      return { ...state, errors: action.errors }
+      return changeErrorsParam(state, action)
     case TOGGLE_TOKENS_LOADING:
-      return { ...state, loading: action.value }
+      return changeLoadingParam(state, action)
     case CHANGE_TOKENS_STATUS:
-      return { ...state, status: action.value }
+      return changeDataParam(state, action)
     default:
       return state
   }

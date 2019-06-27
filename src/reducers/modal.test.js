@@ -1,28 +1,21 @@
 
 import modal from './modal'
 import { changeModal } from '../actions/modal'
+import { getDefaultValues } from './utils'
 
 describe('modal reducer', () => {
-  const initialState = {
-    createProject: {
-      show: false
-    },
-    editProfile: {
-      show: false
-    },
-    editProject: {
-      show: false
-    },
-    changeAvatar: {
-      show: false
-    },
-    changePassword: {
-      show: false
-    },
-    editProjectMembers: {
-      show: false
-    }
-  }
+  const initialState = getDefaultValues([
+    'createProject',
+    'editProfile',
+    'editProject',
+    'changeAvatar',
+    'changePassword',
+    'changePassword',
+    'editProjectMembers',
+    'createTask',
+    'editTask',
+    'chat'
+  ])({ show: false })
   it('should return initialState', () => {
     expect(modal(undefined, {})).toEqual(initialState)
   })

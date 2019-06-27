@@ -6,6 +6,10 @@ import { GET_PROJECTS_REQUEST, POST_PROJECTS_REQUEST, PUT_PROJECTS_REQUEST, DELE
 import { fetchLoggedEntity } from './utils'
 import { put } from 'redux-saga/effects'
 
+const getProjectsKey = 'getProjects'
+const getProjectsErrors = changeProjectsErrors(getProjectsKey)
+const getProjectsLoading = toggleProjectsLoading(getProjectsKey)
+
 export const getProjects = fetchLoggedEntity.bind(
   null,
   'get',
@@ -13,12 +17,17 @@ export const getProjects = fetchLoggedEntity.bind(
   {
     request: GET_PROJECTS_REQUEST,
     success: [
-      response => put(changeProjectsData(response.data.data))
+      response => put(changeProjectsData(response.data.data)),
+      () => put(getProjectsErrors({}))
     ],
-    error: errors => changeProjectsErrors(errors),
-    loading: value => toggleProjectsLoading(value)
+    error: getProjectsErrors,
+    loading: getProjectsLoading
   }
 )
+
+const postProjectsKey = 'postProjects'
+const postProjectsErrors = changeProjectsErrors(postProjectsKey)
+const postProjectsLoading = toggleProjectsLoading(postProjectsKey)
 
 export const postProjects = fetchLoggedEntity.bind(
   null,
@@ -27,14 +36,18 @@ export const postProjects = fetchLoggedEntity.bind(
   {
     request: POST_PROJECTS_REQUEST,
     success: [
-      () => put(changeProjectsErrors({})),
+      () => put(postProjectsErrors({})),
       ({ data }) => put(pushProject(data.data)),
       () => put(changeModal('createProject', { show: false }))
     ],
-    error: errors => changeProjectsErrors(errors),
-    loading: value => toggleProjectsLoading(value)
+    error: postProjectsErrors,
+    loading: postProjectsLoading
   }
 )
+
+const putProjectsKey = 'putProjects'
+const putProjectsErrors = changeProjectsErrors(putProjectsKey)
+const putProjectsLoading = toggleProjectsLoading(putProjectsKey)
 
 export const putProjects = fetchLoggedEntity.bind(
   null,
@@ -43,14 +56,18 @@ export const putProjects = fetchLoggedEntity.bind(
   {
     request: PUT_PROJECTS_REQUEST,
     success: [
-      () => put(changeProjectsErrors({})),
+      () => put(putProjectsErrors({})),
       (response, action) => put(editProject(action.urlParams.id, action.payload)),
       () => put(changeModal('editProject', { show: false }))
     ],
-    error: errors => changeProjectsErrors(errors),
-    loading: value => toggleProjectsLoading(value)
+    error: putProjectsErrors,
+    loading: putProjectsLoading
   }
 )
+
+const deleteProjectsKey = 'deleteProjects'
+const deleteProjectsErrors = changeProjectsErrors(deleteProjectsKey)
+const deleteProjectsLoading = toggleProjectsLoading(deleteProjectsKey)
 
 export const deleteProjects = fetchLoggedEntity.bind(
   null,
@@ -59,13 +76,17 @@ export const deleteProjects = fetchLoggedEntity.bind(
   {
     request: DELETE_PROJECTS_REQUEST,
     success: [
-      () => put(changeProjectsErrors({})),
+      () => put(deleteProjectsErrors({})),
       (response, action) => put(removeProject(action.urlParams.id))
     ],
-    error: errors => changeProjectsErrors(errors),
-    loading: value => toggleProjectsLoading(value)
+    error: deleteProjectsErrors,
+    loading: deleteProjectsLoading
   }
 )
+
+const getProjectsMembersKey = 'getProjectsMembers'
+const getProjectsMembersErrors = changeProjectsErrors(getProjectsMembersKey)
+const getProjectsMembersLoading = toggleProjectsLoading(getProjectsMembersKey)
 
 export const getProjectMembers = fetchLoggedEntity.bind(
   null,
@@ -74,15 +95,19 @@ export const getProjectMembers = fetchLoggedEntity.bind(
   {
     request: GET_PROJECT_MEMBERS_REQUEST,
     success: [
-      () => put(changeProjectsErrors({})),
+      () => put(getProjectsMembersErrors({})),
       (response, action) => {
         return put(editProject(action.urlParams.id, { members: response.data.data }))
       }
     ],
-    error: errors => changeProjectsErrors(errors),
-    loading: value => toggleProjectsLoading(value)
+    error: getProjectsMembersErrors,
+    loading: getProjectsMembersLoading
   }
 )
+
+const putProjectsMembersKey = 'putProjectsMembers'
+const putProjectsMembersErrors = changeProjectsErrors(putProjectsMembersKey)
+const putProjectsMembersLoading = toggleProjectsLoading(putProjectsMembersKey)
 
 export const putProjectMembers = fetchLoggedEntity.bind(
   null,
@@ -91,11 +116,11 @@ export const putProjectMembers = fetchLoggedEntity.bind(
   {
     request: PUT_PROJECT_MEMBERS_REQUEST,
     success: [
-      () => put(changeProjectsErrors({})),
+      () => put(putProjectsMembersErrors({})),
       () => put(changeModal('editProjectMembers', { show: false })),
       (respone, { urlParams }) => put(editProject(urlParams.id, { members: undefined }))
     ],
-    error: errors => changeProjectsErrors(errors),
-    loading: value => toggleProjectsLoading(value)
+    error: putProjectsMembersErrors,
+    loading: putProjectsMembersLoading
   }
 )

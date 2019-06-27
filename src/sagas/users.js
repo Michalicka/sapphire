@@ -5,6 +5,10 @@ import { GET_USERS_REQUEST } from '../actionTypes/users'
 import { changeUsersErrors, changeUsersData, toggleUsersLoading } from '../actions/users'
 import { put } from 'redux-saga/effects'
 
+const getUsersKey = 'getUsers'
+const getUsersErrors = changeUsersErrors(getUsersKey)
+const getUsersLoading = toggleUsersLoading(getUsersKey)
+
 export const getUsers = fetchLoggedEntity.bind(
   null,
   'get',
@@ -12,10 +16,10 @@ export const getUsers = fetchLoggedEntity.bind(
   {
     request: GET_USERS_REQUEST,
     success: [
-      () => put(changeUsersErrors({})),
+      () => put(getUsersErrors({})),
       ({ data }) => put(changeUsersData(data.data))
     ],
-    error: errors => changeUsersErrors(errors),
-    loading: value => toggleUsersLoading(value)
+    error: getUsersErrors,
+    loading: getUsersLoading
   }
 )
