@@ -6,7 +6,7 @@ import { changeModal } from '../../actions/modal'
 describe('ProfileController container', () => {
   it('should return mapped state to props', () => {
     const state = {
-      user: {
+      profile: {
         data: {
           name: 'user',
           avatar: 'avatar'
@@ -15,8 +15,8 @@ describe('ProfileController container', () => {
     }
     const mappedState = mapStateToProps(state)
 
-    expect(mappedState.initial).toBe(state.user.data.name.charAt(0).toUpperCase())
-    expect(mappedState.avatar).toBe(state.user.data.avatar)
+    expect(mappedState.initial).toBe(state.profile.data.name.charAt(0).toUpperCase())
+    expect(mappedState.avatar).toBe(state.profile.data.avatar)
   })
 
   it('should return mapped actions to props', () => {

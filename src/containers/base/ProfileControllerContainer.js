@@ -19,8 +19,6 @@ export const ProfileControllerContainer = (props) => {
     handleClose()
   }
 
-  console.log({ anchorEl })
-
   return (
     <ProfileController
       anchorEl={anchorEl}

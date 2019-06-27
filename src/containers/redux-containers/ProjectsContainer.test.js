@@ -7,12 +7,16 @@ describe('ProjectsContainer container', () => {
   it('should return mapped state props', () => {
     const state = {
       projects: {
-        data: []
+        data: [],
+        loading: {
+          getProjects: false
+        }
       }
     }
     const mappedState = mapStateToProps(state)
 
     expect(mappedState.items).toEqual(state.projects.data)
+    expect(mappedState.loading).toBe(state.projects.loading.getProjects)
   })
 
   it('should return mapped actions props', () => {

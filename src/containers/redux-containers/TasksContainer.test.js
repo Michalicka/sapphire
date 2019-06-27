@@ -1,5 +1,5 @@
 
-import { getTasksRequest } from '../actions/tasks'
+import { getTasksRequest } from '../../actions/tasks'
 import { mapStateToProps, mapDispatchToProps } from './TasksContainer'
 
 describe('TasksContainer container', () => {

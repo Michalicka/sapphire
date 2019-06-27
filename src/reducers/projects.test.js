@@ -1,15 +1,17 @@
 
 import projects from './projects'
 import { changeProjectsData, changeProjectsErrors, toggleProjectsLoading, pushProject, removeProject, editProject } from '../actions/projects'
+import { getDefaultValues } from './utils'
 
 describe('projects reducer', () => {
-  const expectedState = {
+  const projectsDefault = getDefaultValues(['getProjects', 'postProjects', 'putProjects', 'deleteProjects', 'getProjectsMembers', 'putProjectsMembers'])
+  const initialState = {
     data: [],
-    errors: {},
-    loading: false
+    errors: projectsDefault({}),
+    loading: projectsDefault(false)
   }
   it('should return initialState', () => {
-    expect(projects(undefined, {})).toEqual(expectedState)
+    expect(projects(undefined, {})).toEqual(initialState)
   })
 
   it('should return state after changeProjectsData action', () => {
@@ -20,20 +22,30 @@ describe('projects reducer', () => {
         description: 'description'
       }
     ]
-    expect(projects(undefined, changeProjectsData(data))).toEqual({ ...expectedState, data })
+    const expectedState = { ...initialState, data }
+    expect(projects(undefined, changeProjectsData(data))).toEqual(expectedState)
   })
 
   it('should return state after changeProjectsErrors', () => {
-    const errors = {
+    const key = 'getProjects'
+    const value = {
       name: 'error',
       description: 'error'
     }
-    expect(projects(undefined, changeProjectsErrors(errors))).toEqual({ ...expectedState, errors })
+
+    const errors = { ...initialState.errors, [key]: value }
+    const expectedState = { ...initialState, errors }
+
+    expect(projects(undefined, changeProjectsErrors(key)(value))).toEqual(expectedState)
   })
 
   it('should return state after toggleProjectsLoading', () => {
-    const loading = true
-    expect(projects(undefined, toggleProjectsLoading(true))).toEqual({ ...expectedState, loading })
+    const key = 'getProjects'
+    const value = true
+
+    const loading = { ...initialState.loading, [key]: value }
+    const expectedState = { ...initialState, loading }
+    expect(projects(undefined, toggleProjectsLoading(key)(value))).toEqual(expectedState)
   })
 
   it('should return state after pushProject', () => {
@@ -42,8 +54,8 @@ describe('projects reducer', () => {
       name: 'project',
       description: 'description'
     }
-    const data = [...expectedState.data, project]
-    const newState = { ...expectedState, data }
+    const data = [...initialState.data, project]
+    const newState = { ...initialState, data }
     expect(projects(undefined, pushProject(project))).toEqual(newState)
   })
 
@@ -65,13 +77,13 @@ describe('projects reducer', () => {
       description: 'desc'
     }
     const id = 2
-    const newData = [ { ...data[0] }, { id, ...editedProject } ]
+    const newData = [{ ...data[0] }, { id, ...editedProject }]
     const newState = {
-      ...expectedState,
+      ...initialState,
       data: newData
     }
 
-    expect(projects({ ...expectedState, data }, editProject(id, editedProject))).toEqual(newState)
+    expect(projects({ ...initialState, data }, editProject(id, editedProject))).toEqual(newState)
   })
 
   it('should return state after removeProject', () => {
@@ -88,12 +100,12 @@ describe('projects reducer', () => {
       }
     ]
     const id = 2
-    const newData = [ { ...data[0] } ]
+    const newData = [{ ...data[0] }]
     const newState = {
-      ...expectedState,
+      ...initialState,
       data: newData
     }
 
-    expect(projects({ ...expectedState, data }, removeProject(id))).toEqual(newState)
+    expect(projects({ ...initialState, data }, removeProject(id))).toEqual(newState)
   })
 })

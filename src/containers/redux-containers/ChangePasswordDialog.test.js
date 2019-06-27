@@ -1,7 +1,7 @@
 
 import { mapStateToProps, mapDispatchToProps } from './ChangePasswordDialog'
-import { putPasswordsRequest, changeUserErrors } from '../actions/profile'
-import { changeModal } from '../actions/modal'
+import { putPasswordsRequest, changeUserErrors } from '../../actions/profile'
+import { changeModal } from '../../actions/modal'
 
 describe('ChangePasswordDialog container', () => {
   it('should return expected mapped state props', () => {
@@ -11,17 +11,21 @@ describe('ChangePasswordDialog container', () => {
           show: true
         }
       },
-      user: {
-        errors: {},
-        loading: false
+      profile: {
+        errors: {
+          putPasswords: {}
+        },
+        loading: {
+          putPasswords: false
+        }
       }
     }
 
     const mappedState = mapStateToProps(state)
 
     expect(mappedState.open).toBe(true)
-    expect(mappedState.errors).toEqual(state.user.errors)
-    expect(mappedState.loading).toBe(state.user.loading)
+    expect(mappedState.errors).toEqual(state.profile.errors.putPasswords)
+    expect(mappedState.loading).toBe(state.profile.loading.putPasswords)
   })
 
   it('should return expected mapped actions props', () => {
@@ -39,6 +43,6 @@ describe('ChangePasswordDialog container', () => {
 
     expect(dispatch.mock.calls[0][0]).toEqual(putPasswordsRequest(values))
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal('changePassword', { show: false }))
-    expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors({}))
+    expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors('putPasswords')({}))
   })
 })

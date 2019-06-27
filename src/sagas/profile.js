@@ -40,7 +40,8 @@ export const getMe = fetchLoggedEntity.bind(
   {
     request: GET_ME_REQUEST,
     success: [
-      response => put(changeUserData({ ...response.data.data }))
+      response => put(changeUserData({ ...response.data.data })),
+      () => put(getMeErrors({}))
     ],
     error: getMeErrors,
     loading: getMeLoading

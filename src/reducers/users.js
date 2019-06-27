@@ -5,7 +5,7 @@ import { getDefaultValues, changeData, changeErrorsParam, changeLoadingParam } f
 const usersDefault = getDefaultValues(['getUsers'])
 
 const initialState = {
-  loading: false,
+  loading: usersDefault(false),
   errors: usersDefault({}),
   data: []
 }

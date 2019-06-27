@@ -1,6 +1,6 @@
 
 import { mapStateToProps, mapDispatchToProps } from './MessageBar'
-import { changeMessagebarParam } from '../actions/messagebar'
+import { changeMessagebarParam } from '../../actions/messagebar'
 
 describe('MessageBar container', () => {
   it('should return mapped state props', () => {

@@ -24,9 +24,7 @@ const styles = theme => ({
 })
 
 export const ProfileController = ({ classes, avatar, initial, logout, editProfile, changePassword, changeAvatar, anchorEl, handleOpen, handleClose, itemClick }) => {
-  console.log({ anchorEl })
   const open = !!anchorEl
-  console.log(open)
   return (
     <React.Fragment>
       <IconButton

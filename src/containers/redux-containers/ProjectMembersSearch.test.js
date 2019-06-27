@@ -1,6 +1,6 @@
 
-import { getUsersRequest, changeUsersData } from '../../actions/users'
-import { getProjectMembersRequest } from '../../actions/projects'
+import { getUsersRequest } from '../../actions/users'
+import { getProjectMembersRequest, editProject } from '../../actions/projects'
 import { mapStateToProps, mapDispatchToProps } from './ProjectMembersSearch'
 
 describe('ProjectMembersSearch container', () => {
@@ -12,7 +12,9 @@ describe('ProjectMembersSearch container', () => {
         }
       },
       projects: {
-        loading: false,
+        loading: {
+          getProjectsMembers: false
+        },
         data: [
           {
             id: 1,
@@ -54,7 +56,7 @@ describe('ProjectMembersSearch container', () => {
     const mappedState = mapStateToProps(state)
     const project = state.projects.data.find(item => item.id === state.modal.editProjectMembers.id)
 
-    expect(mappedState.loading).toBe(state.projects.loading)
+    expect(mappedState.loading).toBe(state.projects.loading.getProjectsMembers)
     expect(mappedState.items).toEqual(state.users.data)
     expect(mappedState.selectedItems).toEqual(project.members)
     expect(mappedState.id).toBe(project.id)
@@ -66,12 +68,12 @@ describe('ProjectMembersSearch container', () => {
     const name = 'user'
     const mappedAction = mapDispatchToProps(dispatch)
 
-    mappedAction.getItems(id)
-    mappedAction.getNewItems(name)
-    mappedAction.changeItems([])
+    mappedAction.getSelectedItems(id)
+    mappedAction.search(name)
+    mappedAction.changeSelectedItems(id, [])
 
     expect(dispatch.mock.calls[0][0]).toEqual(getProjectMembersRequest({ id }))
     expect(dispatch.mock.calls[1][0]).toEqual(getUsersRequest(name))
-    expect(dispatch.mock.calls[2][0]).toEqual(changeUsersData([]))
+    expect(dispatch.mock.calls[2][0]).toEqual(editProject(id, { members: [] }))
   })
 })

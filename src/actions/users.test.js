@@ -39,24 +39,28 @@ describe('users action', () => {
   })
 
   it('changeUsersErrors', () => {
-    const errors = {
+    const key = 'key'
+    const value = {
       name: 'error'
     }
     const expectedValue = {
       type: CHANGE_USERS_ERRORS,
-      errors
+      key,
+      value
     }
 
-    expect(changeUsersErrors(errors)).toEqual(expectedValue)
+    expect(changeUsersErrors(key)(value)).toEqual(expectedValue)
   })
 
   it('toggleUsersLoading', () => {
-    const loading = true
+    const key = 'key'
+    const value = true
     const expectedValue = {
       type: TOGGLE_USERS_LOADING,
-      loading
+      key,
+      value
     }
 
-    expect(toggleUsersLoading(loading)).toEqual(expectedValue)
+    expect(toggleUsersLoading(key)(value)).toEqual(expectedValue)
   })
 })

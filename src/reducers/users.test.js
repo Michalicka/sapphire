@@ -1,11 +1,13 @@
 
 import users from './users'
 import { changeUsersData, changeUsersErrors, toggleUsersLoading } from '../actions/users'
+import { getDefaultValues } from './utils'
 
 describe('users reducer', () => {
+  const usersDefault = getDefaultValues(['getUsers'])
   const initialState = {
-    loading: false,
-    errors: {},
+    loading: usersDefault(false),
+    errors: usersDefault({}),
     data: []
   }
 
@@ -22,24 +24,28 @@ describe('users reducer', () => {
         avatar: 'https://www.google.com/'
       }
     ]
-    const newState = { ...initialState, data }
+    const expectedState = { ...initialState, data }
 
-    expect(users(undefined, changeUsersData(data))).toEqual(newState)
+    expect(users(undefined, changeUsersData(data))).toEqual(expectedState)
   })
 
   it('should return expected state after changeUsersErrors action', () => {
-    const errors = {
+    const value = {
       name: 'error'
     }
-    const newState = { ...initialState, errors }
+    const key = 'getUsers'
+    const errors = { ...initialState.errors, [key]: value }
+    const expectedState = { ...initialState, errors }
 
-    expect(users(undefined, changeUsersErrors(errors))).toEqual(newState)
+    expect(users(undefined, changeUsersErrors(key)(value))).toEqual(expectedState)
   })
 
   it('should return expected state after toggleUsersLoading action', () => {
-    const loading = true
-    const newState = { ...initialState, loading }
+    const value = true
+    const key = 'getUsers'
+    const loading = { ...initialState.loading, [key]: value }
+    const expectedState = { ...initialState, loading }
 
-    expect(users(undefined, toggleUsersLoading(loading))).toEqual(newState)
+    expect(users(undefined, toggleUsersLoading(key)(value))).toEqual(expectedState)
   })
 })

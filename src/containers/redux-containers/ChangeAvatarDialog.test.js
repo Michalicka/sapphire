@@ -1,7 +1,7 @@
 
 import { mapStateToProps, mapDispatchToProps } from './ChangeAvatarDialog'
-import { postAvatarRequest, changeUserErrors } from '../actions/profile'
-import { changeModal } from '../actions/modal'
+import { postAvatarRequest, changeUserErrors } from '../../actions/profile'
+import { changeModal } from '../../actions/modal'
 
 describe('ChangeAvatarDialog container', () => {
   it('should return expected mapped state props', () => {
@@ -11,17 +11,21 @@ describe('ChangeAvatarDialog container', () => {
           show: true
         }
       },
-      user: {
-        errors: {},
-        loading: false
+      profile: {
+        errors: {
+          postAvatars: {}
+        },
+        loading: {
+          postAvatars: false
+        }
       }
     }
 
     const mappedState = mapStateToProps(state)
 
     expect(mappedState.open).toBe(true)
-    expect(mappedState.errors).toEqual(state.user.errors)
-    expect(mappedState.loading).toBe(state.user.loading)
+    expect(mappedState.errors).toEqual(state.profile.errors.postAvatars)
+    expect(mappedState.loading).toBe(state.profile.loading.postAvatars)
   })
 
   it('should return expected mapped actions props', () => {
@@ -39,6 +43,6 @@ describe('ChangeAvatarDialog container', () => {
 
     expect(dispatch.mock.calls[0][0]).toEqual(postAvatarRequest(values))
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal('changeAvatar', { show: false }))
-    expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors({}))
+    expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors('postAvatars')({}))
   })
 })

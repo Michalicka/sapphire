@@ -12,6 +12,9 @@ import { userRestore } from '../actions/profile'
 
 describe('sagas tokens', () => {
   describe('postTokens tests', () => {
+    const postTokensKey = 'postTokens'
+    const postTokensErrors = changeTokensErrors(postTokensKey)
+    const postTokensLoading = toggleTokensLoading(postTokensKey)
     let gen
     const registrationAction = {
       type: POST_TOKENS_REQUEST,
@@ -41,15 +44,15 @@ describe('sagas tokens', () => {
       }
 
       expect(gen.next().value).toEqual(take(POST_TOKENS_REQUEST))
-      expect(gen.next(registrationAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next(registrationAction).value).toEqual(put(postTokensLoading(true)))
 
       const apiCall = call(axios.post, tokensLink, registrationAction.payload)
 
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(call(setToken, response.data.data))
-      expect(gen.next().value).toEqual(put(changeTokensErrors({})))
+      expect(gen.next().value).toEqual(put(postTokensErrors({})))
       expect(gen.next().value).toEqual(put(changeTokensStatus('Authorized')))
-      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.next().value).toEqual(put(postTokensLoading(false)))
       expect(gen.next().value).toEqual(take(POST_TOKENS_REQUEST))
     })
 
@@ -66,13 +69,13 @@ describe('sagas tokens', () => {
       }
 
       expect(gen.next().value).toEqual(take(POST_TOKENS_REQUEST))
-      expect(gen.next(registrationAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next(registrationAction).value).toEqual(put(postTokensLoading(true)))
 
       const apiCall = call(axios.post, tokensLink, registrationAction.payload)
 
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeTokensErrors(formatErrors(errorBody.response.data.errors))))
-      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(postTokensErrors(formatErrors(errorBody.response.data.errors))))
+      expect(gen.next().value).toEqual(put(postTokensLoading(false)))
       expect(gen.next().value).toEqual(take(POST_TOKENS_REQUEST))
     })
   })
@@ -173,7 +176,10 @@ describe('sagas tokens', () => {
     })
   })
 
-  describe('putUsers tests', () => {
+  describe('deleteTokens tests', () => {
+    const deleteTokensKey = 'deleteTokens'
+    const deleteTokensErrors = changeTokensErrors(deleteTokensKey)
+    const deleteTokensLoading = toggleTokensLoading(deleteTokensKey)
     let gen
     const deleteTokensAction = deleteTokensRequest()
     const apiCall = call(axios.delete, tokensLink, { headers: headers() })
@@ -186,12 +192,12 @@ describe('sagas tokens', () => {
       const response = {}
 
       expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
-      expect(gen.next(deleteTokensAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next(deleteTokensAction).value).toEqual(put(deleteTokensLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.next(response).value).toEqual(put(changeTokensStatus('Unauthorized')))
       expect(gen.next().value).toEqual(call(removeToken))
       expect(gen.next().value).toEqual(put(userRestore()))
-      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.next().value).toEqual(put(deleteTokensLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
     })
 
@@ -208,10 +214,10 @@ describe('sagas tokens', () => {
       }
 
       expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
-      expect(gen.next(deleteTokensAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next(deleteTokensAction).value).toEqual(put(deleteTokensLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(errorBody).value).toEqual(put(changeTokensErrors(formatErrors(errorBody.response.data.errors))))
-      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.throw(errorBody).value).toEqual(put(deleteTokensErrors(formatErrors(errorBody.response.data.errors))))
+      expect(gen.next().value).toEqual(put(deleteTokensLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
     })
 
@@ -223,10 +229,10 @@ describe('sagas tokens', () => {
       }
 
       expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
-      expect(gen.next(deleteTokensAction).value).toEqual(put(toggleTokensLoading(true)))
+      expect(gen.next(deleteTokensAction).value).toEqual(put(deleteTokensLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(deleteTokensAction)))
-      expect(gen.next().value).toEqual(put(toggleTokensLoading(false)))
+      expect(gen.next().value).toEqual(put(deleteTokensLoading(false)))
       expect(gen.next().value).toEqual(take(DELETE_TOKENS_REQUEST))
     })
   })

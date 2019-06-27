@@ -26,24 +26,28 @@ describe('projects actions', () => {
   })
 
   it('changeProjectsErrors', () => {
-    const errors = {
+    const key = 'getMe'
+    const value = {
       name: 'error',
       description: 'error'
     }
     const expectedValue = {
       type: CHANGE_PROJECTS_ERRORS,
-      errors
+      key,
+      value
     }
-    expect(changeProjectsErrors(errors)).toEqual(expectedValue)
+    expect(changeProjectsErrors(key)(value)).toEqual(expectedValue)
   })
 
   it('toggleProjectsLoading', () => {
+    const key = 'getMe'
     const value = true
     const expectedValue = {
       type: TOGGLE_PROJECTS_LOADING,
+      key,
       value
     }
-    expect(toggleProjectsLoading(value)).toEqual(expectedValue)
+    expect(toggleProjectsLoading(key)(value)).toEqual(expectedValue)
   })
 
   it('postProjectRequest', () => {
@@ -56,17 +60,17 @@ describe('projects actions', () => {
   })
 
   it('pushProject', () => {
-    const project = {
+    const item = {
       id: 1,
       name: 'Project',
       description: 'description'
     }
     const expectedValue = {
       type: PUSH_PROJECT,
-      project
+      item
     }
 
-    expect(pushProject(project)).toEqual(expectedValue)
+    expect(pushProject(item)).toEqual(expectedValue)
   })
 
   it('putProjectsRequest', () => {

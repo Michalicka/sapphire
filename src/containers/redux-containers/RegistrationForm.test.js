@@ -1,23 +1,27 @@
 
 import { mapStateToProps, mapDispatchToProps } from './RegistrationForm'
-import { postUsersRequest } from '../actions/profile'
+import { postUsersRequest } from '../../actions/profile'
 
 describe('RegistrationForm container', () => {
   it('should return mapped state props', () => {
     const initialState = {
-      user: {
-        errors: {},
+      profile: {
+        errors: {
+          postUsers: {}
+        },
         data: {
           registrationSuccess: true
         },
-        loading: false
+        loading: {
+          postUsers: false
+        }
       }
     }
     const mappedState = mapStateToProps(initialState)
 
-    expect(mappedState.userErrors).toEqual(initialState.user.errors)
-    expect(mappedState.registrationSuccess).toEqual(initialState.user.data.registrationSuccess)
-    expect(mappedState.loading).toEqual(initialState.user.loading)
+    expect(mappedState.userErrors).toEqual(initialState.profile.errors.postUsers)
+    expect(mappedState.registrationSuccess).toEqual(initialState.profile.data.registrationSuccess)
+    expect(mappedState.loading).toEqual(initialState.profile.loading.postUsers)
   })
 
   it('should return mapped action props', () => {

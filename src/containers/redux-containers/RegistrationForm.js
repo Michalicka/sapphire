@@ -18,7 +18,7 @@ export const mapStateToProps = state => {
 }
 
 export const mapDispatchToProps = dispatch => ({
-  registration: payload => dispatch(postUsersRequest(payload)),
+  registration: payload => dispatch(postUsersRequest(payload))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm)

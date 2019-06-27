@@ -10,7 +10,8 @@ describe('LoginForm component', () => {
     classes: {},
     login: jest.fn(),
     tokensErrors: {},
-    loading: false
+    loading: false,
+    changeRegistrationSuccess: jest.fn()
   }
   const createWrapper = props => createShallow({ dive: true })(<LoginForm {...props} />).dive()
 

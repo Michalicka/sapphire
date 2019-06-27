@@ -1,8 +1,8 @@
 
 import { POST_USERS_REQUEST, CHANGE_USER_DATA, CHANGE_USER_PARAM, CHANGE_USER_ERRORS, TOGGLE_USER_LOADNIG, GET_ME_REQUEST, USER_RESTORE, PUT_USERS_REQUEST, MERGE_USER_DATA, PUT_PASSWORDS_REQUEST, POST_AVATAR_REQUEST } from '../actionTypes/profile'
-import { postUsersRequest, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from './user'
+import { postUsersRequest, changeUserData, changeUserParam, changeUserErrors, toggleUserLoading, getMeRequest, userRestore, putUserRequest, mergeUserData, putPasswordsRequest, postAvatarRequest } from './profile'
 
-describe('user actions', () => {
+describe('profile actions', () => {
   it('user registration', () => {
     const expectedOutput = {
       type: POST_USERS_REQUEST
@@ -38,7 +38,8 @@ describe('user actions', () => {
     expect(changeUserParam(key, value)).toEqual(expectedOutput)
   })
 
-  it('change user errors', () => {
+  it('changeUserErrors', () => {
+    const key = 'errors'
     const errors = {
       name: 'error',
       email: 'error',
@@ -48,19 +49,22 @@ describe('user actions', () => {
 
     const expectedOutput = {
       type: CHANGE_USER_ERRORS,
-      errors
+      key,
+      value: errors
     }
 
-    expect(changeUserErrors(errors)).toEqual(expectedOutput)
+    expect(changeUserErrors(key)(errors)).toEqual(expectedOutput)
   })
 
-  it('toggle user loading', () => {
+  it('toggleUserLoading', () => {
+    const key = 'loading'
     const expectedOutput = {
       type: TOGGLE_USER_LOADNIG,
+      key,
       value: true
     }
 
-    expect(toggleUserLoading(true)).toEqual(expectedOutput)
+    expect(toggleUserLoading(key)(true)).toEqual(expectedOutput)
   })
 
   it('getMeRequest', () => {
@@ -122,7 +126,7 @@ describe('user actions', () => {
     expect(putPasswordsRequest(payload)).toEqual(expectedOutput)
   })
 
-  it('putPasswordsRequest', () => {
+  it('postAvatarRequest', () => {
     const payload = {
       avatar: 'image'
     }

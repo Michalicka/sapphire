@@ -31,10 +31,6 @@ describe('Card container component', () => {
     expect(cardItems.length).toBe(2)
   })
 
-  it('should call getItems props', () => {
-    expect(getItems.mock.calls.length).toBe(1)
-  })
-
   it('should show loader when loading prop is true', () => {
     const wrapper = shallow(<CardContainer items={[]} options={[]} getItems={jest.fn()} loading={true} baseUrl="/tasks/:id" />).dive()
 

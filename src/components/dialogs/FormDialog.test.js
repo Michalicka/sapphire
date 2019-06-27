@@ -9,9 +9,9 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Formik } from 'formik'
 import { shallow } from 'enzyme'
-import ImageInput from '../fields/ImageInput'
-import ProjectMembersSearch from '../containers/redux-containers/ProjectMembersSearch'
-import DateTimeField from './DateTimeField'
+import ImageInputContainer from '../../containers/fields/ImageInputContainer'
+import ProjectMembersSearch from '../../containers/redux-containers/ProjectMembersSearch'
+import DateTimeField from '../fields/DateTimeField'
 
 describe('FormDialog component', () => {
   let wrapper
@@ -54,7 +54,7 @@ describe('FormDialog component', () => {
   it('should render expected count of textFields', () => {
     const form = wrapper.find(Formik).dive()
     const textFields = form.find(TextField)
-    const imageInput = form.find(ImageInput)
+    const imageInput = form.find(ImageInputContainer)
     const projectMembersSearch = form.find(ProjectMembersSearch)
     const dateTimeField = form.find(DateTimeField)
     expect(textFields.length + imageInput.length + projectMembersSearch.length + dateTimeField.length).toBe(props.fields.length)
@@ -79,7 +79,7 @@ describe('FormDialog component', () => {
 
   it('should add initialValues to textFields', () => {
     const textFields = wrapper.find(Formik).dive().find(TextField)
-    const imageInput = wrapper.find(Formik).dive().find(ImageInput)
+    const imageInput = wrapper.find(Formik).dive().find(ImageInputContainer)
     const { initialValues } = props
     expect(textFields.at(0).props().value).toBe(initialValues.name)
     expect(textFields.at(1).props().value).toBe(initialValues.name2)
@@ -88,7 +88,7 @@ describe('FormDialog component', () => {
 
   it('should add initialValues to textFields', () => {
     const textFields = wrapper.find(Formik).dive().find(TextField)
-    const imageInput = wrapper.find(Formik).dive().find(ImageInput)
+    const imageInput = wrapper.find(Formik).dive().find(ImageInputContainer)
     const { errors } = props
     expect(textFields.at(0).props().helperText).toBe(errors.name)
     expect(textFields.at(1).props().helperText).toBe(errors.name2)

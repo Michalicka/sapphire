@@ -5,11 +5,10 @@ describe('tasks validation', () => {
   describe('PostTasks', () => {
     it('should be valid PostTasks validation', done => {
       const validData = {
-        title: 'task',
-        term: '2018-05-06 8:00:00',
-        assignee_id: 1,
-        status_id: 1,
-        duration: '3:30:00'
+        title: 'title',
+        term: '2019-05-30 12:30:15',
+        description: 'description',
+        duration: '12:00:00'
       }
 
       PostTasks.isValid(validData)
@@ -23,8 +22,7 @@ describe('tasks validation', () => {
       const invalidData = {
         title: '',
         term: '',
-        assignee_id: null,
-        status_id: null,
+        description: '',
         duration: ''
       }
 

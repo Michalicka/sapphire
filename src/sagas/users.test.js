@@ -10,6 +10,9 @@ import { getUsers } from './users'
 
 describe('users saga', () => {
   describe('getUsers', () => {
+    const getUsersKey = 'getUsers'
+    const getUsersErrors = changeUsersErrors(getUsersKey)
+    const getUsersLoading = toggleUsersLoading(getUsersKey)
     const name = 'name'
     const fakeAction = getUsersRequest(name)
     const apiCall = call(axios.get, usersLink, { headers: headers(), params: fakeAction.payload })
@@ -34,11 +37,11 @@ describe('users saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_USERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleUsersLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getUsersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.next(response).value).toEqual(put(changeUsersErrors({})))
+      expect(gen.next(response).value).toEqual(put(getUsersErrors({})))
       expect(gen.next().value).toEqual(put(changeUsersData(response.data.data)))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleUsersLoading(false)))
+      expect(gen.next(fakeAction).value).toEqual(put(getUsersLoading(false)))
       expect(gen.next().value).toEqual(take(GET_USERS_REQUEST))
     })
 
@@ -55,10 +58,10 @@ describe('users saga', () => {
       }
 
       expect(gen.next().value).toEqual(take(GET_USERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleUsersLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getUsersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
-      expect(gen.throw(error).value).toEqual(put(changeUsersErrors(formatErrors(error.response.data.errors))))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleUsersLoading(false)))
+      expect(gen.throw(error).value).toEqual(put(getUsersErrors(formatErrors(error.response.data.errors))))
+      expect(gen.next(fakeAction).value).toEqual(put(getUsersLoading(false)))
       expect(gen.next().value).toEqual(take(GET_USERS_REQUEST))
     })
 
@@ -69,10 +72,10 @@ describe('users saga', () => {
         }
       }
       expect(gen.next().value).toEqual(take(GET_USERS_REQUEST))
-      expect(gen.next(fakeAction).value).toEqual(put(toggleUsersLoading(true)))
+      expect(gen.next(fakeAction).value).toEqual(put(getUsersLoading(true)))
       expect(gen.next().value).toEqual(apiCall)
       expect(gen.throw(errorBody).value).toEqual(put(putTokensRequest(fakeAction)))
-      expect(gen.next().value).toEqual(put(toggleUsersLoading(false)))
+      expect(gen.next().value).toEqual(put(getUsersLoading(false)))
       expect(gen.next().value).toEqual(take(GET_USERS_REQUEST))
     })
   })

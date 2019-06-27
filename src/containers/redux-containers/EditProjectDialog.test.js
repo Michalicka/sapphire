@@ -13,8 +13,12 @@ describe('EditProjectDialog containers', () => {
         }
       },
       projects: {
-        errors: {},
-        loading: true,
+        errors: {
+          putProjects: {}
+        },
+        loading: {
+          putProjects: false
+        },
         data: [
           {
             id: 1,
@@ -27,8 +31,8 @@ describe('EditProjectDialog containers', () => {
     const mappedState = mapStateToProps(state)
 
     expect(mappedState.open).toBe(false)
-    expect(mappedState.errors).toEqual(state.projects.errors)
-    expect(mappedState.loading).toBe(state.projects.loading)
+    expect(mappedState.errors).toEqual(state.projects.errors.putProjects)
+    expect(mappedState.loading).toBe(state.projects.loading.putProjects)
     expect(mappedState.initialValues).toEqual({
       name: state.projects.data[0].name,
       description: ''
@@ -52,6 +56,6 @@ describe('EditProjectDialog containers', () => {
 
     expect(dispatch.mock.calls[0][0]).toEqual(putProjectsRequest(project, urlParams))
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal('editProject', { show: false }))
-    expect(dispatch.mock.calls[2][0]).toEqual(changeProjectsErrors({}))
+    expect(dispatch.mock.calls[2][0]).toEqual(changeProjectsErrors('putProjects')({}))
   })
 })

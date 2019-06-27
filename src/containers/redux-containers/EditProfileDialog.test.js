@@ -11,27 +11,31 @@ describe('EditProfileDialog container', () => {
           show: true
         }
       },
-      user: {
+      profile: {
         data: {
           id: 1,
           name: 'name',
           email: 'email'
         },
-        errors: {},
-        loading: false
+        errors: {
+          putUsers: {}
+        },
+        loading: {
+          putUsers: false
+        }
       }
     }
     const initialValues = {
-      name: state.user.data.name,
-      email: state.user.data.email
+      name: state.profile.data.name,
+      email: state.profile.data.email
     }
 
     const mappedState = mapStateToProps(state)
 
     expect(mappedState.open).toBe(true)
-    expect(mappedState.errors).toEqual(state.user.errors)
-    expect(mappedState.loading).toBe(state.user.loading)
-    expect(mappedState.id).toBe(state.user.data.id)
+    expect(mappedState.errors).toEqual(state.profile.errors.putUsers)
+    expect(mappedState.loading).toBe(state.profile.loading.putUsers)
+    expect(mappedState.id).toBe(state.profile.data.id)
     expect(mappedState.initialValues).toEqual(initialValues)
   })
 
@@ -52,6 +56,6 @@ describe('EditProfileDialog container', () => {
 
     expect(dispatch.mock.calls[0][0]).toEqual(putUserRequest(values, urlParams))
     expect(dispatch.mock.calls[1][0]).toEqual(changeModal('editProfile', { show: false }))
-    expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors({}))
+    expect(dispatch.mock.calls[2][0]).toEqual(changeUserErrors('putUsers')({}))
   })
 })

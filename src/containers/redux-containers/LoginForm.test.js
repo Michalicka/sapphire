@@ -1,21 +1,27 @@
 
 import { mapDispatchToProps, mapStateToProps } from './LoginForm'
-import { postTokensRequest } from '../actions/tokens'
+import { postTokensRequest } from '../../actions/tokens'
 
 describe('LoginForm container', () => {
   it('should return mapped state props', () => {
     const initialState = {
       tokens: {
-        errors: {},
-        loading: false,
-        status: 'Authorized'
+        errors: {
+          postTokens: {}
+        },
+        loading: {
+          postTokens: false
+        },
+        data: {
+          status: 'Authorized'
+        }
       }
     }
     const mappedState = mapStateToProps(initialState)
 
-    expect(mappedState.tokensErrors).toEqual(initialState.tokens.errors)
-    expect(mappedState.loading).toEqual(initialState.tokens.loading)
-    expect(mappedState.status).toEqual(initialState.tokens.status)
+    expect(mappedState.tokensErrors).toEqual(initialState.tokens.errors.postTokens)
+    expect(mappedState.loading).toEqual(initialState.tokens.loading.postTokens)
+    expect(mappedState.status).toEqual(initialState.tokens.data.status)
   })
 
   it('should return mapped actions props', () => {
